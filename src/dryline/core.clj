@@ -2,7 +2,8 @@
   (:require [cheshire.core :as json]
             [clojure.string :as string]
             [clojure.set]
-            [clojure.spec.alpha :as s]))
+            [clojure.spec.alpha :as s]
+            [clojure.zip :as z]))
 
 (s/def :AWS/PropertyTypes (constantly true))
 (s/def :AWS.ResourceType.Attribute/ItemType string?)
@@ -44,3 +45,15 @@
                                             :ResourceTypes :AWS/ResourceTypes
                                             :ResourceSpecificationVersion :AWS/ResourceSpecificationVersion})))
 (s/valid? :AWS/Resources aws-spec)
+
+(defn namify [rtn [pn _]] (keyword (str (namespace rtn) "." (name rtn)) (name pn)))
+
+(defn f [[rtn rt]]
+  (let [{req true opt false} (group-by #(get-in % [1 :Required]) (:Properties rt))]
+    `(s/def ~rtn (s/keys :req ~(map (partial namify rtn) req) :opt ~(map (partial namify rtn) opt)))))
+
+(sequence (comp (take 1)
+                (map f))
+          (get-in aws-spec [:AWS/ResourceTypes]))
+
+(def az (z/seq-zip (seq (s/conform :AWS/ResourceType (get-in aws-spec [:AWS/ResourceTypes :AWS.Kinesis/Stream])))))
