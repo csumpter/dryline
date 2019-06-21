@@ -3,28 +3,6 @@
             [cheshire.core :as json]
             [clojure.string :as string]))
 
-;(s/def ::Primitive #{"String" "Long" "Integer" "Double" "Boolean" "Timestamp"})
-;(s/def ::NonPrimitive (s/or :str string? :key keyword?))
-;(s/def ::Documentation string?)
-;(s/def ::DuplicatesAllowed boolean?)
-;(s/def ::ItemType (s/or :map (s/map-of string? ::NonPrimitive)
-;                        :vec (s/every ::NonPrimitive)))
-;(s/def ::PrimitiveItemType (s/or :map (s/map-of string? ::Primitive)
-;                                 :vec (s/every ::Primitive)))
-;(s/def ::PrimitiveType ::Primitive)
-;(s/def ::Required boolean?)
-;(s/def ::Type ::NonPrimitive)
-;(s/def ::UpdateType #{"Mutable" "Immutable" "Conditional"})
-;
-;(s/def ::Property (s/keys :req-un [::Documentation
-;                                   ::DuplicatesAllowed
-;                                   ::Required
-;                                   ::UpdateType]
-;                          :opt-un [::ItemType
-;                                   ::PrimitiveItemType
-;                                   ::PrimitiveType
-                                        ;                                   ::Type]))
-
 (s/def ::Documentation string?)
 (s/def ::DuplicatesAllowed boolean?)
 (s/def ::Required boolean?)
