@@ -40,7 +40,7 @@
                                                  (string/replace #"(.*)::" "$1/")
                                                  (string/replace #"::" ".")
                                                  keyword)))
-                  (set/rename-keys {:PropertyTypes :AWS/PropertyTypes
-                                    :ResourceTypes :AWS/ResourceTypes
-                                    :ResourceSpecificationVersion :AWS/ResourceSpecificationVersion})))
+                  (clojure.set/rename-keys {:PropertyTypes :AWS/PropertyTypes
+                                            :ResourceTypes :AWS/ResourceTypes
+                                            :ResourceSpecificationVersion :AWS/ResourceSpecificationVersion})))
 (s/valid? :AWS/Resources aws-spec)
