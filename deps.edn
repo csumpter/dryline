@@ -1,2 +1,4 @@
 {:deps {org.clojure/clojure {:mvn/version "1.10.1"}
-        cheshire {:mvn/version "5.8.1"}}}
+        cheshire {:mvn/version "5.8.1"}}
+ :paths ["src"
+         "resources"]}
