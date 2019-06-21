@@ -7,7 +7,13 @@
 (s/def :AWS/PropertyTypes (constantly true))
 (s/def :AWS.ResourceType.Attribute/ItemType string?)
 (s/def :AWS.ResourceType.Attribute/PrimitiveItemType string?)
-(s/def :AWS.ResourceType.Attribute/PrimitiveType string?)
+(s/def :AWS.ResourceType.Attribute/PrimitiveType #{"String"
+                                                   "Long"
+                                                   "Integer"
+                                                   "Double"
+                                                   "Boolean"
+                                                   "Timestamp"
+                                                   "Json"})
 (s/def :AWS.ResourceType.Attribute/Type string?)
 (s/def :AWS.ResourceType/Attribute (s/keys :req-un []
                                            :opt-un [:AWS.ResourceType.Attribute/ItemType
