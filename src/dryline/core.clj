@@ -46,14 +46,15 @@
                                             :ResourceSpecificationVersion :AWS/ResourceSpecificationVersion})))
 (s/valid? :AWS/Resources aws-spec)
 
-(defn namify [rtn [pn _]] (keyword (str (namespace rtn) "." (name rtn)) (name pn)))
+(defn namify
+  [rtn [pn _]]
+  (keyword (str (namespace rtn) "." (name rtn)) (name pn)))
 
-(defn f [[rtn rt]]
+(defn spec-code
+  [[rtn rt]]
   (let [{req true opt false} (group-by #(get-in % [1 :Required]) (:Properties rt))]
-    `(s/def ~rtn (s/keys :req ~(map (partial namify rtn) req) :opt ~(map (partial namify rtn) opt)))))
+    `(s/def ~rtn (s/keys :req ~(map (partial namify rtn) req)
+                         :opt ~(map (partial namify rtn) opt)))))
 
-(sequence (comp (take 1)
-                (map f))
+(sequence (map (comp eval spec-code))
           (get-in aws-spec [:AWS/ResourceTypes]))
-
-(def az (z/seq-zip (seq (s/conform :AWS/ResourceType (get-in aws-spec [:AWS/ResourceTypes :AWS.Kinesis/Stream])))))
