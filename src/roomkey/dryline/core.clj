@@ -1,51 +1,82 @@
-(ns dryline.core
+(ns roomkey.dryline.core
   (:require [cheshire.core :as json]
             [clojure.string :as string]
-            [clojure.set]
             [clojure.spec.alpha :as s]
             [clojure.zip :as z]
+            [clojure.java.io :as io]
             [dryline.lib.loader :refer [read-json-file]]))
 
-(s/def :AWS/PropertyTypes (constantly true))
-(s/def :AWS.ResourceType.Attribute/ItemType string?)
-(s/def :AWS.ResourceType.Attribute/PrimitiveItemType string?)
-(s/def :AWS.ResourceType.Attribute/PrimitiveType #{"String"
-                                                   "Long"
-                                                   "Integer"
-                                                   "Double"
-                                                   "Boolean"
-                                                   "Timestamp"
-                                                   "Json"})
-(s/def :AWS.ResourceType.Attribute/Type string?)
-(s/def :AWS.ResourceType/Attribute (s/keys :req-un []
-                                           :opt-un [:AWS.ResourceType.Attribute/ItemType
-                                                    :AWS.ResourceType.Attribute/PrimitiveItemType
-                                                    :AWS.ResourceType.Attribute/PrimitiveType
-                                                    :AWS.ResourceType.Attribute/Type]))
-(s/def :AWS.ResourceType/AttributeName keyword?)
-(s/def :AWS.ResourceType/Attributes (s/map-of :AWS.ResourceType/AttributeName :AWS.ResourceType/Attribute))
-(s/def :AWS.ResourceType/Documentation string?)
-(s/def :AWS.ResourceType/Properties (constantly true))
-(s/def :AWS/ResourceType (s/keys :req-un [:AWS.ResourceType/Documentation
-                                          :AWS.ResourceType/Properties]
-                                 :opt-un [:AWS.ResourceType/Attributes]))
-(s/def :AWS/ResourceTypeName keyword?)
-(s/def :AWS/ResourceTypes (s/map-of :AWS/ResourceTypeName :AWS/ResourceType))
-(s/def :AWS/ResourceSpecificationVersion string?)
-(s/def :AWS/Resources (s/keys :req [:AWS/PropertyTypes
-                                    :AWS/ResourceSpecificationVersion
-                                    :AWS/ResourceTypes]))
+(s/def :roomkey.dryline.aws/PropertyTypes (constantly true))
 
-(def aws-spec (-> (read-json-file "resources/aws/us-east-spec.json")
-                  (json/parse-string (fn [k] (-> k
-                                                 (string/replace #"(.*)::" "$1/")
-                                                 (string/replace #"::" ".")
-                                                 keyword)))
-                  (clojure.set/rename-keys {:PropertyTypes :AWS/PropertyTypes
-                                            :ResourceTypes :AWS/ResourceTypes
-                                            :ResourceSpecificationVersion :AWS/ResourceSpecificationVersion})))
+(s/def :roomkey.dryline.aws.resourcetype.Attribute/ItemType string?)
 
-(s/valid? :AWS/Resources aws-spec)
+(s/def :roomkey.dryline.aws.resourcetype.Attribute/PrimitiveItemType string?)
+
+(s/def :roomkey.dryline.aws.resourcetype.Attribute/PrimitiveType
+  #{"String" "Long" "Integer" "Double" "Boolean" "Timestamp" "Json"})
+
+(s/def :roomkey.dryline.aws.resourcetype.Attribute/Type string?)
+
+(s/def :roomkey.dryline.aws.ResourceType/Attribute
+  (s/keys :req-un []
+          :opt-un [:roomkey.dryline.aws.resourcetype.Attribute/ItemType
+                   :roomkey.dryline.aws.resourcetype.Attribute/PrimitiveItemType
+                   :roomkey.dryline.aws.resourcetype.Attribute/PrimitiveType
+                   :roomkey.dryline.aws.resourcetype.Attribute/Type]))
+
+(s/def :roomkey.dryline.aws.ResourceType/AttributeName keyword?)
+
+(s/def :roomkey.dryline.aws.ResourceType/Attributes
+  (s/map-of :roomkey.dryline.aws.ResourceType/AttributeName
+            :roomkey.dryline.aws.ResourceType/Attribute))
+
+(s/def :roomkey.dryline.aws.ResourceType/Documentation string?)
+
+(s/def :roomkey.dryline.aws.ResourceType/Properties (constantly true))
+
+(s/def :roomkey.dryline.aws/ResourceType
+  (s/keys :req-un [:roomkey.dryline.aws.ResourceType/Documentation
+                   :roomkey.dryline.aws.ResourceType/Properties]
+          :opt-un [:roomkey.dryline.aws.ResourceType/Attributes]))
+
+(s/def :roomkey.dryline.aws/ResourceTypeName keyword?)
+
+(s/def :roomkey.dryline.aws/ResourceTypes
+  (s/map-of :roomkey.dryline.aws/ResourceTypeName
+            :roomkey.dryline.aws/ResourceType))
+
+(s/def :roomkey.dryline.aws/ResourceSpecificationVersion string?)
+
+(s/def :roomkey.dryline.aws/Resources
+  (s/keys :req-un [:roomkey.dryline.aws/PropertyTypes
+                   :roomkey.dryline.aws/ResourceSpecificationVersion
+                   :roomkey.dryline.aws/ResourceTypes]))
+
+(def ^:private prefix "roomkey.dryline.aws")
+
+(defn dryline-keyword
+  [resource-type-name]
+  (let [[top-level-service service type] (string/split resource-type-name #"::")
+        [type subtype] (string/split type #"\.")
+        service-prefix (string/join \. [prefix
+                                        (string/lower-case top-level-service)
+                                        (string/lower-case service)])]
+    (if subtype
+      (keyword (str service-prefix \. type) subtype)
+      (keyword service-prefix type))))
+
+(defn parse-spec
+  [rdr]
+  (json/parse-stream rdr
+                     (fn [k] (if (re-matches #".+::.+::.+" k)
+                               (dryline-keyword k)
+                               (keyword k)))))
+
+(def ^:private local-spec-file "resources/aws/us-east-spec.json")
+
+(defn parse-spec-local
+  []
+  (parse-spec (io/reader local-spec-file)))
 
 (defn namify
   [rtn [pn _]]
@@ -54,8 +85,15 @@
 (defn spec-code
   [[rtn rt]]
   (let [{req true opt false} (group-by #(get-in % [1 :Required]) (:Properties rt))]
-    `(s/def ~rtn (s/keys :req ~(map (partial namify rtn) req)
-                         :opt ~(map (partial namify rtn) opt)))))
+    `(s/def ~rtn (s/keys :req-un ~(map (partial namify rtn) req)
+                         :opt-un ~(map (partial namify rtn) opt)))))
 
-(sequence (map (comp eval spec-code))
-          (get-in aws-spec [:AWS/ResourceTypes]))
+(defn gen-resource-type-specs
+  [rdr]
+  (sequence (map (comp eval spec-code))
+            (:ResourceTypes (parse-spec rdr))))
+
+(defn gen-resource-type-specs-local
+  []
+  (sequence (map (comp eval spec-code))
+            (:ResourceTypes (parse-spec-local))))
