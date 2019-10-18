@@ -3,7 +3,8 @@
             [clojure.string :as string]
             [clojure.set]
             [clojure.spec.alpha :as s]
-            [clojure.zip :as z]))
+            [clojure.zip :as z]
+            [dryline.lib.loader :refer [read-json-file]]))
 
 (s/def :AWS/PropertyTypes (constantly true))
 (s/def :AWS.ResourceType.Attribute/ItemType string?)
@@ -35,8 +36,7 @@
                                     :AWS/ResourceSpecificationVersion
                                     :AWS/ResourceTypes]))
 
-(def aws-spec (-> "resources/aws/us-east-spec.json"
-                  slurp
+(def aws-spec (-> (read-json-file "resources/aws/us-east-spec.json")
                   (json/parse-string (fn [k] (-> k
                                                  (string/replace #"(.*)::" "$1/")
                                                  (string/replace #"::" ".")
@@ -44,6 +44,7 @@
                   (clojure.set/rename-keys {:PropertyTypes :AWS/PropertyTypes
                                             :ResourceTypes :AWS/ResourceTypes
                                             :ResourceSpecificationVersion :AWS/ResourceSpecificationVersion})))
+
 (s/valid? :AWS/Resources aws-spec)
 
 (defn namify

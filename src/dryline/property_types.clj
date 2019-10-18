@@ -1,7 +1,8 @@
 (ns dryline.property-types
   (:require [clojure.spec.alpha :as s]
             [cheshire.core :as json]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            [dryline.lib.loader :refer [read-json-file]]))
 
 (s/def ::Documentation string?)
 (s/def ::DuplicatesAllowed boolean?)
@@ -34,7 +35,7 @@
 
 (s/def ::PropertyList (s/map-of keyword? ::PropertyType))
 
-(def aws-spec (json/parse-string (slurp "resources/aws/us-east-spec.json")
+(def aws-spec (json/parse-string (read-json-file "resources/aws/us-east-spec.json")
                                  (fn [k] (-> k
                                              (string/replace #"(.*)::" "$1/")
                                              (string/replace #"::" ".")
