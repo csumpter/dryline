@@ -1,4 +1,5 @@
-
+# Dryline
+A [dry line](https://en.wikipedia.org/wiki/Dry_line) is a line across a continent that separates moist air from dry air. Storms (cloud formations) form along a dry line.
 
 #### Source materials
 
