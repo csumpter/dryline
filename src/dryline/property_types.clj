@@ -44,3 +44,6 @@
 
 (s/explain-data ::PropertyList props)
 
+(s/def ::ResourceSpecificationVersion #(re-matches #"^([\d]+[.]?)+$" %))
+
+#_(s/valid? ::ResourceSpecificationVersion (:ResourceSpecificationVersion aws-spec))
