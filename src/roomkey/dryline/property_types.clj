@@ -1,4 +1,4 @@
-(ns dryline.property-types
+(ns roomkey.dryline.property-types
   (:require [clojure.spec.alpha :as s]
             [cheshire.core :as json]
             [clojure.string :as string]
