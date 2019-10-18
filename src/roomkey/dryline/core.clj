@@ -3,8 +3,7 @@
             [clojure.string :as string]
             [clojure.spec.alpha :as s]
             [clojure.zip :as z]
-            [clojure.java.io :as io]
-            [dryline.lib.loader :refer [read-json-file]]))
+            [clojure.java.io :as io]))
 
 (s/def :roomkey.dryline.aws/PropertyTypes (constantly true))
 
