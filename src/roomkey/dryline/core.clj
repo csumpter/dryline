@@ -74,8 +74,8 @@
 (def ^:private local-spec-file "resources/aws/us-east-spec.json")
 
 (defn parse-spec-local
-  [path]
-  (parse-spec (io/reader path)))
+  []
+  (parse-spec (io/reader local-spec-file)))
 
 (defn namify
   [rtn [pn _]]
@@ -95,4 +95,4 @@
 (defn gen-resource-type-specs-local
   []
   (sequence (map (comp eval spec-code))
-            (:ResourceTypes (parse-spec-local local-spec-file))))
+            (:ResourceTypes (parse-spec-local))))
