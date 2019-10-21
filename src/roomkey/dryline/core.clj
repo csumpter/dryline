@@ -70,12 +70,6 @@
                                (dryline-keyword k)
                                (keyword k)))))
 
-(def ^:private local-spec-file "resources/aws/us-east-spec.json")
-
-(defn parse-spec-local
-  []
-  (parse-spec (io/reader local-spec-file)))
-
 (defn namify
   [rtn [pn _]]
   (keyword (str (namespace rtn) "." (name rtn)) (name pn)))
@@ -91,7 +85,15 @@
   (sequence (map (comp eval spec-code))
             (:ResourceTypes (parse-spec rdr))))
 
-(defn gen-resource-type-specs-local
-  []
-  (sequence (map (comp eval spec-code))
-            (:ResourceTypes (parse-spec-local))))
+(comment
+  ;; These are for ease of development and should be removed before release
+  (def ^:private local-spec-file "resources/aws/us-east-spec.json")
+
+  (defn parse-spec-local
+    []
+    (parse-spec (io/reader local-spec-file)))
+
+  (defn gen-resource-type-specs-local
+    []
+    (sequence (map (comp eval spec-code))
+              (:ResourceTypes (parse-spec-local)))))
