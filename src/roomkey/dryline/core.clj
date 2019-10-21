@@ -1,9 +1,8 @@
 (ns roomkey.dryline.core
   (:require [cheshire.core :as json]
-            [clojure.string :as string]
+            [clojure.java.io :as io]
             [clojure.spec.alpha :as s]
-            [clojure.zip :as z]
-            [clojure.java.io :as io]))
+            [clojure.string :as string]))
 
 (s/def :roomkey.dryline.aws/PropertyTypes (constantly true))
 
