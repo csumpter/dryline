@@ -1,4 +1,4 @@
-(ns roomkey.dryline.core
+(ns roomkey.dryline.resource-type
   (:require [cheshire.core :as json]
             [clojure.java.io :as io]
             [clojure.spec.alpha :as s]
