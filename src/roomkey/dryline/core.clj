@@ -50,7 +50,7 @@
                    :roomkey.dryline.aws/ResourceSpecificationVersion
                    :roomkey.dryline.aws/ResourceTypes]))
 
-(def ^:private prefix "roomkey.dryline.aws")
+(def ^:private prefix "roomkey.dryline")
 
 (defn dryline-keyword
   [resource-type-name]
