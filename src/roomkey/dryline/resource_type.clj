@@ -4,53 +4,6 @@
             [clojure.spec.alpha :as s]
             [clojure.string :as string]))
 
-;; The following specs are for validating the specification file from AWS
-(s/def :roomkey.dryline.aws/PropertyTypes (constantly true))
-
-(s/def :roomkey.dryline.aws.resourcetype.Attribute/ItemType string?)
-
-(s/def :roomkey.dryline.aws.resourcetype.Attribute/PrimitiveItemType string?)
-
-(s/def :roomkey.dryline.aws.resourcetype.Attribute/PrimitiveType
-  #{"String" "Long" "Integer" "Double" "Boolean" "Timestamp" "Json"})
-
-(s/def :roomkey.dryline.aws.resourcetype.Attribute/Type string?)
-
-(s/def :roomkey.dryline.aws.ResourceType/Attribute
-  (s/keys :req-un []
-          :opt-un [:roomkey.dryline.aws.resourcetype.Attribute/ItemType
-                   :roomkey.dryline.aws.resourcetype.Attribute/PrimitiveItemType
-                   :roomkey.dryline.aws.resourcetype.Attribute/PrimitiveType
-                   :roomkey.dryline.aws.resourcetype.Attribute/Type]))
-
-(s/def :roomkey.dryline.aws.ResourceType/AttributeName keyword?)
-
-(s/def :roomkey.dryline.aws.ResourceType/Attributes
-  (s/map-of :roomkey.dryline.aws.ResourceType/AttributeName
-            :roomkey.dryline.aws.ResourceType/Attribute))
-
-(s/def :roomkey.dryline.aws.ResourceType/Documentation string?)
-
-(s/def :roomkey.dryline.aws.ResourceType/Properties (constantly true))
-
-(s/def :roomkey.dryline.aws/ResourceType
-  (s/keys :req-un [:roomkey.dryline.aws.ResourceType/Documentation
-                   :roomkey.dryline.aws.ResourceType/Properties]
-          :opt-un [:roomkey.dryline.aws.ResourceType/Attributes]))
-
-(s/def :roomkey.dryline.aws/ResourceTypeName keyword?)
-
-(s/def :roomkey.dryline.aws/ResourceTypes
-  (s/map-of :roomkey.dryline.aws/ResourceTypeName
-            :roomkey.dryline.aws/ResourceType))
-
-(s/def :roomkey.dryline.aws/ResourceSpecificationVersion string?)
-
-(s/def :roomkey.dryline.aws/Resources
-  (s/keys :req-un [:roomkey.dryline.aws/PropertyTypes
-                   :roomkey.dryline.aws/ResourceSpecificationVersion
-                   :roomkey.dryline.aws/ResourceTypes]))
-
 (def ^:private prefix "roomkey.dryline")
 
 (defn dryline-keyword
