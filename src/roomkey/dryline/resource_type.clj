@@ -161,8 +161,7 @@
 
   (defn gen-resource-type-specs-local
     []
-    (sequence (map (comp eval spec-code))
-              (:ResourceTypes (parse-spec-local)))))
+    (gen-resource-type-specs (io/reader local-spec-file))))
 
 (comment
   ;; Example Properties for testing
