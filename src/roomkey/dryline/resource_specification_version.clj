@@ -3,7 +3,7 @@
             [clojure.spec.alpha :as s]
             [clojure.string :as string]))
 
-(s/def ::ResourceSpecificationVersion #(re-matches #"^([\d]+[.]?)+$" %))
+(s/def ::ResourceSpecificationVersion (s/and string? #(re-matches #"^([\d]+[.]?)+$" %)))
 
 (comment
   ;; used for development - remove before release
