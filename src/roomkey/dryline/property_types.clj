@@ -1,10 +1,11 @@
 (ns roomkey.dryline.property-types
-  (:require [clojure.spec.alpha :as s]
-            [cheshire.core :as json]
-            [clojure.string :as string]
-            [dryline.lib.loader :refer [read-json-file]]))
+  (:require [cheshire.core :as json]
+            [clojure.spec.alpha :as s]
+            [clojure.string :as string]))
 
-(s/def ::Documentation string?)
+(s/def ::Documentation
+  #(re-matches #"^((http[s]?):\/\/)(docs.aws.amazon.com\/)([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$" %))
+
 (s/def ::DuplicatesAllowed boolean?)
 (s/def ::Required boolean?)
 (s/def ::UpdateType #{"Mutable" "Immutable" "Conditional"})
@@ -35,16 +36,20 @@
 
 (s/def ::PropertyList (s/map-of keyword? ::PropertyType))
 
-(def aws-spec (json/parse-string (read-json-file "resources/aws/us-east-spec.json")
-                                 (fn [k] (-> k
-                                             (string/replace #"(.*)::" "$1/")
-                                             (string/replace #"::" ".")
-                                             keyword))))
-
-(def props (:PropertyTypes aws-spec))
-
-(s/explain-data ::PropertyList props)
-
 (s/def ::ResourceSpecificationVersion #(re-matches #"^([\d]+[.]?)+$" %))
 
-#_(s/valid? ::ResourceSpecificationVersion (:ResourceSpecificationVersion aws-spec))
+(comment
+  ;; used for development - remove before release
+  (defn read-json-file [path]
+    (slurp path))
+  (def aws-spec (json/parse-string (read-json-file "resources/aws/us-east-spec.json")
+                                   (fn [k] (-> k
+                                               (string/replace #"(.*)::" "$1/")
+                                               (string/replace #"::" ".")
+                                               keyword))))
+  (def props (:PropertyTypes aws-spec))
+
+  (s/explain-str ::PropertyList props)
+
+  #_(s/valid? ::ResourceSpecificationVersion (:ResourceSpecificationVersion aws-spec))
+  )
