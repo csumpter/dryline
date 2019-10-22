@@ -1,35 +1,22 @@
-(ns roomkey.dryline.resource-type
+(ns roomkey.dryline.specs
   (:require [cheshire.core :as json]
             [clojure.java.io :as io]
             [clojure.spec.alpha :as s]
             [clojure.string :as string]))
 
-(def ^:private prefix "roomkey.dryline")
+(def ^:private prefix "roomkey")
 
 (defn dryline-keyword
   "Converts strings of form AWS::<Service>::<Resource> to namespaced keywords"
-  [resource-type-name]
-  (let [[top-level-service service type] (string/split resource-type-name #"::")
+  [type-name]
+  (let [[top-level-service service type] (string/split type-name #"::")
         [type subtype] (string/split type #"\.")
-        service-prefix (string/join \. [prefix
+        service-prefix (string/join \. ["roomkey"
                                         (string/lower-case top-level-service)
                                         (string/lower-case service)])]
     (if subtype
       (keyword (str service-prefix \. type) subtype)
       (keyword service-prefix type))))
-
-(defn parse-spec
-  "Parses an AWS CloudFormation specification passed in as a reader."
-  [rdr]
-  (json/parse-stream rdr
-                     (fn [k]
-                       (cond
-                         ;; Specs with only one resource defined
-                         ;; have a singular key so we change it
-                         ;; to plural here. Thx AWS.
-                         (= k "ResourceType") :ResourceTypes
-                         (re-matches #".+::.+::.+" k) (dryline-keyword k)
-                         :else (keyword k)))))
 
 (def ^:private primitive-type->predicate
   "A map from CF PrimitiveType to clojure predicates"
@@ -48,21 +35,21 @@
   (keyword (str (namespace kw) \. (name kw)) (name suffix)))
 
 (defn- type-reference
-  [rtn t]
+  [type-name t]
   (case t
-    "Tag" :roomkey.dryline.aws/Tag
-    (append-to-keyword rtn t)))
+    "Tag" :roomkey.aws/Tag
+    (append-to-keyword (dryline-keyword type-name) t)))
 
 (defn- property-collection-predicate
   "Returns the predicate or reference for the collection type"
-  [rtn {:keys [ItemType PrimitiveItemType]}]
+  [type-name {:keys [ItemType PrimitiveItemType]}]
   (if PrimitiveItemType
     (primitive-type->predicate PrimitiveItemType)
-    (type-reference rtn ItemType)))
+    (type-reference type-name ItemType)))
 
 (defn- property-predicate
   "Returns the predicate for a given property"
-  [rtn {:keys [DuplicatesAllowed
+  [type-name {:keys [DuplicatesAllowed
                ItemType
                PrimitiveItemType
                PrimitiveType
@@ -70,39 +57,40 @@
         :as property}]
   (if PrimitiveType (primitive-type->predicate PrimitiveType)
       (case Type
-        "List" (eval `(s/coll-of ~(property-collection-predicate rtn property)
+        "List" (eval `(s/coll-of ~(property-collection-predicate type-name property)
                                  :distinct ~(not DuplicatesAllowed)))
-        "Map" (eval `(s/map-of string? ~(property-collection-predicate rtn property)))
+        "Map" (eval `(s/map-of string? ~(property-collection-predicate type-name property)))
         (constantly true)
         ;; TODO need to generate property type specs before they can be referenced here
-        #_(type-reference rtn Type))))
+        #_(type-reference type-name Type))))
 
 (defn gen-property-spec
   "Generates a spec for a property found in a resource type"
-  [rtn [pn property]]
-  (let [spec-name (append-to-keyword rtn pn)]
-    (eval `(s/def ~spec-name ~(property-predicate rtn property)))))
+  [type-name [pn property]]
+  (let [spec-name (append-to-keyword (dryline-keyword type-name) pn)]
+    (eval `(s/def ~spec-name ~(property-predicate type-name property)))))
 
 (defn- namify
-  [rtn [pn _]]
-  (append-to-keyword rtn pn))
+  [type-name [pn _]]
+  (append-to-keyword (dryline-keyword type-name) pn))
 
 (defn gen-resource-type-spec
   "Generates a spec for a resource type as well as all of the properties defined
   in its specification."
-  [[rtn {:keys [Properties] :as rt}]]
-  (let [property-specs (map (partial gen-property-spec rtn) Properties)
+  [[type-name {:keys [Properties] :as rt}]]
+  (let [property-specs (map (partial gen-property-spec type-name) Properties)
         {req true opt false} (group-by #(get-in % [1 :Required]) Properties)
-        rtn-spec (eval `(s/def ~rtn (s/keys :req-un ~(mapv (partial namify rtn) req)
-                                            :opt-un ~(mapv (partial namify rtn) opt))))]
+        resource-spec (eval `(s/def ~(dryline-keyword type-name)
+                               (s/keys :req-un ~(mapv (partial namify type-name) req)
+                                       :opt-un ~(mapv (partial namify type-name) opt))))]
     (conj property-specs
-          rtn-spec)))
+          resource-spec)))
 
 (defn gen-resource-type-specs
   "Generates all of the specs for resources types given a AWS CloudFormation
   specification as a reader"
-  [rdr]
-  (mapcat gen-resource-type-spec (:ResourceTypes (parse-spec rdr))))
+  [parsed-spec]
+  (mapcat gen-resource-type-spec (:ResourceTypes parsed-spec)))
 
 (comment
   ;; These are for ease of development and should be removed before release
