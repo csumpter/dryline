@@ -36,8 +36,6 @@
 
 (s/def ::PropertyList (s/map-of keyword? ::PropertyType))
 
-(s/def ::ResourceSpecificationVersion #(re-matches #"^([\d]+[.]?)+$" %))
-
 (comment
   ;; used for development - remove before release
   (defn read-json-file [path]
@@ -50,6 +48,4 @@
   (def props (:PropertyTypes aws-spec))
 
   (s/explain-str ::PropertyList props)
-
-  #_(s/valid? ::ResourceSpecificationVersion (:ResourceSpecificationVersion aws-spec))
   )
