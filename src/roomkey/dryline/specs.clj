@@ -2,7 +2,8 @@
   (:require [cheshire.core :as json]
             [clojure.java.io :as io]
             [clojure.spec.alpha :as s]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            [roomkey.dryline.parse :as parse]))
 
 (def ^:private prefix "roomkey")
 
@@ -50,10 +51,10 @@
 (defn- property-predicate
   "Returns the predicate for a given property"
   [type-name {:keys [DuplicatesAllowed
-               ItemType
-               PrimitiveItemType
-               PrimitiveType
-               Type]
+                     ItemType
+                     PrimitiveItemType
+                     PrimitiveType
+                     Type]
         :as property}]
   (if PrimitiveType (primitive-type->predicate PrimitiveType)
       (case Type
@@ -98,7 +99,7 @@
 
   (defn parse-spec-local
     []
-    (parse-spec (io/reader local-spec-file)))
+    (parse/parse (io/reader local-spec-file)))
 
   (defn gen-resource-type-specs-local
     []
