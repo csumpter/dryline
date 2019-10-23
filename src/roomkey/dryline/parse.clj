@@ -1,6 +1,5 @@
 (ns roomkey.dryline.parse
-  (:require [cheshire.core :as json]
-            [clojure.string :as string]))
+  (:require [cheshire.core :as json]))
 
 (defn parse
   "Parses an AWS CloudFormation specification passed in as a reader."
