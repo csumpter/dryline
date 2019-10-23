@@ -11,7 +11,7 @@
   [type-name]
   (let [[top-level-service service type] (string/split type-name #"::")
         [type subtype] (string/split type #"\.")
-        service-prefix (string/join \. ["roomkey"
+        service-prefix (string/join \. [prefix
                                         (string/lower-case top-level-service)
                                         (string/lower-case service)])]
     (if subtype
