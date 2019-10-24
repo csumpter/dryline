@@ -78,7 +78,7 @@
 (defn gen-resource-type-spec
   "Generates a spec for a resource type as well as all of the properties defined
   in its specification."
-  [[type-name {:keys [Properties] :as rt}]]
+  [[type-name {:keys [Properties]}]]
   (let [property-specs (map (partial gen-property-spec type-name) Properties)
         {req true opt false} (group-by #(get-in % [1 :Required]) Properties)
         resource-spec (eval `(s/def ~(dryline-keyword type-name)
