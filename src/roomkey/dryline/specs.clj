@@ -3,21 +3,24 @@
             [clojure.java.io :as io]
             [clojure.spec.alpha :as s]
             [clojure.string :as string]
-            [roomkey.dryline.parse :as parse]))
+            [roomkey.dryline.parse :as parse]
+            [clojure.zip :as z]))
 
 (def ^:private prefix "roomkey")
 
 (defn dryline-keyword
   "Converts strings of form AWS::<Service>::<Resource> to namespaced keywords"
   [type-name]
-  (let [[top-level-service service type] (string/split type-name #"::")
-        [type subtype] (string/split type #"\.")
-        service-prefix (string/join \. [prefix
-                                        (string/lower-case top-level-service)
-                                        (string/lower-case service)])]
-    (if subtype
-      (keyword (str service-prefix \. type) subtype)
-      (keyword service-prefix type))))
+  (case type-name
+    "Tag" :roomkey.aws/Tag
+    (let [[top-level-service service type] (string/split type-name #"::")
+          [type subtype] (string/split type #"\.")
+          service-prefix (string/join \. [prefix
+                                          (string/lower-case top-level-service)
+                                          (string/lower-case service)])]
+      (if subtype
+        (keyword (str service-prefix \. type) subtype)
+        (keyword service-prefix type)))))
 
 (def ^:private primitive-type->predicate
   "A map from CF PrimitiveType to clojure predicates"
@@ -65,16 +68,15 @@
         ;; TODO need to generate property type specs before they can be referenced here
         #_(type-reference type-name Type))))
 
-(defn gen-property-spec
-  "Generates a spec for a property found in a resource type"
-  [type-name [pn property]]
-  (let [is-tag? (= type-name "Tag")
-        spec-name (append-to-keyword (if is-tag? (keyword type-name) (dryline-keyword type-name)) pn)]
-    (eval `(s/def ~spec-name ~(property-predicate type-name property)))))
-
 (defn- namify
   [type-name [pn _]]
   (append-to-keyword (dryline-keyword type-name) pn))
+
+(defn gen-property-spec
+  "Generates a spec for a property found in a resource type"
+  [type-name [pn property]]
+  (let [spec-name (append-to-keyword (dryline-keyword type-name) pn)]
+    (eval `(s/def ~spec-name ~(property-predicate type-name property)))))
 
 (defn gen-resource-type-spec
   "Generates a spec for a resource type as well as all of the properties defined
@@ -94,17 +96,57 @@
   [parsed-spec]
   (mapcat gen-resource-type-spec (:ResourceTypes parsed-spec)))
 
-(defn gen-property-type-spec
-  [[type-name {:keys [Properties]}]]
-  (map (partial gen-property-spec type-name) Properties))
+(defn primitive?
+  [{:keys [PrimitiveType PrimitiveItemType]}]
+  (boolean (or PrimitiveType PrimitiveItemType)))
 
-(defn gen-property-type-specs
-  [parsed-spec]
-  (map gen-property-type-spec (:PropertyTypes parsed-spec)))
+(defn gen-spec-if-not-present
+  "Returns the keyword of the generated spec only generating the spec if
+  it is not already in the registry"
+  [[property-name property]]
+  (let [spec-name (append-to-keyword (dryline-keyword property-name) property)]
+    (eval `(s/def ~spec-name ~(property-predicate property-name property)))
+    spec-name))
+
+;;(gen-spec-if-not-present ["AWS::AutoScalingPlans::ScalingPlan.PredefinedScalingMetricSpecification" :ResourceLabel])
+
+;;(gen-spec-if-not-present ["Tag" :Value])
+
+;;(zip/branch? zipper)
+
+#_(defn gen-property-specs* [parsed-spec]
+  (let [right-exists? #(not= (z/right loc) nil)
+        came-from-up? (atom false)
+        spec-zipper (zip/zipper
+                    (fn [n] (vector? n))
+                    (fn [n] (second n))
+                    (fn [n children] n)
+                    parsed-spec)]
+      (loop [loc (zip/branch? spec-zipper)]
+        (if (primitive? loc)
+          (do (gen-spec-if-not-present loc)
+              (if right-exists? loc)))
+        (recur ))))
+
+(defn root-properties
+  [{:keys [PropertyTypes]}]
+  (let [ptns (map (comp dryline-keyword first) PropertyTypes)
+        referenced-ptns
+        (mapcat (fn [[property-type-name property-type]]
+                  (prn property-type-name)
+                  (map (fn [[property-name property]]
+                         (append-to-keyword (dryline-keyword property-type-name)
+                                            property-name))
+                       (:Properties property-type)))
+                PropertyTypes)]
+    ptns
+    referenced-ptns))
+
+;; (root-properties (parse-spec-local))
 
 (comment
   ;; These are for ease of development and should be removed before release
-  (def ^:private local-spec-file "resources/aws/us-east-spec.json")
+  (def ^:private local-spec-file "resources/aws/S3BucketSpecification.json")
 
   (defn parse-spec-local []
     (parse/parse (io/reader local-spec-file)))
@@ -113,9 +155,7 @@
     (gen-resource-type-specs (parse/parse (io/reader local-spec-file))))
 
   (defn gen-property-type-specs-local []
-    (parse/parse (io/reader local-spec-file)))
-
-  (gen-property-type-specs (gen-property-type-specs-local)))
+    (parse/parse (io/reader local-spec-file))))
 
 (comment
   ;; Example Properties for testing
