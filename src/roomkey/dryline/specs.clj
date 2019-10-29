@@ -94,17 +94,28 @@
   [parsed-spec]
   (mapcat gen-resource-type-spec (:ResourceTypes parsed-spec)))
 
+(defn gen-property-type-spec
+  [[type-name {:keys [Properties]}]]
+  (map (partial gen-property-spec type-name) Properties))
+
+(defn gen-property-type-specs
+  [parsed-spec]
+  (map gen-property-type-spec (:PropertyTypes parsed-spec)))
+
 (comment
   ;; These are for ease of development and should be removed before release
   (def ^:private local-spec-file "resources/aws/us-east-spec.json")
 
-  (defn parse-spec-local
-    []
+  (defn parse-spec-local []
     (parse/parse (io/reader local-spec-file)))
 
-  (defn gen-resource-type-specs-local
-    []
-    (gen-resource-type-specs (io/reader local-spec-file))))
+  (defn gen-resource-type-specs-local []
+    (gen-resource-type-specs (parse/parse (io/reader local-spec-file))))
+
+  (defn gen-property-type-specs-local []
+    (parse/parse (io/reader local-spec-file)))
+
+  (gen-property-type-specs (gen-property-type-specs-local)))
 
 (comment
   ;; Example Properties for testing
