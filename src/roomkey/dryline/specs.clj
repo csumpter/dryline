@@ -68,7 +68,8 @@
 (defn gen-property-spec
   "Generates a spec for a property found in a resource type"
   [type-name [pn property]]
-  (let [spec-name (append-to-keyword (dryline-keyword type-name) pn)]
+  (let [is-tag? (= type-name "Tag")
+        spec-name (append-to-keyword (if is-tag? (keyword type-name) (dryline-keyword type-name)) pn)]
     (eval `(s/def ~spec-name ~(property-predicate type-name property)))))
 
 (defn- namify
