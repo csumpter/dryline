@@ -174,7 +174,8 @@
           (recur (z/up loc) true (concat specs new-specs))))
 
       :else
-      (if (z/down loc)
+      (if (not= (some-> loc z/down z/node)
+                (z/node loc))
         (recur (z/down loc) false specs)
         (let [new-specs (gen-type-spec (z/node loc))]
           (if (z/right loc)
