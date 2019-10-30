@@ -4,6 +4,7 @@
             [clojure.spec.alpha :as s]
             [clojure.string :as string]
             [roomkey.dryline.parse :as parse]
+            [roomkey.dryline.validation]
             [clojure.zip :as z]))
 
 (def ^:private prefix "roomkey")
@@ -100,6 +101,14 @@
   [{:keys [PrimitiveType PrimitiveItemType]}]
   (boolean (or PrimitiveType PrimitiveItemType)))
 
+(defn non-primitive-type
+  "Returns the referenced type from a property and returns nil
+  if the property is primitive."
+  [{:keys [Type ItemType]}]
+  (case Type
+    ("List" "Map") ItemType
+    Type))
+
 (defn gen-spec-if-not-present
   "Returns the keyword of the generated spec only generating the spec if
   it is not already in the registry"
@@ -128,19 +137,52 @@
               (if right-exists? loc)))
         (recur ))))
 
-(defn root-properties
+(defn referenced-property-type
+  [property-type-name property]
+  (str (first (string/split property-type-name #"\."))
+       \.
+       (non-primitive-type property)))
+
+(defn- referenced-properties
+  "Returns the properties which are references to other property types"
+  [[property-type-name property-type]]
+  (sequence (comp
+             (remove (comp primitive? second))
+             (map (fn [[property-name property]]
+                    (referenced-property-type property-type-name property))))
+            (:Properties property-type)))
+
+(defn root-property-types
+  "Returns a set of dryline keywords of the root property types. Root property
+  types are those property types which are not referenced by other property
+  types. The set will include property types whose properties are all primitive."
   [{:keys [PropertyTypes]}]
-  (let [ptns (map (comp dryline-keyword first) PropertyTypes)
-        referenced-ptns
-        (mapcat (fn [[property-type-name property-type]]
-                  (prn property-type-name)
-                  (map (fn [[property-name property]]
-                         (append-to-keyword (dryline-keyword property-type-name)
-                                            property-name))
-                       (:Properties property-type)))
-                PropertyTypes)]
-    ptns
-    referenced-ptns))
+  (let [ptns (keys PropertyTypes)
+        referenced-ptns (into #{} (mapcat referenced-properties) PropertyTypes)]
+    (remove referenced-ptns ptns)))
+
+(defn property-type-zipper
+  [root-property-type {:keys [PropertyTypes] :as parsed-spec}]
+  (z/zipper
+   (fn [[property-type-name property-type]]
+     (seq (remove primitive? (vals (:Properties property-type)))))
+   (fn [[property-type-name property-type]]
+     (select-keys PropertyTypes
+                  (sequence (comp (remove primitive?)
+                                  (map (partial referenced-property-type
+                                                property-type-name)))
+                            (vals (:Properties property-type)))))
+   (fn [n children] n)
+   root-property-type))
+
+
+
+
+;; Walk the zippers
+;; Build specs for property types
+;; - Build property specs
+;; - Build property-type spec
+
 
 ;; (root-properties (parse-spec-local))
 
@@ -155,7 +197,12 @@
     (gen-resource-type-specs (parse/parse (io/reader local-spec-file))))
 
   (defn gen-property-type-specs-local []
-    (parse/parse (io/reader local-spec-file))))
+    (parse/parse (io/reader local-spec-file)))
+
+  (def zippers (let [s3-spec (parse-spec-local)]
+                 (map #(property-type-zipper % s3-spec)
+                      (select-keys (:PropertyTypes s3-spec)
+                                   (root-property-types s3-spec))))) )
 
 (comment
   ;; Example Properties for testing
