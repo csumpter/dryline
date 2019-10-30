@@ -43,7 +43,11 @@
   [type-name t]
   (case t
     "Tag" :roomkey.aws/Tag
-    (append-to-keyword (dryline-keyword type-name) t)))
+    (-> type-name
+        (string/split #"\.")
+        first
+        dryline-keyword
+        (append-to-keyword t))))
 
 (defn- property-collection-predicate
   "Returns the predicate or reference for the collection type"
@@ -65,9 +69,9 @@
         "List" (eval `(s/coll-of ~(property-collection-predicate type-name property)
                                  :distinct ~(not DuplicatesAllowed)))
         "Map" (eval `(s/map-of string? ~(property-collection-predicate type-name property)))
-        (constantly true)
+        #_(constantly true)
         ;; TODO need to generate property type specs before they can be referenced here
-        #_(type-reference type-name Type))))
+        (type-reference type-name Type))))
 
 (defn- namify
   [type-name [pn _]]
@@ -79,9 +83,9 @@
   (let [spec-name (append-to-keyword (dryline-keyword type-name) pn)]
     (eval `(s/def ~spec-name ~(property-predicate type-name property)))))
 
-(defn gen-resource-type-spec
-  "Generates a spec for a resource type as well as all of the properties defined
-  in its specification."
+(defn gen-type-spec
+  "Generates a spec for a resource or property type as well as all of the
+  properties defined in its specification."
   [[type-name {:keys [Properties]}]]
   (let [property-specs (map (partial gen-property-spec type-name) Properties)
         {req true opt false} (group-by #(get-in % [1 :Required]) Properties)
@@ -95,7 +99,7 @@
   "Generates all of the specs for resources types given a AWS CloudFormation
   specification as a reader"
   [parsed-spec]
-  (mapcat gen-resource-type-spec (:ResourceTypes parsed-spec)))
+  (mapcat gen-type-spec (:ResourceTypes parsed-spec)))
 
 (defn primitive?
   [{:keys [PrimitiveType PrimitiveItemType]}]
@@ -116,26 +120,6 @@
   (let [spec-name (append-to-keyword (dryline-keyword property-name) property)]
     (eval `(s/def ~spec-name ~(property-predicate property-name property)))
     spec-name))
-
-;;(gen-spec-if-not-present ["AWS::AutoScalingPlans::ScalingPlan.PredefinedScalingMetricSpecification" :ResourceLabel])
-
-;;(gen-spec-if-not-present ["Tag" :Value])
-
-;;(zip/branch? zipper)
-
-#_(defn gen-property-specs* [parsed-spec]
-  (let [right-exists? #(not= (z/right loc) nil)
-        came-from-up? (atom false)
-        spec-zipper (zip/zipper
-                    (fn [n] (vector? n))
-                    (fn [n] (second n))
-                    (fn [n children] n)
-                    parsed-spec)]
-      (loop [loc (zip/branch? spec-zipper)]
-        (if (primitive? loc)
-          (do (gen-spec-if-not-present loc)
-              (if right-exists? loc)))
-        (recur ))))
 
 (defn referenced-property-type
   [property-type-name property]
@@ -175,7 +159,27 @@
    (fn [n children] n)
    root-property-type))
 
+(defn spec-walk
+  [zipper]
+  (loop [loc zipper
+         came-from-up? false
+         specs []]
+    (cond
+      (nil? loc) specs
 
+      came-from-up?
+      (let [new-specs (gen-type-spec (z/node loc))]
+        (if (z/right loc)
+          (recur (z/right loc) false (concat specs new-specs))
+          (recur (z/up loc) true (concat specs new-specs))))
+
+      :else
+      (if (z/down loc)
+        (recur (z/down loc) false specs)
+        (let [new-specs (gen-type-spec (z/node loc))]
+          (if (z/right loc)
+            (recur (z/right loc) false (concat specs new-specs))
+            (recur (z/up loc) true (concat specs new-specs))))))))
 
 
 ;; Walk the zippers
@@ -189,6 +193,8 @@
 (comment
   ;; These are for ease of development and should be removed before release
   (def ^:private local-spec-file "resources/aws/S3BucketSpecification.json")
+  (def s3-spec-file "resources/aws/S3BucketSpecification.json")
+  (def full-spec-file "resources/aws/us-east-spec.json")
 
   (defn parse-spec-local []
     (parse/parse (io/reader local-spec-file)))
@@ -199,10 +205,34 @@
   (defn gen-property-type-specs-local []
     (parse/parse (io/reader local-spec-file)))
 
+  (defn get-zippers
+    [parsed-spec]
+    (map #(property-type-zipper % parsed-spec)
+         (select-keys (:PropertyTypes parsed-spec)
+                      (root-property-types parsed-spec))))
+
   (def zippers (let [s3-spec (parse-spec-local)]
                  (map #(property-type-zipper % s3-spec)
                       (select-keys (:PropertyTypes s3-spec)
-                                   (root-property-types s3-spec))))) )
+                                   (root-property-types s3-spec)))))
+
+  (def services (group-by #(first (clojure.string/split (first %) #"\." )) (:PropertyTypes parsed-spec)))
+
+  (defn zippers-from-service
+    [[service-name property-types]]
+    (map #(property-type-zipper % parsed-spec)
+         (select-keys (into {} property-types)
+                      (root-property-types parsed-spec))))
+
+  (defn process-service
+    [service]
+    (let [zippers (zippers-from-service service)]
+      (doseq [zipper zippers]
+        (spec-walk zipper))))
+
+  (doseq [service services]
+    (println (first service))
+    (time (process-service service))) )
 
 (comment
   ;; Example Properties for testing
