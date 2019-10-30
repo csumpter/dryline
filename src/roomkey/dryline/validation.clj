@@ -37,8 +37,16 @@
                    :roomkey.aws.cloudformation.propertytype/Type
                    :roomkey.aws.cloudformation.propertytype/UpdateType]))
 
+(s/def :roomkey.aws.cloudformation/Properties
+  (s/map-of keyword? :roomkey.aws.cloudformation/PropertySpecification))
+
+(s/def :roomkey.aws.cloudformation/PropertyType
+  (s/keys :req-un [:roomkey.aws.cloudformation.propertytype/Documentation
+                   :roomkey.aws.cloudformation/Properties]))
+
 (s/def :roomkey.aws.cloudformation/PropertyTypes
-  (s/map-of string? :roomkey.aws.cloudformation/PropertySpecification))
+  (s/map-of string?
+            :roomkey.aws.cloudformation/PropertyType))
 
 ;; ResourceTypes
 
