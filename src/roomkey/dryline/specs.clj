@@ -1,11 +1,9 @@
 (ns roomkey.dryline.specs
-  (:require [cheshire.core :as json]
-            [clojure.java.io :as io]
-            [clojure.spec.alpha :as s]
+  (:require [clojure.spec.alpha :as s]
             [clojure.string :as string]
+            [clojure.zip :as z]
             [roomkey.dryline.parse :as parse]
-            [roomkey.dryline.validation]
-            [clojure.zip :as z]))
+            [roomkey.dryline.validation]))
 
 (def ^:private prefix "roomkey")
 
@@ -39,7 +37,8 @@
   [kw suffix]
   (keyword (str (namespace kw) \. (name kw)) (name suffix)))
 
-(defn- type-reference
+(defn- spec-reference
+  "Returns a reference to a Clojure spec as a keyword"
   [type-name t]
   (case t
     "Tag" :roomkey.aws/Tag
@@ -54,24 +53,20 @@
   [type-name {:keys [ItemType PrimitiveItemType]}]
   (if PrimitiveItemType
     (primitive-type->predicate PrimitiveItemType)
-    (type-reference type-name ItemType)))
+    (spec-reference type-name ItemType)))
 
 (defn- property-predicate
   "Returns the predicate for a given property"
   [type-name {:keys [DuplicatesAllowed
-                     ItemType
-                     PrimitiveItemType
                      PrimitiveType
                      Type]
-        :as property}]
+              :as property}]
   (if PrimitiveType (primitive-type->predicate PrimitiveType)
       (case Type
         "List" (eval `(s/coll-of ~(property-collection-predicate type-name property)
                                  :distinct ~(not DuplicatesAllowed)))
         "Map" (eval `(s/map-of string? ~(property-collection-predicate type-name property)))
-        #_(constantly true)
-        ;; TODO need to generate property type specs before they can be referenced here
-        (type-reference type-name Type))))
+        (spec-reference type-name Type))))
 
 (defn- namify
   [type-name [pn _]]
@@ -95,17 +90,13 @@
     (conj property-specs
           resource-spec)))
 
-(defn gen-resource-type-specs
-  "Generates all of the specs for resources types given a AWS CloudFormation
-  specification as a reader"
-  [parsed-spec]
-  (mapcat gen-type-spec (:ResourceTypes parsed-spec)))
-
-(defn primitive?
+(defn- primitive?
+  "Returns true if a property is primitive. A primitive property can be defined
+  only using the AWS CloudFormation primitive types and references no other types"
   [{:keys [PrimitiveType PrimitiveItemType]}]
   (boolean (or PrimitiveType PrimitiveItemType)))
 
-(defn non-primitive-type
+(defn- non-primitive-type
   "Returns the referenced type from a property and returns nil
   if the property is primitive."
   [{:keys [Type ItemType]}]
@@ -113,19 +104,15 @@
     ("List" "Map") ItemType
     Type))
 
-(defn gen-spec-if-not-present
-  "Returns the keyword of the generated spec only generating the spec if
-  it is not already in the registry"
-  [[property-name property]]
-  (let [spec-name (append-to-keyword (dryline-keyword property-name) property)]
-    (eval `(s/def ~spec-name ~(property-predicate property-name property)))
-    spec-name))
-
-(defn referenced-property-type
+(defn- referenced-property-type
+  "Returns the property type name referenced by a property"
   [property-type-name property]
-  (str (first (string/split property-type-name #"\."))
-       \.
-       (non-primitive-type property)))
+  (let [npt (non-primitive-type property)]
+    (case npt
+      "Tag" npt
+      (str (first (string/split property-type-name #"\."))
+           \.
+           npt))))
 
 (defn- referenced-properties
   "Returns the properties which are references to other property types"
@@ -137,7 +124,7 @@
             (:Properties property-type)))
 
 (defn root-property-types
-  "Returns a set of dryline keywords of the root property types. Root property
+  "Returns a collection of root property type names. Root property
   types are those property types which are not referenced by other property
   types. The set will include property types whose properties are all primitive."
   [{:keys [PropertyTypes]}]
@@ -146,10 +133,11 @@
     (remove referenced-ptns ptns)))
 
 (defn property-type-zipper
+  "Returns a zipper that can walk a graph of dependent property-types"
   [root-property-type {:keys [PropertyTypes] :as parsed-spec}]
   (z/zipper
    (fn [[property-type-name property-type]]
-     (seq (remove primitive? (vals (:Properties property-type)))))
+     (boolean (seq (remove primitive? (vals (:Properties property-type))))))
    (fn [[property-type-name property-type]]
      (select-keys PropertyTypes
                   (sequence (comp (remove primitive?)
@@ -159,7 +147,9 @@
    (fn [n children] n)
    root-property-type))
 
-(defn spec-walk
+(defn property-type-walk
+  "Walks the dependency graph of property types ensuring that specs are
+  generated in the correct order."
   [zipper]
   (loop [loc zipper
          came-from-up? false
@@ -174,28 +164,41 @@
           (recur (z/up loc) true (concat specs new-specs))))
 
       :else
-      (if (not= (some-> loc z/down z/node)
-                (z/node loc))
+      (if (and (z/branch? loc)
+               (not= (some-> loc z/down z/node)
+                     (z/node loc)))
         (recur (z/down loc) false specs)
         (let [new-specs (gen-type-spec (z/node loc))]
           (if (z/right loc)
             (recur (z/right loc) false (concat specs new-specs))
             (recur (z/up loc) true (concat specs new-specs))))))))
 
+(defn gen-property-type-specs
+  "Generates all of the specs for PropertyTypes"
+  [parsed-spec]
+  (sequence (comp (map #(property-type-zipper % parsed-spec))
+                  (mapcat spec-walk))
+            (select-keys (:PropertyTypes parsed-spec)
+                         (root-property-types parsed-spec))))
 
-;; Walk the zippers
-;; Build specs for property types
-;; - Build property specs
-;; - Build property-type spec
+(defn gen-resource-type-specs
+  "Generates all of the specs for ResourceTypes"
+  [parsed-spec]
+  (mapcat gen-type-spec (:ResourceTypes parsed-spec)))
 
-
-;; (root-properties (parse-spec-local))
+(defn gen-specs
+  "Generates specs for all PropertyTypes and ResourceTypes"
+  [parsed-spec]
+  (concat (gen-property-type-specs parsed-spec)
+          (gen-resource-type-specs parsed-spec)))
 
 (comment
   ;; These are for ease of development and should be removed before release
   (def ^:private local-spec-file "resources/aws/S3BucketSpecification.json")
   (def s3-spec-file "resources/aws/S3BucketSpecification.json")
   (def full-spec-file "resources/aws/us-east-spec.json")
+
+  (require '[clojure.java.io :as io])
 
   (defn parse-spec-local []
     (parse/parse (io/reader local-spec-file)))
