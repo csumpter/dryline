@@ -215,6 +215,8 @@
          (select-keys (:PropertyTypes parsed-spec)
                       (root-property-types parsed-spec))))
 
+  (time (do (gen-specs (parse-spec-local)) nil))
+
   (def zippers (let [s3-spec (parse-spec-local)]
                  (map #(property-type-zipper % s3-spec)
                       (select-keys (:PropertyTypes s3-spec)
