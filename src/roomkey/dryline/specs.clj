@@ -164,7 +164,7 @@
 
       :else
       (if (and (z/branch? loc)
-               (not= (some-> loc z/down z/node)
+               (not= (z/node (z/down loc))
                      (z/node loc)))
         (recur (z/down loc) false specs)
         (let [new-specs (gen-type-spec (z/node loc))]
