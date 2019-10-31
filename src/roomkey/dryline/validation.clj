@@ -2,12 +2,12 @@
   (:require [roomkey.dryline.parse :as parse]
             [clojure.spec.alpha :as s]))
 
-;; PropertyTypes
 (def documentation-url-regex
   #"^((http[s]?):\/\/)(docs.aws.amazon.com\/)([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$")
 
 (def primitive-types #{"String" "Long" "Integer" "Double" "Boolean" "Timestamp" "Json"})
 
+;; PropertyTypes
 (s/def :roomkey.aws.cloudformation.propertytype/Documentation
   (s/and string?
          #(re-matches documentation-url-regex %)))
@@ -46,10 +46,10 @@
 
 (s/def :roomkey.aws.cloudformation/PropertyTypes
   (s/map-of string?
-            :roomkey.aws.cloudformation/PropertyType))
+            (s/or :property-type :roomkey.aws.cloudformation/PropertyType
+                  :property :roomkey.aws.cloudformation/PropertySpecification)))
 
 ;; ResourceTypes
-
 (s/def :roomkey.aws.cloudformation.resourcetype.attribute/ItemType string?)
 
 (s/def :roomkey.aws.cloudformation.resourcetype.attribute/PrimitiveItemType string?)
@@ -76,7 +76,7 @@
 (s/def :roomkey.aws.cloudformation.resourcetype/Properties
   (s/map-of keyword? :roomkey.aws.cloudformation/PropertySpecification))
 
-(s/def :roomkey.aws.cloudformation/ResourceSpecification
+(s/def :roomkey.aws.cloudformation/ResourceType
   (s/keys :req-un [:roomkey.aws.cloudformation.resourcetype/Documentation
                    :roomkey.aws.cloudformation.resourcetype/Properties]
           :opt-un [:roomkey.aws.cloudformation.resourcetype/Attributes]))
