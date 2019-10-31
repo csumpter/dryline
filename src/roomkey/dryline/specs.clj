@@ -152,12 +152,12 @@
   generated in the correct order."
   [zipper]
   (loop [loc zipper
-         came-from-up? false
+         came-up? false
          specs []]
     (cond
       (nil? loc) specs
 
-      came-from-up?
+      came-up?
       (let [new-specs (gen-type-spec (z/node loc))]
         (if (z/right loc)
           (recur (z/right loc) false (concat specs new-specs))
@@ -189,8 +189,8 @@
 (defn gen-specs
   "Generates specs for all PropertyTypes and ResourceTypes"
   [parsed-spec]
-  (concat (gen-property-type-specs parsed-spec)
-          (gen-resource-type-specs parsed-spec)))
+  (doall (concat (gen-property-type-specs parsed-spec)
+                 (gen-resource-type-specs parsed-spec))))
 
 (comment
   ;; These are for ease of development and should be removed before release
