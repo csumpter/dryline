@@ -2,8 +2,7 @@
   (:require [clojure.spec.alpha :as s]
             [clojure.string :as string]
             [clojure.zip :as z]
-            [roomkey.dryline.parse :as parse]
-            [roomkey.dryline.validation]))
+            [roomkey.dryline.parse :as parse]))
 
 (def ^:private prefix "roomkey")
 
