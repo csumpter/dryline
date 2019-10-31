@@ -83,7 +83,7 @@
 
 (s/def :roomkey.aws.cloudformation/ResourceTypes
   (s/map-of string?
-            :roomkey.aws.cloudformation/ResourceSpecification))
+            :roomkey.aws.cloudformation/ResourceType))
 
 ;; ResourceSpecificationVersion
 (s/def :roomkey.aws.cloudformation/ResourceSpecificationVersion
