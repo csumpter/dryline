@@ -177,7 +177,7 @@
   "Generates all of the specs for PropertyTypes"
   [parsed-spec]
   (sequence (comp (map #(property-type-zipper % parsed-spec))
-                  (mapcat spec-walk))
+                  (mapcat property-type-walk))
             (select-keys (:PropertyTypes parsed-spec)
                          (root-property-types parsed-spec))))
 
