@@ -81,13 +81,9 @@
                    :roomkey.aws.cloudformation.resourcetype/Properties]
           :opt-un [:roomkey.aws.cloudformation.resourcetype/Attributes]))
 
-(s/def :roomkey.aws.cloudformation/ResourceType
-  (s/map-of string?
-            :roomkey.aws.cloudformation/ResourceSpecification))
-
 (s/def :roomkey.aws.cloudformation/ResourceTypes
   (s/map-of string?
-            :roomkey.aws.cloudformation/ResourceType))
+            :roomkey.aws.cloudformation/ResourceSpecification))
 
 ;; ResourceSpecificationVersion
 (s/def :roomkey.aws.cloudformation/ResourceSpecificationVersion
