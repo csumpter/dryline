@@ -11,3 +11,12 @@
       :roomkey.aws.sns/Topic
       "Tag"
       :roomkey.aws/Tag)))
+
+(t/deftest ^:unit append-to-keyword
+  (let [sut specs/append-to-keyword]
+    (t/is (= (sut :roomkey.aws.managedblockchain.Member/ApprovalThresholdPolicy
+                  :ThresholdComparator)
+             :roomkey.aws.managedblockchain.Member.ApprovalThresholdPolicy/ThresholdComparator))
+    (t/is (= (sut :roomkey.aws.lambda/EventSourceMapping
+                  :Enabled)
+             :roomkey.aws.lambda.EventSourceMapping/Enabled))))

@@ -30,7 +30,7 @@
    "Timestamp" inst?
    "Json" map?})
 
-(defn- append-to-keyword
+(defn append-to-keyword
   "Returns a keyword with a namespace equal to the name of kw appended to its
   namespace with a period and a name of suffix"
   [kw suffix]
