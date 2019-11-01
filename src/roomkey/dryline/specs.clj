@@ -30,7 +30,7 @@
    "Timestamp" inst?
    "Json" map?})
 
-(defn append-to-keyword
+(defn- append-to-keyword
   "Returns a keyword with a namespace equal to the name of kw appended to its
   namespace with a period and a name of suffix"
   [kw suffix]
@@ -38,14 +38,14 @@
 
 (defn- spec-reference
   "Returns a reference to a Clojure spec as a keyword"
-  [type-name t]
-  (case t
+  [type-name type]
+  (case type
     "Tag" :roomkey.aws/Tag
     (-> type-name
         (string/split #"\.")
         first
         dryline-keyword
-        (append-to-keyword t))))
+        (append-to-keyword type))))
 
 (defn- property-collection-predicate
   "Returns the predicate or reference for the collection type"
