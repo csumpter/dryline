@@ -41,7 +41,7 @@
   (s/map-of keyword? :roomkey.aws.cloudformation/PropertySpecification))
 
 (s/def :roomkey.aws.cloudformation/PropertyType
-  (s/keys :opt-un [:roomkey.aws.cloudformation.propertytype/Documentation
+  (s/keys :req-un [:roomkey.aws.cloudformation.propertytype/Documentation
                    :roomkey.aws.cloudformation/Properties]))
 
 (s/def :roomkey.aws.cloudformation/PropertyTypes
