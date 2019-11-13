@@ -76,58 +76,75 @@
             (s/keys :req-un [:roomkey.aws.cloudformation.intrinsic-function.Transform/Name
                              :roomkey.aws.cloudformation.intrinsic-function.Transform/Parameters])))
 
-(defmulti intrinsic-function (comp key first))
+(comment
+  ;; Conditional functions need to be developed more
+  (s/def :roomkey.aws.cloudformation.intrinsic-function/Condition
+    (s/map-of #{"Condition"} string?))
 
-(defmethod intrinsic-function "Fn::Base64" [_]
-  :roomkey.aws.cloudformation.intrinsic-function/Base64)
+  (s/def :roomkey.aws.cloudformation.intrinsic-function/And
+    (s/map-of #{"Fn::And"} any?))
 
-(defmethod intrinsic-function "Fn::Cidr" [_]
-  :roomkey.aws.cloudformation.intrinsic-function/Cidr)
+  (s/def :roomkey.aws.cloudformation.intrinsic-function/Equals
+    (s/map-of #{"Fn::Equals"} any?))
 
-(defmethod intrinsic-function "Fn::FindInMap" [_]
-  :roomkey.aws.cloudformation.intrinsic-function/FindInMap)
+  (s/def :roomkey.aws.cloudformation.intrinsic-function/If
+    (s/map-of #{"Fn::If"} any?))
 
-(defmethod intrinsic-function "Fn::GetAtt" [_]
-  :roomkey.aws.cloudformation.intrinsic-function/GetAtt)
+  (s/def :roomkey.aws.cloudformation.intrinsic-function/Not
+    (s/map-of #{"Fn::Not"} any?))
 
-(defmethod intrinsic-function "Fn::GetAZs" [_]
-  :roomkey.aws.cloudformation.intrinsic-function/GetAZs)
+  (s/def :roomkey.aws.cloudformation.intrinsic-function/Or
+    (s/map-of #{"Fn::Or"} any?)))
 
-(defmethod intrinsic-function "Fn::ImportValues" [_]
-  :roomkey.aws.cloudformation.intrinsic-function/ImportValues)
-
-(defmethod intrinsic-function "Fn::Join" [_]
-  :roomkey.aws.cloudformation.intrinsic-function/Join)
-
-(defmethod intrinsic-function "Fn::Split" [_]
-  :roomkey.aws.cloudformation.intrinsic-function/Split)
-
-(defmethod intrinsic-function "Fn::Sub" [_]
-  :roomkey.aws.cloudformation.intrinsic-function/Sub)
-
-(defmethod intrinsic-function "Fn::Transform" [_]
-  :roomkey.aws.cloudformation.intrinsic-function/Transform)
-
-(defmethod intrinsic-function "Ref" [_]
-  :roomkey.aws.cloudformation.intrinsic-function/Ref)
 
 (s/def :roomkey.aws.cloudformation/intrinsic-function
-  (s/multi-spec intrinsic-function first))
+  (s/or :base64 :roomkey.aws.cloudformation.intrinsic-function/Base64
+        :cidr :roomkey.aws.cloudformation.intrinsic-function/Cidr
+        :find-in-map :roomkey.aws.cloudformation.intrinsic-function/FindInMap
+        :get-att :roomkey.aws.cloudformation.intrinsic-function/GetAtt
+        :get-azs :roomkey.aws.cloudformation.intrinsic-function/GetAZs
+        :import-value :roomkey.aws.cloudformation.intrinsic-function/ImportValue
+        :join :roomkey.aws.cloudformation.intrinsic-function/Join
+        :select :roomkey.aws.cloudformation.intrinsic-function/Select
+        :split :roomkey.aws.cloudformation.intrinsic-function/Split
+        :sub :roomkey.aws.cloudformation.intrinsic-function/Sub
+        :transform :roomkey.aws.cloudformation.intrinsic-function/Transform
+        :ref :roomkey.aws.cloudformation.intrinsic-function/Ref))
 
-(def ^:private primitive-type->predicate
+(def primitive-type->predicate-or-intrinsic-funtion
   "A map from CF PrimitiveType to clojure predicates"
-  {"String" (s/or :string string?
+  {"String" '(s/or :string string?
                   :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
-   "Long" (s/or :string int?
+   "Long" '(s/or :string int?
                 :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
-   "Integer" (s/or :string int?
+   "Integer" '(s/or :string int?
                    :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
-   "Double" (s/or :string double?
+   "Double" '(s/or :string double?
                   :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
-   "Boolean" (s/or :string boolean?
+   "Boolean" '(s/or :string boolean?
                    :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
-   "Timestamp" (s/or :string inst?
+   "Timestamp" '(s/or :string inst?
                      :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
-   "Json" (s/or :string map?
+   "Json" '(s/or :string map?
                 :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)})
 
+(s/def :roomkey.aws.cloudformation/simple-intrinsic-function
+  (s/map-of (s/or :ref #{"Ref"} :fn (s/and string? #(clojure.string/starts-with? % "Fn::")))
+            any?))
+
+(def primitive-type->predicate-or-simple-intrinsic-funtion
+  "A map from CF PrimitiveType to clojure predicates"
+  {"String" '(s/or :string string?
+                  :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
+   "Long" '(s/or :string int?
+                :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
+   "Integer" '(s/or :string int?
+                   :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
+   "Double" '(s/or :string double?
+                  :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
+   "Boolean" '(s/or :string boolean?
+                   :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
+   "Timestamp" '(s/or :string inst?
+                     :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
+   "Json" '(s/or :string map?
+                :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)})
