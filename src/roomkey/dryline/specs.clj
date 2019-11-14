@@ -6,6 +6,8 @@
 
 (def ^:private prefix "roomkey")
 
+(def spec-metadata (atom {}))
+
 (defn dryline-keyword
   "Converts strings of form AWS::<Service>::<Resource> to namespaced keywords"
   [type-name]
@@ -93,46 +95,67 @@
                                                                  property))
       (spec-reference type-name Type))))
 
-(defn- namify
-  [type-name [pn _]]
-  (append-to-keyword (dryline-keyword type-name) pn))
+(defn document-property!
+  [spec-name property]
+  (swap! spec-metadata assoc spec-name property))
 
 (defn gen-property-spec
   "Generates a spec for a property found in a resource type"
   [type-name [pn property]]
   (let [spec-name (append-to-keyword (dryline-keyword type-name) pn)]
+    (document-property! spec-name property)
     (eval `(s/def ~spec-name ~(property-predicate type-name property)))))
 
 (defn gen-property-spec-2
   "Generates a spec for a property found in a resource type"
   [primitive-type-mapping type-name [pn property]]
   (let [spec-name (append-to-keyword (dryline-keyword type-name) pn)]
+    (document-property! spec-name property)
     (eval `(s/def ~spec-name ~(property-predicate-2 primitive-type-mapping
                                                     type-name
                                                     property)))))
 
+(defn- property-references
+  [property-spec-reference properties]
+  (reduce-kv (fn [acc property-name {:keys [Required]}]
+               (update acc Required conj (property-spec-reference property-name)))
+             {}
+             properties))
+
+(defn- document-type!
+  [spec-name type-specification property-references]
+  (swap! spec-metadata assoc spec-name (assoc type-specification :Properties property-references)))
+
 (defn gen-type-spec
   "Generates a spec for a resource or property type as well as all of the
   properties defined in its specification."
-  [[type-name {:keys [Properties]}]]
-  (let [property-specs (map (partial gen-property-spec type-name) Properties)
-        {req true opt false} (group-by #(get-in % [1 :Required]) Properties)
-        resource-spec (eval `(s/def ~(dryline-keyword type-name)
-                               (s/keys :req-un ~(mapv (partial namify type-name) req)
-                                       :opt-un ~(mapv (partial namify type-name) opt))))]
+  [[type-name {:keys [Properties] :as type-specification}]]
+  (let [property-spec-reference (fn [property-name]
+                                  (append-to-keyword (dryline-keyword type-name) property-name))
+        property-specs (map (partial gen-property-spec type-name) Properties)
+        {req true opt false} (property-references property-spec-reference Properties)
+        spec-name (dryline-keyword type-name)
+        resource-spec (eval `(s/def ~spec-name
+                               (s/keys :req-un ~req
+                                       :opt-un ~opt)))]
+    (document-type! spec-name type-specification (concat req opt))
     (conj property-specs
           resource-spec)))
 
 (defn gen-type-spec-2
   "Generates a spec for a resource or property type as well as all of the
   properties defined in its specification."
-  [primitive-type-mapping [type-name {:keys [Properties]}]]
-  (let [property-specs (map (partial gen-property-spec-2 primitive-type-mapping type-name)
+  [primitive-type-mapping [type-name {:keys [Properties] :as type-specification}]]
+  (let [property-spec-reference (fn [property-name]
+                                  (append-to-keyword (dryline-keyword type-name) property-name))
+        property-specs (map (partial gen-property-spec-2 primitive-type-mapping type-name)
                             Properties)
-        {req true opt false} (group-by #(get-in % [1 :Required]) Properties)
-        resource-spec (eval `(s/def ~(dryline-keyword type-name)
-                               (s/keys :req-un ~(mapv (partial namify type-name) req)
-                                       :opt-un ~(mapv (partial namify type-name) opt))))]
+        {req true opt false} (property-references property-spec-reference Properties)
+        spec-name (dryline-keyword type-name)
+        resource-spec (eval `(s/def ~spec-name
+                               (s/keys :req-un ~req
+                                       :opt-un ~opt)))]
+    (document-type! spec-name type-specification (concat req opt))
     (conj property-specs
           resource-spec)))
 
