@@ -7,7 +7,8 @@
          "resources"]
  :aliases {:dev {:extra-paths ["test"
                                "test-resources"]
-                 :extra-deps {org.clojure/test.check {:mvn/version "0.10.0"}}}
+                 :extra-deps {org.clojure/test.check {:mvn/version "0.10.0"}
+                              crucible {:mvn/version "0.43.1"}}}
            :test {:extra-paths ["test"
                                 "test-resources"]
                   :extra-deps {com.cognitect/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
