@@ -72,9 +72,12 @@
   (if PrimitiveType
     (primitive-type->predicate PrimitiveType)
     (case Type
-      "List" (eval `(s/coll-of ~(property-collection-predicate type-name property)
-                               :distinct ~(not DuplicatesAllowed)))
-      "Map" (eval `(s/map-of string? ~(property-collection-predicate type-name property)))
+      "List" (eval `(clojure.spec.alpha/coll-of
+                     ~(property-collection-predicate type-name property)
+                     :distinct ~(not DuplicatesAllowed)))
+      "Map" (eval `(clojure.spec.alpha/map-of
+                    string?
+                    ~(property-collection-predicate type-name property)))
       (spec-reference type-name Type))))
 
 (defn- property-predicate-2
@@ -86,13 +89,16 @@
   (if PrimitiveType
     (primitive-type-mapping PrimitiveType)
     (case Type
-      "List" `(s/coll-of ~(property-collection-predicate-2 primitive-type-mapping
-                                                           type-name
-                                                           property)
-                         :distinct ~(not DuplicatesAllowed))
-      "Map" `(s/map-of string? ~(property-collection-predicate-2 primitive-type-mapping
-                                                                 type-name
-                                                                 property))
+      "List" `(clojure.spec.alpha/coll-of
+               ~(property-collection-predicate-2 primitive-type-mapping
+                                                 type-name
+                                                 property)
+               :distinct ~(not DuplicatesAllowed))
+      "Map" `(clojure.spec.alpha/map-of
+              string?
+              ~(property-collection-predicate-2 primitive-type-mapping
+                                                type-name
+                                                property))
       (spec-reference type-name Type))))
 
 (defn document-property!
@@ -104,16 +110,18 @@
   [type-name [pn property]]
   (let [spec-name (append-to-keyword (dryline-keyword type-name) pn)]
     (document-property! spec-name property)
-    (eval `(s/def ~spec-name ~(property-predicate type-name property)))))
+    (eval `(clojure.spec.alpha/def ~spec-name
+             ~(property-predicate type-name property)))))
 
 (defn gen-property-spec-2
   "Generates a spec for a property found in a resource type"
   [primitive-type-mapping type-name [pn property]]
   (let [spec-name (append-to-keyword (dryline-keyword type-name) pn)]
     (document-property! spec-name property)
-    (eval `(s/def ~spec-name ~(property-predicate-2 primitive-type-mapping
-                                                    type-name
-                                                    property)))))
+    (eval `(clojure.spec.alpha/def ~spec-name
+             ~(property-predicate-2 primitive-type-mapping
+                                    type-name
+                                    property)))))
 
 (defn- property-references
   [property-spec-reference properties]
@@ -135,9 +143,9 @@
         property-specs (map (partial gen-property-spec type-name) Properties)
         {req true opt false} (property-references property-spec-reference Properties)
         spec-name (dryline-keyword type-name)
-        resource-spec (eval `(s/def ~spec-name
-                               (s/keys :req-un ~req
-                                       :opt-un ~opt)))]
+        resource-spec (eval `(clojure.spec.alpha/def ~spec-name
+                               (clojure.spec.alpha/keys :req-un ~req
+                                                        :opt-un ~opt)))]
     (document-type! spec-name type-specification (concat req opt))
     (conj property-specs
           resource-spec)))
@@ -152,9 +160,9 @@
                             Properties)
         {req true opt false} (property-references property-spec-reference Properties)
         spec-name (dryline-keyword type-name)
-        resource-spec (eval `(s/def ~spec-name
-                               (s/keys :req-un ~req
-                                       :opt-un ~opt)))]
+        resource-spec (eval `(clojure.spec.alpha/def ~spec-name
+                               (clojure.spec.alpha/keys :req-un ~req
+                                                        :opt-un ~opt)))]
     (document-type! spec-name type-specification (concat req opt))
     (conj property-specs
           resource-spec)))

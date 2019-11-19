@@ -113,20 +113,27 @@
 
 (def primitive-type->predicate-or-intrinsic-funtion
   "A map from CF PrimitiveType to clojure predicates"
-  {"String" '(s/or :string string?
-                  :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
-   "Long" '(s/or :string int?
-                :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
-   "Integer" '(s/or :string int?
-                   :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
-   "Double" '(s/or :string double?
-                  :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
-   "Boolean" '(s/or :string boolean?
-                   :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
-   "Timestamp" '(s/or :string inst?
-                     :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
-   "Json" '(s/or :string map?
-                :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)})
+  {"String" '(clojure.spec.alpha/or
+              :string string?
+              :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
+   "Long" '(clojure.spec.alpha/or
+            :string int?
+            :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
+   "Integer" '(clojure.spec.alpha/or
+               :string int?
+               :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
+   "Double" '(clojure.spec.alpha/or
+              :string double?
+              :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
+   "Boolean" '(clojure.spec.alpha/or
+               :string boolean?
+               :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
+   "Timestamp" '(clojure.spec.alpha/or
+                 :string inst?
+                 :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)
+   "Json" '(clojure.spec.alpha/or
+            :string map?
+            :intrinsic-function :roomkey.aws.cloudformation/intrinsic-function)})
 
 (s/def :roomkey.aws.cloudformation/simple-intrinsic-function
   (s/map-of (s/or :ref #{"Ref"} :fn (s/and string? #(clojure.string/starts-with? % "Fn::")))
@@ -134,17 +141,24 @@
 
 (def primitive-type->predicate-or-simple-intrinsic-funtion
   "A map from CF PrimitiveType to clojure predicates"
-  {"String" '(s/or :string string?
-                  :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
-   "Long" '(s/or :string int?
-                :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
-   "Integer" '(s/or :string int?
-                   :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
-   "Double" '(s/or :string double?
-                  :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
-   "Boolean" '(s/or :string boolean?
-                   :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
-   "Timestamp" '(s/or :string inst?
-                     :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
-   "Json" '(s/or :string map?
-                :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)})
+  {"String" '(clojure.spec.alpha/or
+              :string string?
+              :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
+   "Long" '(clojure.spec.alpha/or
+            :string int?
+            :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
+   "Integer" '(clojure.spec.alpha/or
+               :string int?
+               :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
+   "Double" '(clojure.spec.alpha/or
+              :string double?
+              :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
+   "Boolean" '(clojure.spec.alpha/or
+               :string boolean?
+               :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
+   "Timestamp" '(clojure.spec.alpha/or
+                 :string inst?
+                 :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)
+   "Json" '(clojure.spec.alpha/or
+            :string map?
+            :simple-intrinsic-function :roomkey.aws.cloudformation/simple-intrinsic-function)})
