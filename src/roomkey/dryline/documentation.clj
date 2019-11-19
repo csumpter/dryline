@@ -31,11 +31,12 @@
   "Returns a hickory selector for the dt element (property-name) in a properties
   list for the given property-name"
   [property-name]
-  (hick.sel/descendant
-   properties-list-selector
-   (hick.sel/and (hick.sel/tag :dt)
-                 (hick.sel/has-descendant
-                  (hick.sel/find-in-text (re-pattern (name property-name)))))))
+  (hick.sel/descendant properties-list-selector
+                       (hick.sel/and (hick.sel/tag :dt)
+                                     (hick.sel/has-descendant
+                                      (hick.sel/find-in-text (-> property-name
+                                                                 name
+                                                                 re-pattern))))))
 
 (defn property-dd-selector
   "Returns a hickory selector for the dd element (property description) in a
