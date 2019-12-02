@@ -72,12 +72,12 @@
   (if PrimitiveType
     (primitive-type->predicate PrimitiveType)
     (case Type
-      "List" (eval `(clojure.spec.alpha/coll-of
-                     ~(property-collection-predicate type-name property)
-                     :distinct ~(not DuplicatesAllowed)))
-      "Map" (eval `(clojure.spec.alpha/map-of
-                    string?
-                    ~(property-collection-predicate type-name property)))
+      "List" `(clojure.spec.alpha/coll-of
+               ~(property-collection-predicate type-name property)
+               :distinct ~(not DuplicatesAllowed))
+      "Map" `(clojure.spec.alpha/map-of
+              string?
+              ~(property-collection-predicate type-name property))
       (spec-reference type-name Type))))
 
 (defn- property-predicate-2
