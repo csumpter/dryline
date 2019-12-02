@@ -1,0 +1,13 @@
+name: test
+on: [push, pull_request]
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 1
+
+    - run: docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app clojure:openjdk-8-tools-deps scripts/test.sh
