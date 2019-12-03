@@ -100,8 +100,10 @@
              properties))
 
 (defn- document-type!
-  [spec-name type-specification property-references]
-  (swap! spec-metadata assoc spec-name (assoc type-specification :Properties property-references)))
+  [spec-name type-specification property-references type-name]
+  (swap! spec-metadata assoc spec-name (assoc type-specification
+                                              :Properties property-references
+                                              :ResourceTypeName type-name)))
 
 (defn gen-type-spec
   "Generates a spec for a resource or property type as well as all of the
@@ -116,7 +118,7 @@
         resource-spec (eval `(clojure.spec.alpha/def ~spec-name
                                (clojure.spec.alpha/keys :req-un ~req
                                                         :opt-un ~opt)))]
-    (document-type! spec-name type-specification (concat req opt))
+    (document-type! spec-name type-specification (concat req opt) type-name)
     (conj property-specs
           resource-spec)))
 
