@@ -65,15 +65,17 @@
   (if PrimitiveType
     (primitive-type-mapping PrimitiveType)
     (case Type
-      "List" `(clojure.spec.alpha/coll-of ~(property-collection-predicate
-                                            primitive-type-mapping
-                                            type-name
-                                            property)
-                         :distinct ~(not DuplicatesAllowed))
-      "Map" `(clojure.spec.alpha/map-of string? ~(property-collection-predicate
-                                                  primitive-type-mapping
-                                                  type-name
-                                                  property))
+      "List" `(clojure.spec.alpha/coll-of
+               ~(property-collection-predicate
+                 primitive-type-mapping
+                 type-name
+                 property)
+               :distinct ~(not DuplicatesAllowed))
+      "Map" `(clojure.spec.alpha/map-of
+              string? ~(property-collection-predicate
+                        primitive-type-mapping
+                        type-name
+                        property))
       (spec-reference type-name Type))))
 
 (defn document-property!
