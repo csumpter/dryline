@@ -1,8 +1,7 @@
 (ns roomkey.dryline.specs
   (:require [clojure.spec.alpha :as s]
             [clojure.string :as string]
-            [clojure.zip :as z]
-            [roomkey.dryline.documentation :as doc]))
+            [clojure.zip :as z]))
 
 (def ^:private prefix "roomkey")
 
@@ -87,10 +86,8 @@
 
 (defn- gen-property-spec
   "Generates a spec for a property found in a resource type"
-  [primitive-type-mapping type-name document [pn property]]
+  [primitive-type-mapping type-name [pn property]]
   (let [spec-name (append-to-keyword (dryline-keyword type-name) pn)]
-    (when document
-      (doc/document-property! spec-name property))
     (eval `(clojure.spec.alpha/def ~spec-name
              ~(property-predicate primitive-type-mapping
                                   type-name
@@ -107,7 +104,7 @@
 (defn- gen-type-spec
   "Generates a spec for a resource or property type as well as all of the
   properties defined in its specification."
-  [primitive-type-mapping document [type-name {:keys [Properties] :as type-specification}]]
+  [primitive-type-mapping [type-name {:keys [Properties] :as type-specification}]]
   (let [property-spec-reference (fn [property-name]
                                   (append-to-keyword (dryline-keyword type-name)
                                                      property-name))
@@ -116,9 +113,7 @@
         spec-name (cond-> (dryline-keyword type-name)
                     property-type-suffix (append-to-keyword property-type-suffix))]
     (doseq [property Properties]
-      (gen-property-spec primitive-type-mapping type-name document property))
-    (when document
-      (doc/document-type! spec-name type-specification (concat req opt) type-name))
+      (gen-property-spec primitive-type-mapping type-name property))
     (eval `(clojure.spec.alpha/def ~spec-name
              (clojure.spec.alpha/keys :req-un ~req
                                       :opt-un ~opt)))))
@@ -208,21 +203,21 @@
 
 (defn- gen-property-type-specs
   "Generates all of the specs for PropertyTypes"
-  [parsed-spec primitive-type-mapping document]
+  [parsed-spec primitive-type-mapping]
   (doseq [root-property-type (select-keys (:PropertyTypes parsed-spec)
                                           (root-property-types parsed-spec))]
-    (property-type-walk (partial gen-type-spec primitive-type-mapping document)
+    (property-type-walk (partial gen-type-spec primitive-type-mapping)
                         (property-type-zipper parsed-spec root-property-type))))
 
 (defn- gen-resource-type-specs
   "Generates all of the specs for ResourceTypes"
-  [parsed-spec primitive-type-mapping document]
+  [parsed-spec primitive-type-mapping]
   (doseq [resource-type (:ResourceTypes parsed-spec)]
-    (gen-type-spec primitive-type-mapping document resource-type)))
+    (gen-type-spec primitive-type-mapping resource-type)))
 
 (defn gen-specs
   "Generates specs for all PropertyTypes and ResourceTypes allowing the user to
   set which primitive type mapping to use"
-  ([parsed-spec primitive-type-mapping & {:keys [document]}]
-   (gen-property-type-specs parsed-spec primitive-type-mapping document)
-   (gen-resource-type-specs parsed-spec primitive-type-mapping document)))
+  ([parsed-spec primitive-type-mapping]
+   (gen-property-type-specs parsed-spec primitive-type-mapping)
+   (gen-resource-type-specs parsed-spec primitive-type-mapping)))
