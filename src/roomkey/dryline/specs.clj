@@ -2,11 +2,9 @@
   (:require [clojure.spec.alpha :as s]
             [clojure.string :as string]
             [clojure.zip :as z]
-            [roomkey.dryline.parse :as parse]))
+            [roomkey.dryline.documentation :as doc]))
 
 (def ^:private prefix "roomkey")
-
-(def spec-metadata (atom {}))
 
 (defn dryline-keyword
   "Converts strings of form AWS::<Service>::<Resource> to namespaced keywords"
@@ -22,7 +20,15 @@
         (keyword (str service-prefix \. type) subtype)
         (keyword service-prefix type)))))
 
-(def ^:private primitive-type->predicate
+(s/def ::json
+  (s/or :string string?
+        :integer integer?
+        :double double?
+        :boolean boolean?
+        :vector (s/coll-of ::json :kind vector?)
+        :map (s/map-of string? ::json)))
+
+(def primitive-type->predicate
   "A map from CF PrimitiveType to clojure predicates"
   {"String" 'string?
    "Long" 'int?
@@ -30,7 +36,7 @@
    "Double" 'double?
    "Boolean" 'boolean?
    "Timestamp" 'inst?
-   "Json" 'map?})
+   "Json" ::json})
 
 (defn- append-to-keyword
   "Returns a keyword with a namespace equal to the name of kw appended to its
@@ -47,6 +53,7 @@
         (string/split #"\.")
         first
         dryline-keyword
+        (append-to-keyword type)
         (append-to-keyword type))))
 
 (defn- property-collection-predicate
@@ -65,58 +72,56 @@
   (if PrimitiveType
     (primitive-type-mapping PrimitiveType)
     (case Type
-      "List" `(clojure.spec.alpha/coll-of ~(property-collection-predicate
-                                            primitive-type-mapping
-                                            type-name
-                                            property)
-                         :distinct ~(not DuplicatesAllowed))
-      "Map" `(clojure.spec.alpha/map-of string? ~(property-collection-predicate
-                                                  primitive-type-mapping
-                                                  type-name
-                                                  property))
+      "List" `(clojure.spec.alpha/coll-of
+               ~(property-collection-predicate
+                 primitive-type-mapping
+                 type-name
+                 property)
+               :distinct ~(not DuplicatesAllowed))
+      "Map" `(clojure.spec.alpha/map-of
+              string? ~(property-collection-predicate
+                        primitive-type-mapping
+                        type-name
+                        property))
       (spec-reference type-name Type))))
 
-(defn document-property!
-  [spec-name property]
-  (swap! spec-metadata assoc spec-name property))
-
-(defn gen-property-spec
+(defn- gen-property-spec
   "Generates a spec for a property found in a resource type"
-  [primitive-type-mapping type-name [pn property]]
+  [primitive-type-mapping type-name document [pn property]]
   (let [spec-name (append-to-keyword (dryline-keyword type-name) pn)]
-    (document-property! spec-name property)
+    (when document
+      (doc/document-property! spec-name property))
     (eval `(clojure.spec.alpha/def ~spec-name
              ~(property-predicate primitive-type-mapping
                                   type-name
                                   property)))))
 
 (defn- property-references
+  "Returns a map of the property specs referenced grouped by :Required"
   [property-spec-reference properties]
   (reduce-kv (fn [acc property-name {:keys [Required]}]
                (update acc Required conj (property-spec-reference property-name)))
              {}
              properties))
 
-(defn- document-type!
-  [spec-name type-specification property-references]
-  (swap! spec-metadata assoc spec-name (assoc type-specification :Properties property-references)))
-
-(defn gen-type-spec
+(defn- gen-type-spec
   "Generates a spec for a resource or property type as well as all of the
   properties defined in its specification."
-  [primitive-type-mapping [type-name {:keys [Properties] :as type-specification}]]
+  [primitive-type-mapping document [type-name {:keys [Properties] :as type-specification}]]
   (let [property-spec-reference (fn [property-name]
-                                  (append-to-keyword (dryline-keyword type-name) property-name))
-        property-specs (map (partial gen-property-spec primitive-type-mapping type-name)
-                            Properties)
+                                  (append-to-keyword (dryline-keyword type-name)
+                                                     property-name))
         {req true opt false} (property-references property-spec-reference Properties)
-        spec-name (dryline-keyword type-name)
-        resource-spec (eval `(clojure.spec.alpha/def ~spec-name
-                               (clojure.spec.alpha/keys :req-un ~req
-                                                        :opt-un ~opt)))]
-    (document-type! spec-name type-specification (concat req opt))
-    (conj property-specs
-          resource-spec)))
+        [_ property-type-suffix] (string/split type-name #"\.")
+        spec-name (cond-> (dryline-keyword type-name)
+                    property-type-suffix (append-to-keyword property-type-suffix))]
+    (doseq [property Properties]
+      (gen-property-spec primitive-type-mapping type-name document property))
+    (when document
+      (doc/document-type! spec-name type-specification (concat req opt) type-name))
+    (eval `(clojure.spec.alpha/def ~spec-name
+             (clojure.spec.alpha/keys :req-un ~req
+                                      :opt-un ~opt)))))
 
 (defn- primitive?
   "Returns true if a property is primitive. A primitive property can be defined
@@ -151,18 +156,18 @@
                     (referenced-property-type property-type-name property))))
             (:Properties property-type)))
 
-(defn root-property-types
+(defn- root-property-types
   "Returns a collection of root property type names. Root property
   types are those property types which are not referenced by other property
   types. The set will include property types whose properties are all primitive."
-  [{:keys [PropertyTypes]}]
+  [{:keys [PropertyTypes] :as parsed-spec}]
   (let [ptns (keys PropertyTypes)
         referenced-ptns (into #{} (mapcat referenced-properties) PropertyTypes)]
     (remove referenced-ptns ptns)))
 
-(defn property-type-zipper
+(defn- property-type-zipper
   "Returns a zipper that can walk a graph of dependent property-types"
-  [root-property-type {:keys [PropertyTypes] :as parsed-spec}]
+  [{:keys [PropertyTypes] :as parsed-spec} root-property-type]
   (z/zipper
    (fn [[property-type-name property-type]]
      (boolean (seq (remove primitive? (vals (:Properties property-type))))))
@@ -175,7 +180,7 @@
    (fn [n children] n)
    root-property-type))
 
-(defn property-type-walk
+(defn- property-type-walk
   "Walks the dependency graph of property types ensuring that specs are
   generated in the correct order."
   [spec-generator-fn zipper]
@@ -201,23 +206,23 @@
             (recur (z/right loc) false (concat specs new-specs))
             (recur (z/up loc) true (concat specs new-specs))))))))
 
-(defn gen-property-type-specs
+(defn- gen-property-type-specs
   "Generates all of the specs for PropertyTypes"
-  [parsed-spec primitive-type-mapping]
-  (sequence (comp (map #(property-type-zipper % parsed-spec))
-                  (mapcat (partial property-type-walk
-                                   (partial gen-type-spec primitive-type-mapping))))
-            (select-keys (:PropertyTypes parsed-spec)
-                         (root-property-types parsed-spec))))
+  [parsed-spec primitive-type-mapping document]
+  (doseq [root-property-type (select-keys (:PropertyTypes parsed-spec)
+                                          (root-property-types parsed-spec))]
+    (property-type-walk (partial gen-type-spec primitive-type-mapping document)
+                        (property-type-zipper parsed-spec root-property-type))))
 
-(defn gen-resource-type-specs
+(defn- gen-resource-type-specs
   "Generates all of the specs for ResourceTypes"
-  [parsed-spec primitive-type-mapping]
-  (mapcat (partial gen-type-spec primitive-type-mapping) (:ResourceTypes parsed-spec)))
+  [parsed-spec primitive-type-mapping document]
+  (doseq [resource-type (:ResourceTypes parsed-spec)]
+    (gen-type-spec primitive-type-mapping document resource-type)))
 
 (defn gen-specs
   "Generates specs for all PropertyTypes and ResourceTypes allowing the user to
   set which primitive type mapping to use"
-  [parsed-spec primitive-type-mapping]
-  (doall (concat (gen-property-type-specs parsed-spec primitive-type-mapping)
-                 (gen-resource-type-specs parsed-spec primitive-type-mapping))))
+  ([parsed-spec primitive-type-mapping & {:keys [document]}]
+   (gen-property-type-specs parsed-spec primitive-type-mapping document)
+   (gen-resource-type-specs parsed-spec primitive-type-mapping document)))
