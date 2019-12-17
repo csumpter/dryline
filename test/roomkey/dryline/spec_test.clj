@@ -1,14 +1,19 @@
 (ns roomkey.dryline.spec-test
-  (:require  [clojure.test :as t]
-             [roomkey.dryline.specs :as specs]))
+  (:require [clojure.java.io :as io]
+            [clojure.test :as t]
+            [roomkey.dryline.specs :as specs]
+            [roomkey.dryline.parse :as parse]
+            [clojure.spec.alpha :as s]))
 
 (t/deftest ^:unit dryline-keyword
   (let [sut specs/dryline-keyword]
     (t/are [type-name kw] (= (sut type-name) kw)
-      "AWS::ManagedBlockchain::Member.ApprovalThresholdPolicy"
-      :roomkey.aws.managedblockchain.Member/ApprovalThresholdPolicy
-      "AWS::SNS::Topic"
-      :roomkey.aws.sns/Topic
+      "AWS::S3::Bucket.ObjectLockConfiguration"
+      :roomkey.aws.s3.Bucket.ObjectLockConfiguration/ObjectLockConfiguration
+
+      "AWS::S3::Bucket"
+      :roomkey.aws.s3/Bucket
+
       "Tag"
       :roomkey.aws/Tag)))
 

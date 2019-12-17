@@ -16,7 +16,7 @@
                                           (string/lower-case top-level-service)
                                           (string/lower-case service)])]
       (if subtype
-        (keyword (str service-prefix \. type) subtype)
+        (keyword (str service-prefix \. type \. subtype) subtype)
         (keyword service-prefix type)))))
 
 (s/def ::json
@@ -42,6 +42,15 @@
   namespace with a period and a name of suffix"
   [kw suffix]
   (keyword (str (namespace kw) \. (name kw)) (name suffix)))
+
+(defn- property-keyword
+  "Returns a namespaced keyword for property-name based on type-name"
+  [type-name property-name]
+  (let [[type subtype] (string/split type-name #"\.")]
+    (if subtype
+      (keyword (namespace (dryline-keyword type-name)) (name property-name))
+      (append-to-keyword (dryline-keyword type-name)
+                         property-name))))
 
 (defn- spec-reference
   "Returns a reference to a Clojure spec as a keyword"
@@ -86,8 +95,8 @@
 
 (defn- gen-property-spec
   "Generates a spec for a property found in a resource type"
-  [primitive-type-mapping type-name [pn property]]
-  (let [spec-name (append-to-keyword (dryline-keyword type-name) pn)]
+  [primitive-type-mapping type-name [property-name property]]
+  (let [spec-name (property-keyword type-name property-name)]
     (eval `(clojure.spec.alpha/def ~spec-name
              ~(property-predicate primitive-type-mapping
                                   type-name
@@ -105,13 +114,9 @@
   "Generates a spec for a resource or property type as well as all of the
   properties defined in its specification."
   [primitive-type-mapping [type-name {:keys [Properties] :as type-specification}]]
-  (let [property-spec-reference (fn [property-name]
-                                  (append-to-keyword (dryline-keyword type-name)
-                                                     property-name))
+  (let [property-spec-reference (partial property-keyword type-name) 
         {req true opt false} (property-references property-spec-reference Properties)
-        [_ property-type-suffix] (string/split type-name #"\.")
-        spec-name (cond-> (dryline-keyword type-name)
-                    property-type-suffix (append-to-keyword property-type-suffix))]
+        spec-name (dryline-keyword type-name)]
     (doseq [property Properties]
       (gen-property-spec primitive-type-mapping type-name property))
     (eval `(clojure.spec.alpha/def ~spec-name
