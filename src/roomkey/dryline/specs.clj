@@ -46,7 +46,7 @@
 (defn- property-keyword
   "Returns a namespaced keyword for property-name based on type-name"
   [type-name property-name]
-  (let [[type subtype] (string/split type-name #"\.")]
+  (let [[_type subtype] (string/split type-name #"\.")]
     (if subtype
       (keyword (namespace (dryline-keyword type-name)) (name property-name))
       (append-to-keyword (dryline-keyword type-name)
@@ -113,8 +113,8 @@
 (defn- gen-type-spec
   "Generates a spec for a resource or property type as well as all of the
   properties defined in its specification."
-  [primitive-type-mapping [type-name {:keys [Properties] :as type-specification}]]
-  (let [property-spec-reference (partial property-keyword type-name) 
+  [primitive-type-mapping [type-name {:keys [Properties] :as _type-specification}]]
+  (let [property-spec-reference (partial property-keyword type-name)
         {req true opt false} (property-references property-spec-reference Properties)
         spec-name (dryline-keyword type-name)]
     (doseq [property Properties]
@@ -152,7 +152,7 @@
   [[property-type-name property-type]]
   (sequence (comp
              (remove (comp primitive? second))
-             (map (fn [[property-name property]]
+             (map (fn [[_property-name property]]
                     (referenced-property-type property-type-name property))))
             (:Properties property-type)))
 
@@ -160,16 +160,16 @@
   "Returns a collection of root property type names. Root property
   types are those property types which are not referenced by other property
   types. The set will include property types whose properties are all primitive."
-  [{:keys [PropertyTypes] :as parsed-spec}]
+  [{:keys [PropertyTypes] :as _parsed-spec}]
   (let [ptns (keys PropertyTypes)
         referenced-ptns (into #{} (mapcat referenced-properties) PropertyTypes)]
     (remove referenced-ptns ptns)))
 
 (defn- property-type-zipper
   "Returns a zipper that can walk a graph of dependent property-types"
-  [{:keys [PropertyTypes] :as parsed-spec} root-property-type]
+  [{:keys [PropertyTypes] :as _parsed-spec} root-property-type]
   (z/zipper
-   (fn [[property-type-name property-type]]
+   (fn [[_property-type-name property-type]]
      (boolean (seq (remove primitive? (vals (:Properties property-type))))))
    (fn [[property-type-name property-type]]
      (select-keys PropertyTypes
@@ -177,7 +177,7 @@
                                   (map (partial referenced-property-type
                                                 property-type-name)))
                             (vals (:Properties property-type)))))
-   (fn [n children] n)
+   (fn [n _children] n)
    root-property-type))
 
 (defn- property-type-walk
