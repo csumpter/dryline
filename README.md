@@ -60,6 +60,9 @@ In this example we will generate and use specs for an S3 Bucket. A version of th
 ;; This is false, because :BucketName must be a string
 ```
 
+### Crucible Integration
+A detailed example of integrating Crucible and Dryline can be found [here](docs/crucible.md)
+
 ## Background
 Roomkey wanted to find a solution for building and validating CloudFormation templates programmatically with Clojure. We liked and supported the work done in the [Crucible](https://www.github.com/brabster/crucible) library but found that developers spent a lot of time writing and updating Clojure specs for CloudFormation resources, waiting on a release cycle and updating project dependencies. 
 

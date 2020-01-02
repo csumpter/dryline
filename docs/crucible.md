@@ -32,7 +32,7 @@ The following example code shows you how to:
             [crucible.values]
             [crucible.resources]))
 
-;;; Translate the spec-or-ref concept
+;;; Create a compatible primitive type mapping
 ;;;
 ;;; Because Crucible relies on internal functions like `xref` to do template
 ;;; level validation, you must extend Dryline with a new primitive type mapping
@@ -79,7 +79,6 @@ The following example code shows you how to:
                ~spec-kw)))))
 
 (let [parsed-spec (-> "path/to/Specification.json"
-                      io/resource
                       io/reader
                       parse/parse)]
   ;; Generate the dryline specs using a primitive type mapping that supports spec-or-ref
