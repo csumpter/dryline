@@ -1,6 +1,6 @@
 (ns roomkey.dryline.simple-intrinsic-function
   (:require [clojure.spec.alpha :as s]
-            [roomkey.dryline.specs :as specs]))
+            [clojure.string]))
 
 (s/def :roomkey.aws.cloudformation/simple-intrinsic-function
   (s/map-of (s/or :ref #{"Ref"} :fn (s/and string? #(clojure.string/starts-with? % "Fn::")))
