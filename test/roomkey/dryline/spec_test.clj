@@ -30,7 +30,7 @@
   (let [sut #'specs/spec-reference]
     (t/is (= (sut "AWS::S3::Bucket.ObjectLockConfiguration"
                   "Rule")
-             :roomkey.aws.s3.Bucket.Rule/Rule))
+             :roomkey.aws.s3.Bucket.properties/Rule))
     (t/is (= (sut "AWS::S3::Bucket"
                   "Tag")
              :roomkey.aws/Tag))))
@@ -63,15 +63,14 @@
                 :roomkey.aws.s3.Bucket/AnalyticsConfigurations
                 :roomkey.aws.s3.Bucket/AccessControl))))
     (t/is (= (get (s/registry) :roomkey.aws.s3.Bucket/ObjectLockConfiguration)
-             :roomkey.aws.s3.Bucket.ObjectLockConfiguration/Bucket.ObjectLockConfiguration))
-    (t/is (= (s/describe :roomkey.aws.s3.Bucket.ObjectLockConfiguration/Bucket.ObjectLockConfiguration)
+             :roomkey.aws.s3.Bucket.properties/ObjectLockConfiguration))
+    (t/is (= (s/describe :roomkey.aws.s3.Bucket.properties/ObjectLockConfiguration)
              '(keys
                :opt-un
-               (:roomkey.aws.s3.Bucket.ObjectLockConfiguration/Rule
-                :roomkey.aws.s3.Bucket.ObjectLockConfiguration/ObjectLockEnabled))))
-    (t/is (= (get (s/registry) :roomkey.aws.s3.Bucket.ObjectLockConfiguration/Rule)
-             :roomkey.aws.s3.Bucket.ObjectLockRule/ObjectLockRule))))
-
+               (:roomkey.aws.s3.Bucket.properties.ObjectLockConfiguration/Rule
+                :roomkey.aws.s3.Bucket.properties.ObjectLockConfiguration/ObjectLockEnabled))))
+    (t/is (= (get (s/registry) :roomkey.aws.s3.Bucket.properties.ObjectLockConfiguration/Rule)
+             :roomkey.aws.s3.Bucket.properties/ObjectLockRule))))
 
 (t/deftest ^:unit full-specs
   (let [parsed-spec (-> "aws/us-east-spec.json"

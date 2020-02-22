@@ -75,43 +75,42 @@
 (defn property-type-keyword
   "Converts property-type-name of form AWS::<Service>::<ResourceType>.<PropertyType>
   to a keyword of form
-  :roomkey.aws.<service>.<ResourceType>.<PropertyType>/<ResourceType>.<PropertyType>"
+  :roomkey.aws.<service>.<ResourceType>.properties/<PropertyType>"
   [property-type-name]
   (prn property-type-name "<< property-type-keyword")
   (case property-type-name
     "Tag" :roomkey.aws/Tag
     (let [[top-level-service service type] (string/split property-type-name #"::")
+          [resource-type property-type] (string/split type #"\.")
           service-prefix (string/join \. [prefix
                                           (string/lower-case top-level-service)
                                           (string/lower-case service)])]
-      (keyword (str service-prefix \. type) type))))
+      (keyword (str service-prefix \. resource-type \. "properties") property-type))))
 
 (defn property-type-property-keyword
   "Returns a keyword for a property of a property type of form
-  :roomkey.aws.<service>.<ResourceType>.<PropertyType>/<PropertyName>"
+  :roomkey.aws.<service>.<ResourceType>.properties.<PropertyType>/<PropertyName>"
   [property-type-name property-name]
   (prn property-type-name property-name "<< property-type-property-keyword")
   (let [[top-level-service service type] (string/split property-type-name #"::")
+        [resource-type property-type] (string/split type #"\.")
         service-prefix (string/join \. [prefix
                                         (string/lower-case top-level-service)
                                         (string/lower-case service)])]
-    (keyword (str service-prefix \. type) (name property-name))))
+    (keyword (str service-prefix \. resource-type \. "properties" \. property-type) (name property-name))))
 
 (defn- spec-reference
   "Returns a reference to a Clojure spec as a keyword"
-  [type-name type]
-  (prn type-name type "<< spec-reference")
-  #_(case type
-      "Tag" :roomkey.aws/Tag
-      (-> type-name
-          (string/split #"\.")
-          first
-          dryline-keyword
-          (append-to-keyword type)
-          (append-to-keyword type)))
-  (case type
+  [type-name property-type]
+  (prn type-name property-type "<< spec-reference")
+  (case property-type
     "Tag" :roomkey.aws/Tag
-    (property-type-keyword (str type-name \. type))))
+    (let [[top-level-service service type-name] (string/split type-name #"::")
+          [resource-type _] (string/split type-name #"\.")
+          service-prefix (string/join \. [prefix
+                                          (string/lower-case top-level-service)
+                                          (string/lower-case service)])]
+      (keyword (str service-prefix \. resource-type \. "properties") (name property-type)))))
 
 (defn- property-collection-predicate
   "Returns the predicate or reference for the collection type"
@@ -145,7 +144,7 @@
 (defn- gen-property-spec
   "Generates a spec for a property found in a resource type"
   [primitive-type-mapping type-name [property-name property]]
-  (let [spec-name (if (clojure.string/includes? type-name ".")
+  (let [spec-name (if (string/includes? type-name ".")
                     (property-type-property-keyword type-name property-name)
                     (resource-type-property-keyword type-name property-name))]
     (eval `(clojure.spec.alpha/def ~spec-name
@@ -165,7 +164,10 @@
   "Generates a spec for a resource or property type as well as all of the
   properties defined in its specification."
   [primitive-type-mapping [type-name {:keys [Properties] :as _type-specification}]]
-  (let [property-spec-reference (partial property-keyword type-name)
+  (let [property-spec-reference (fn [property-name]
+                                  (if (string/includes? type-name ".")
+                                    (property-type-property-keyword type-name property-name)
+                                    (resource-type-property-keyword type-name property-name)))
         {req true opt false} (property-references property-spec-reference Properties)
         spec-name (if (clojure.string/includes? type-name ".")
                     (property-type-keyword type-name)
