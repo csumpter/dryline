@@ -63,8 +63,8 @@
                 :roomkey.aws.s3.Bucket/AnalyticsConfigurations
                 :roomkey.aws.s3.Bucket/AccessControl))))
     (t/is (= (get (s/registry) :roomkey.aws.s3.Bucket/ObjectLockConfiguration)
-             :roomkey.aws.s3.Bucket.ObjectLockConfiguration/ObjectLockConfiguration))
-    (t/is (= (s/describe :roomkey.aws.s3.Bucket.ObjectLockConfiguration/ObjectLockConfiguration)
+             :roomkey.aws.s3.Bucket.ObjectLockConfiguration/Bucket.ObjectLockConfiguration))
+    (t/is (= (s/describe :roomkey.aws.s3.Bucket.ObjectLockConfiguration/Bucket.ObjectLockConfiguration)
              '(keys
                :opt-un
                (:roomkey.aws.s3.Bucket.ObjectLockConfiguration/Rule
