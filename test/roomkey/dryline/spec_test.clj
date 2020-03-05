@@ -73,7 +73,7 @@
              :roomkey.aws.s3.Bucket.properties/ObjectLockRule))))
 
 (t/deftest ^:unit full-specs
-  (let [parsed-spec (-> "aws/us-east-spec.json"
+  (let [parsed-spec (-> "aws/CloudFormationResourceSpecification.json"
                         io/resource
                         io/reader
                         parse/parse)]
