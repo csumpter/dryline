@@ -1,23 +1,11 @@
 (ns roomkey.dryline.specs
   (:require [clojure.spec.alpha :as s]
             [clojure.string :as string]
-            [clojure.zip :as z]))
+            [clojure.zip :as z]
+            [clojure.java.io :as io]
+            [roomkey.dryline.util :refer [dryline-keyword]]))
 
-(def ^:private prefix "roomkey")
-
-(defn dryline-keyword
-  "Converts strings of form AWS::<Service>::<Resource> to namespaced keywords"
-  [type-name]
-  (case type-name
-    "Tag" :roomkey.aws/Tag
-    (let [[top-level-service service type] (string/split type-name #"::")
-          [type subtype] (string/split type #"\.")
-          service-prefix (string/join \. [prefix
-                                          (string/lower-case top-level-service)
-                                          (string/lower-case service)])]
-      (if subtype
-        (keyword (str service-prefix \. type \. subtype) subtype)
-        (keyword service-prefix type)))))
+(def scraped-properties (read-string (slurp (io/resource "scraped-spec-data.edn"))))
 
 (s/def ::json
   (s/or :string string?
@@ -76,31 +64,37 @@
   [primitive-type-mapping type-name {:keys [DuplicatesAllowed
                                             PrimitiveType
                                             Type]
-                                     :as property}]
-  (if PrimitiveType
-    (primitive-type-mapping PrimitiveType)
-    (case Type
-      "List" `(clojure.spec.alpha/coll-of
-               ~(property-collection-predicate
-                 primitive-type-mapping
-                 type-name
-                 property)
-               :distinct ~(not DuplicatesAllowed))
-      "Map" `(clojure.spec.alpha/map-of
-              string? ~(property-collection-predicate
-                        primitive-type-mapping
-                        type-name
-                        property))
-      (spec-reference type-name Type))))
+                                     :as property}
+   {:keys [_regex enumerations _minimum _maximum] :as _scraped-data}]
+  (cond
+    (and (= Type "List") enumerations) (eval `(clojure.spec.alpha/coll-of ~enumerations))
+    enumerations enumerations
+    PrimitiveType (primitive-type-mapping PrimitiveType)
+    :else (case Type
+            "List" `(clojure.spec.alpha/coll-of
+                     ~(property-collection-predicate
+                       primitive-type-mapping
+                       type-name
+                       property)
+                     :distinct ~(not DuplicatesAllowed))
+            "Map" `(clojure.spec.alpha/map-of
+                    string? ~(property-collection-predicate
+                              primitive-type-mapping
+                              type-name
+                              property))
+            (spec-reference type-name Type))))
 
 (defn- gen-property-spec
   "Generates a spec for a property found in a resource type"
   [primitive-type-mapping type-name [property-name property]]
-  (let [spec-name (property-keyword type-name property-name)]
+  (let [spec-name (property-keyword type-name property-name)
+        dl-kw (dryline-keyword type-name)
+        scraped-data (-> scraped-properties dl-kw property-name)]
     (eval `(clojure.spec.alpha/def ~spec-name
              ~(property-predicate primitive-type-mapping
                                   type-name
-                                  property)))))
+                                  property
+                                  scraped-data)))))
 
 (defn- property-references
   "Returns a map of the property specs referenced grouped by :Required"
