@@ -1,0 +1,2525 @@
+{:roomkey.aws.cognito.UserPoolUser.AttributeType/AttributeType
+ {:Name
+  {:regex #"[\p{L}\p{M}\p{S}\p{N}\p{P}]+", :minimum 1, :maximum 32},
+  :Value {:maximum 2048}},
+ :roomkey.aws.ec2.EC2Fleet.TagSpecification/TagSpecification
+ {:ResourceType
+  {:enumerations
+   #{"key-pair" "traffic-mirror-target" "host-reservation"
+     "vpn-gateway" "subnet" "transit-gateway" "spot-fleet-request"
+     "vpc" "elastic-ip" "dedicated-host" "spot-instances-request"
+     "route-table" "image" "natgateway" "traffic-mirror-session"
+     "transit-gateway-route-table" "snapshot" "vpn-connection"
+     "traffic-mirror-filter" "internet-gateway" "reserved-instances"
+     "instance" "transit-gateway-multicast-domain" "fleet"
+     "network-interface" "security-group" "volume" "dhcp-options"
+     "vpc-peering-connection" "customer-gateway" "placement-group"
+     "fpga-image" "network-acl" "client-vpn-endpoint" "launch-template"
+     "transit-gateway-attachment"}}},
+ :roomkey.aws.kinesisanalyticsv2.Application.KinesisStreamsInput/KinesisStreamsInput
+ {:ResourceARN {:regex #"arn:.*", :minimum 1, :maximum 2048}},
+ :roomkey.aws.cognito.UserPoolDomain.CustomDomainConfigType/CustomDomainConfigType
+ {:CertificateArn
+  {:regex
+   #"arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=/,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?",
+   :minimum 20,
+   :maximum 2048}},
+ :roomkey.aws.opsworks.Instance.EbsBlockDevice/EbsBlockDevice
+ {:VolumeType {:enumerations #{"standard" "io1" "gp2"}}},
+ :roomkey.aws.s3.Bucket.RedirectAllRequestsTo/RedirectAllRequestsTo
+ {:Protocol {:enumerations #{"https" "http"}}},
+ :roomkey.aws.robomaker.RobotApplication.RobotSoftwareSuite/RobotSoftwareSuite
+ {:Name {:enumerations #{"ROS" "ROS2"}},
+  :Version {:enumerations #{"Melodic" "Dashing" "Kinetic"}}},
+ :roomkey.aws.codepipeline.Pipeline.OutputArtifact/OutputArtifact
+ {:Name {:regex #"[a-zA-Z0-9_&#45;]+", :minimum 1, :maximum 100}},
+ :roomkey.aws.kinesisanalytics.ApplicationOutput.KinesisStreamsOutput/KinesisStreamsOutput
+ {:ResourceARN {:regex #"arn:.*", :minimum 1, :maximum 2048},
+  :RoleARN
+  {:regex #"arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@&#45;_/]+",
+   :minimum 1,
+   :maximum 2048}},
+ :roomkey.aws.autoscalingplans.ScalingPlan.PredefinedScalingMetricSpecification/PredefinedScalingMetricSpecification
+ {:PredefinedScalingMetricType
+  {:enumerations
+   #{"ASGAverageCPUUtilization" "DynamoDBWriteCapacityUtilization"
+     "DynamoDBReadCapacityUtilization" "ASGAverageNetworkOut"
+     "EC2SpotFleetRequestAverageNetworkIn"
+     "EC2SpotFleetRequestAverageNetworkOut" "ALBRequestCountPerTarget"
+     "RDSReaderAverageCPUUtilization"
+     "RDSReaderAverageDatabaseConnections"
+     "ECSServiceAverageMemoryUtilization" "ASGAverageNetworkIn"
+     "EC2SpotFleetRequestAverageCPUUtilization"
+     "ECSServiceAverageCPUUtilization"}}},
+ :roomkey.aws.events.Rule.InputTransformer/InputTransformer
+ {:InputTemplate {:minimum 1, :maximum 8192}},
+ :roomkey.aws.ec2/EIP {:Domain {:enumerations #{"standard" "vpc"}}},
+ :roomkey.aws.iotanalytics.Dataset.VersioningConfiguration/VersioningConfiguration
+ {:MaxVersions {:minimum 1, :maximum 1000}},
+ :roomkey.aws.ecs.TaskDefinition.ProxyConfiguration/ProxyConfiguration
+ {:Type {:enumerations #{"APPMESH"}}},
+ :roomkey.aws.cognito.UserPoolRiskConfigurationAttachment.NotifyConfigurationType/NotifyConfigurationType
+ {:SourceArn
+  {:regex
+   #"arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=/,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?",
+   :minimum 20,
+   :maximum 2048}},
+ :roomkey.aws.ecs.Cluster.ClusterSetting/ClusterSetting
+ {:Name {:enumerations #{"containerInsights"}}},
+ :roomkey.aws.s3.Bucket.Destination/Destination
+ {:Format {:enumerations #{"CSV"}}},
+ :roomkey.aws.ec2.LaunchTemplate.LaunchTemplateData/LaunchTemplateData
+ {:InstanceInitiatedShutdownBehavior
+  {:enumerations #{"stop" "terminate"}},
+  :InstanceType
+  {:enumerations
+   #{"c5d.metal" "m1.large" "t3.small" "i3en.2xlarge" "m5ad.4xlarge"
+     "cc1.4xlarge" "t3a.xlarge" "z1d.large" "x1e.32xlarge" "t3a.small"
+     "r5d.xlarge" "r5a.large" "r5a.xlarge" "m5d.24xlarge" "c1.medium"
+     "r4.2xlarge" "inf1.24xlarge" "r3.8xlarge" "r5.4xlarge"
+     "m5ad.16xlarge" "d2.xlarge" "m3.2xlarge" "r5d.8xlarge"
+     "i3en.12xlarge" "i2.8xlarge" "r5dn.2xlarge" "h1.16xlarge"
+     "m5.xlarge" "r5a.2xlarge" "t3.2xlarge" "g2.2xlarge" "g3.8xlarge"
+     "m5n.large" "t3a.medium" "t3.xlarge" "c3.8xlarge" "t2.large"
+     "r5ad.24xlarge" "m5n.4xlarge" "x1e.4xlarge" "t3.nano"
+     "p2.16xlarge" "m1.xlarge" "m5a.24xlarge" "d2.8xlarge"
+     "r5n.12xlarge" "r5d.large" "m4.4xlarge" "m5a.8xlarge" "t2.2xlarge"
+     "r4.16xlarge" "m5d.16xlarge" "r5n.16xlarge" "c5.24xlarge"
+     "r5dn.24xlarge" "u-12tb1.metal" "r5d.4xlarge" "c5.metal"
+     "g3.16xlarge" "z1d.2xlarge" "m5d.8xlarge" "t3.large" "h1.2xlarge"
+     "g3.4xlarge" "cr1.8xlarge" "t1.micro" "r5ad.16xlarge" "a1.2xlarge"
+     "c5d.large" "g4dn.4xlarge" "m5ad.2xlarge" "r5a.24xlarge"
+     "z1d.xlarge" "t3a.2xlarge" "c5.4xlarge" "p3dn.24xlarge"
+     "m5n.8xlarge" "c3.2xlarge" "g2.8xlarge" "a1.metal" "z1d.3xlarge"
+     "u-18tb1.metal" "r5ad.12xlarge" "c5d.18xlarge" "c4.8xlarge"
+     "m5dn.2xlarge" "m5a.16xlarge" "c5.18xlarge" "x1e.2xlarge"
+     "r5.metal" "i3en.6xlarge" "z1d.6xlarge" "inf1.2xlarge"
+     "m5n.12xlarge" "u-24tb1.metal" "m5dn.24xlarge" "m2.xlarge"
+     "m1.small" "i2.4xlarge" "c3.4xlarge" "i3.16xlarge" "t2.micro"
+     "r5d.16xlarge" "z1d.metal" "g3s.xlarge" "d2.2xlarge" "x1.32xlarge"
+     "m4.2xlarge" "r5d.24xlarge" "u-6tb1.metal" "i3.4xlarge"
+     "m4.10xlarge" "i3.metal" "m1.medium" "g4dn.2xlarge" "c5n.xlarge"
+     "c4.4xlarge" "hi1.4xlarge" "r3.xlarge" "c5n.large" "x1e.16xlarge"
+     "r5a.16xlarge" "m5.large" "r5n.8xlarge" "r5dn.4xlarge"
+     "c5d.24xlarge" "r5.xlarge" "c4.2xlarge" "i3.8xlarge" "m5.8xlarge"
+     "p3.2xlarge" "m5.4xlarge" "t3.medium" "u-9tb1.metal"
+     "r5ad.8xlarge" "m5ad.8xlarge" "t2.small" "r5n.xlarge"
+     "c5n.4xlarge" "r4.xlarge" "m5ad.xlarge" "m5ad.12xlarge"
+     "m5a.2xlarge" "m5.2xlarge" "z1d.12xlarge" "i3en.metal"
+     "r5a.8xlarge" "t3.micro" "m5dn.4xlarge" "c5.large" "c5.2xlarge"
+     "m5dn.8xlarge" "f1.2xlarge" "m5d.4xlarge" "c5d.xlarge" "m3.xlarge"
+     "c5d.9xlarge" "r3.2xlarge" "m5d.metal" "cg1.4xlarge" "m5ad.large"
+     "r3.4xlarge" "r5n.large" "m5.16xlarge" "t2.xlarge" "c4.xlarge"
+     "m2.2xlarge" "t3a.micro" "f1.4xlarge" "r5.large" "p2.8xlarge"
+     "r5d.12xlarge" "m5.metal" "r5ad.large" "x1.16xlarge" "m5n.xlarge"
+     "m4.large" "c5n.2xlarge" "r5dn.8xlarge" "i3en.large"
+     "r5ad.2xlarge" "r5ad.xlarge" "m4.16xlarge" "r3.large"
+     "m5n.16xlarge" "d2.4xlarge" "h1.8xlarge" "r5n.4xlarge"
+     "i3.2xlarge" "c4.large" "h1.4xlarge" "m5d.12xlarge" "r5ad.4xlarge"
+     "m4.xlarge" "m5a.large" "f1.16xlarge" "r5.12xlarge" "m5a.4xlarge"
+     "i2.2xlarge" "p3.16xlarge" "inf1.6xlarge" "m5ad.24xlarge"
+     "r5dn.12xlarge" "i3.xlarge" "m5n.24xlarge" "c5n.9xlarge"
+     "r5dn.16xlarge" "m5dn.large" "c5d.12xlarge" "r5dn.xlarge"
+     "i3en.3xlarge" "t2.nano" "m2.4xlarge" "r5a.4xlarge" "r5d.metal"
+     "g4dn.16xlarge" "r4.large" "m5a.xlarge" "c3.xlarge" "p2.xlarge"
+     "g4dn.12xlarge" "c5d.4xlarge" "m5dn.12xlarge" "i3.large"
+     "a1.4xlarge" "g4dn.xlarge" "r4.8xlarge" "a1.xlarge" "t2.medium"
+     "i3en.xlarge" "p3.8xlarge" "m5a.12xlarge" "c3.large" "c5.12xlarge"
+     "m3.medium" "a1.medium" "m5n.2xlarge" "r5dn.large" "m5d.2xlarge"
+     "r5d.2xlarge" "t3a.nano" "i2.xlarge" "m5.24xlarge" "c5n.18xlarge"
+     "r5a.12xlarge" "c5.9xlarge" "g4dn.8xlarge" "m5d.large"
+     "m5.12xlarge" "cc2.8xlarge" "hs1.8xlarge" "r5.16xlarge"
+     "m5dn.16xlarge" "m3.large" "i3en.24xlarge" "x1e.xlarge"
+     "c1.xlarge" "c5d.2xlarge" "x1e.8xlarge" "r5.2xlarge" "m5dn.xlarge"
+     "t3a.large" "m5d.xlarge" "r5n.2xlarge" "r5n.24xlarge" "a1.large"
+     "c5.xlarge" "r4.4xlarge" "inf1.xlarge" "r5.8xlarge"
+     "r5.24xlarge"}}},
+ :roomkey.aws.applicationautoscaling.ScalingPolicy.PredefinedMetricSpecification/PredefinedMetricSpecification
+ {:PredefinedMetricType
+  {:enumerations
+   #{"DynamoDBWriteCapacityUtilization"
+     "DynamoDBReadCapacityUtilization"
+     "EC2SpotFleetRequestAverageNetworkIn"
+     "LambdaProvisionedConcurrencyUtilization"
+     "ComprehendInferenceUtilization"
+     "EC2SpotFleetRequestAverageNetworkOut" "ALBRequestCountPerTarget"
+     "RDSReaderAverageCPUUtilization"
+     "RDSReaderAverageDatabaseConnections"
+     "AppStreamAverageCapacityUtilization"
+     "ECSServiceAverageMemoryUtilization"
+     "SageMakerVariantInvocationsPerInstance"
+     "EC2SpotFleetRequestAverageCPUUtilization"
+     "ECSServiceAverageCPUUtilization"}}},
+ :roomkey.aws.cloudfront.StreamingDistribution.StreamingDistributionConfig/StreamingDistributionConfig
+ {:PriceClass
+  {:enumerations
+   #{"PriceClass_200" "PriceClass_All" "PriceClass_100"}}},
+ :roomkey.aws.s3.Bucket.VersioningConfiguration/VersioningConfiguration
+ {:Status {:enumerations #{"Suspended" "Enabled"}}},
+ :roomkey.aws.appconfig.Environment.Monitors/Monitors
+ {:AlarmArn
+  {:regex
+   #"arn:(aws[a-zA-Z-]*)?:[a-z]+:([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\d{1})?:(\d{12})?:[a-zA-Z0-9-_/:.]+",
+   :minimum 20,
+   :maximum 2048},
+  :AlarmRoleArn
+  {:regex
+   #"arn:(aws[a-zA-Z-]*)?:[a-z]+:([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\d{1})?:(\d{12})?:[a-zA-Z0-9-_/:.]+",
+   :minimum 20,
+   :maximum 2048}},
+ :roomkey.aws.cognito.UserPoolRiskConfigurationAttachment.CompromisedCredentialsActionsType/CompromisedCredentialsActionsType
+ {:EventAction {:enumerations #{"NO_ACTION" "BLOCK"}}},
+ :roomkey.aws.kinesisanalytics.ApplicationReferenceDataSource.RecordColumn/RecordColumn
+ {:SqlType {:minimum 1}},
+ :roomkey.aws.cloudtrail.Trail.EventSelector/EventSelector
+ {:ReadWriteType {:enumerations #{"WriteOnly" "ReadOnly" "All"}}},
+ :roomkey.aws.fsx.FileSystem.WindowsConfiguration/WindowsConfiguration
+ {:ActiveDirectoryId
+  {:regex #"^d-[0-9a-f]{10}$", :minimum 12, :maximum 12},
+  :AutomaticBackupRetentionDays {:minimum 0, :maximum 35},
+  :ThroughputCapacity {:minimum 8, :maximum 2048}},
+ :roomkey.aws.wafv2.WebACL.SingleQueryArgument/SingleQueryArgument
+ {:Name {:regex #".*\S.*", :minimum 1, :maximum 64}},
+ :roomkey.aws.iotevents.Input.Attribute/Attribute
+ {:JsonPath {:minimum 1, :maximum 128}},
+ :roomkey.aws.elasticbeanstalk.Environment.OptionSetting/OptionSetting
+ {:ResourceName {:minimum 1, :maximum 256}},
+ :roomkey.aws.emr.InstanceFleetConfig.SpotProvisioningSpecification/SpotProvisioningSpecification
+ {:BlockDurationMinutes {:minimum 0},
+  :TimeoutAction
+  {:enumerations #{"TERMINATE_CLUSTER" "SWITCH_TO_ON_DEMAND"}},
+  :TimeoutDurationMinutes {:minimum 0}},
+ :roomkey.aws.emr.InstanceFleetConfig.InstanceTypeConfig/InstanceTypeConfig
+ {:BidPrice
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256},
+  :WeightedCapacity {:minimum 0}},
+ :roomkey.aws.cloudwatch.Alarm.MetricStat/MetricStat
+ {:Unit
+  {:enumerations
+   #{"Terabytes" "Kilobits/Second" "Count" "Bits" "Percent"
+     "Gigabits/Second" "None" "Count/Second" "Bytes" "Gigabytes/Second"
+     "Megabits/Second" "Kilobytes/Second" "Terabytes/Second"
+     "Bits/Second" "Bytes/Second" "Milliseconds" "Kilobytes"
+     "Microseconds" "Terabits" "Megabytes/Second" "Gigabytes"
+     "Gigabits" "Megabits" "Kilobits" "Terabits/Second" "Megabytes"
+     "Seconds"}}},
+ :roomkey.aws.wafv2.WebACL.SingleHeader/SingleHeader
+ {:Name {:regex #".*\S.*", :minimum 1, :maximum 64}},
+ :roomkey.aws.directoryservice.SimpleAD.VpcSettings/VpcSettings
+ {:VpcId {:regex #"^(vpc-[0-9a-f]{8}|vpc-[0-9a-f]{17})$"}},
+ :roomkey.aws.appstream.ImageBuilder.VpcConfig/VpcConfig
+ {:SecurityGroupIds {:maximum 5}},
+ :roomkey.aws.waf.WebACL.ActivatedRule/ActivatedRule
+ {:RuleId {:minimum 1, :maximum 128}},
+ :roomkey.aws.codebuild.Project.Source/Source
+ {:GitCloneDepth {:minimum 0}},
+ :roomkey.aws.emr.Cluster.InstanceTypeConfig/InstanceTypeConfig
+ {:BidPrice
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256},
+  :InstanceType
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 256},
+  :WeightedCapacity {:minimum 0}},
+ :roomkey.aws.ecs.Service.AwsVpcConfiguration/AwsVpcConfiguration
+ {:AssignPublicIp {:enumerations #{"DISABLED" "ENABLED"}}},
+ :roomkey.aws.ec2.CapacityReservation.TagSpecification/TagSpecification
+ {:ResourceType
+  {:enumerations
+   #{"key-pair" "traffic-mirror-target" "host-reservation"
+     "vpn-gateway" "subnet" "transit-gateway" "spot-fleet-request"
+     "vpc" "elastic-ip" "dedicated-host" "spot-instances-request"
+     "route-table" "image" "natgateway" "traffic-mirror-session"
+     "transit-gateway-route-table" "snapshot" "vpn-connection"
+     "traffic-mirror-filter" "internet-gateway" "reserved-instances"
+     "instance" "transit-gateway-multicast-domain" "fleet"
+     "network-interface" "security-group" "volume" "dhcp-options"
+     "vpc-peering-connection" "customer-gateway" "placement-group"
+     "fpga-image" "network-acl" "client-vpn-endpoint" "launch-template"
+     "transit-gateway-attachment"}}},
+ :roomkey.aws.s3.Bucket.NoncurrentVersionTransition/NoncurrentVersionTransition
+ {:StorageClass
+  {:enumerations
+   #{"DEEP_ARCHIVE" "GLACIER" "ONEZONE_IA" "STANDARD_IA"
+     "INTELLIGENT_TIERING"}}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.KinesisStreamSourceConfiguration/KinesisStreamSourceConfiguration
+ {:KinesisStreamARN {:regex #"arn:.*", :minimum 1, :maximum 512},
+  :RoleARN {:regex #"arn:.*", :minimum 1, :maximum 512}},
+ :roomkey.aws.dynamodb.Table.Projection/Projection
+ {:NonKeyAttributes {:maximum 20}},
+ :roomkey.aws.route53/RecordSet
+ {:Comment {:maximum 256},
+  :HostedZoneId {:maximum 32},
+  :HostedZoneName {:maximum 32},
+  :SetIdentifier {:minimum 1, :maximum 128}},
+ :roomkey.aws.codepipeline.Pipeline.StageTransition/StageTransition
+ {:Reason
+  {:regex #"[a-zA-Z0-9!@ &#40;&#41;&#46;&#42;\?&#45;]+",
+   :minimum 1,
+   :maximum 300},
+  :StageName
+  {:regex #"[A-Za-z0-9.@&#45;_]+", :minimum 1, :maximum 100}},
+ :roomkey.aws.iotanalytics.Dataset.QueryAction/QueryAction
+ {:Filters {:maximum 1}},
+ :roomkey.aws.lambda.LayerVersion.Content/Content
+ {:S3Bucket
+  {:regex #"^[0-9A-Za-z&#46;&#45;_]*(?<!&#46;)$",
+   :minimum 3,
+   :maximum 63},
+  :S3Key {:minimum 1, :maximum 1024},
+  :S3ObjectVersion {:minimum 1, :maximum 1024}},
+ :roomkey.aws.elasticache.ReplicationGroup.NodeGroupConfiguration/NodeGroupConfiguration
+ {:NodeGroupId {:regex #"\d+", :minimum 1, :maximum 4}},
+ :roomkey.aws.autoscaling.LaunchConfiguration.BlockDeviceMapping/BlockDeviceMapping
+ {:DeviceName
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :VirtualName
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255}},
+ :roomkey.aws.codepipeline.CustomActionType.ArtifactDetails/ArtifactDetails
+ {:MaximumCount {:minimum 0, :maximum 5},
+  :MinimumCount {:minimum 0, :maximum 5}},
+ :roomkey.aws.codepipeline.Pipeline.ArtifactStoreMap/ArtifactStoreMap
+ {:Region {:minimum 4, :maximum 30}},
+ :roomkey.aws.s3.Bucket.ReplicationRule/ReplicationRule
+ {:Status {:enumerations #{"Disabled" "Enabled"}}},
+ :roomkey.aws.appstream.DirectoryConfig.ServiceAccountCredentials/ServiceAccountCredentials
+ {:AccountName {:minimum 1},
+  :AccountPassword {:minimum 1, :maximum 127}},
+ :roomkey.aws.emr.InstanceGroupConfig.SimpleScalingPolicyConfiguration/SimpleScalingPolicyConfiguration
+ {:AdjustmentType
+  {:enumerations
+   #{"EXACT_CAPACITY" "PERCENT_CHANGE_IN_CAPACITY"
+     "CHANGE_IN_CAPACITY"}}},
+ :roomkey.aws.autoscaling/LaunchConfiguration
+ {:PlacementTenancy
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 64},
+  :ImageId
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :UserData
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :maximum 21847},
+  :InstanceType
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :KernelId
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :KeyName
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :ClassicLinkVPCId
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :IamInstanceProfile
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 1600},
+  :RamDiskId
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :SpotPrice {:minimum 1, :maximum 255},
+  :LaunchConfigurationName
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255}},
+ :roomkey.aws.cloudwatch.Alarm.MetricDataQuery/MetricDataQuery
+ {:Expression {:minimum 1, :maximum 1024},
+  :Id {:minimum 1, :maximum 255}},
+ :roomkey.aws.cognito.UserPoolResourceServer.ResourceServerScopeType/ResourceServerScopeType
+ {:ScopeDescription {:minimum 1, :maximum 256},
+  :ScopeName
+  {:regex #"[\x21\x23-\x2E\x30-\x5B\x5D-\x7E]+",
+   :minimum 1,
+   :maximum 256}},
+ :roomkey.aws.config.ConformancePack.ConformancePackInputParameter/ConformancePackInputParameter
+ {:ParameterName {:minimum 0, :maximum 255},
+  :ParameterValue {:minimum 0, :maximum 4096}},
+ :roomkey.aws.dynamodb.Table.LocalSecondaryIndex/LocalSecondaryIndex
+ {:IndexName {:regex #"[a-zA-Z0-9_.-]+", :minimum 3, :maximum 255}},
+ :roomkey.aws.iotanalytics.Pipeline.DeviceShadowEnrich/DeviceShadowEnrich
+ {:Attribute {:minimum 1, :maximum 256},
+  :Name {:minimum 1, :maximum 128},
+  :Next {:minimum 1, :maximum 128},
+  :RoleArn {:minimum 20, :maximum 2048},
+  :ThingName {:minimum 1, :maximum 256}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.BufferingHints/BufferingHints
+ {:IntervalInSeconds {:minimum 60, :maximum 900},
+  :SizeInMBs {:minimum 1, :maximum 128}},
+ :roomkey.aws.appstream.Fleet.VpcConfig/VpcConfig
+ {:SecurityGroupIds {:maximum 5}},
+ :roomkey.aws.kinesisanalyticsv2.ApplicationOutput.KinesisStreamsOutput/KinesisStreamsOutput
+ {:ResourceARN {:regex #"arn:.*", :minimum 1, :maximum 2048}},
+ :roomkey.aws.kinesisanalyticsv2.Application.KinesisFirehoseInput/KinesisFirehoseInput
+ {:ResourceARN {:regex #"arn:.*", :minimum 1, :maximum 2048}},
+ :roomkey.aws.cloudfront.Distribution.CustomOriginConfig/CustomOriginConfig
+ {:OriginProtocolPolicy
+  {:enumerations #{"match-viewer" "https-only" "http-only"}}},
+ :roomkey.aws.emr.Cluster.KeyValue/KeyValue
+ {:Key
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 10280},
+  :Value
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 10280}},
+ :roomkey.aws.datapipeline.Pipeline.ParameterObject/ParameterObject
+ {:Id
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 256}},
+ :roomkey.aws.dynamodb.Table.GlobalSecondaryIndex/GlobalSecondaryIndex
+ {:IndexName {:regex #"[a-zA-Z0-9_.-]+", :minimum 3, :maximum 255}},
+ :roomkey.aws.iotanalytics.Pipeline.Channel/Channel
+ {:ChannelName {:regex #"^[a-zA-Z0-9_]+$", :minimum 1, :maximum 128},
+  :Name {:minimum 1, :maximum 128},
+  :Next {:minimum 1, :maximum 128}},
+ :roomkey.aws.kinesisanalyticsv2.ApplicationReferenceDataSource.RecordColumn/RecordColumn
+ {:SqlType {:minimum 1}},
+ :roomkey.aws.ec2.SpotFleet.FleetLaunchTemplateSpecification/FleetLaunchTemplateSpecification
+ {:LaunchTemplateName
+  {:regex #"[a-zA-Z0-9&#40;&#41;&#46;&#45;/_]+",
+   :minimum 3,
+   :maximum 128}},
+ :roomkey.aws.events.Rule.Target/Target
+ {:Arn {:minimum 1, :maximum 1600},
+  :Id {:regex #"[&#46;&#45;_A-Za-z0-9]+", :minimum 1, :maximum 64},
+  :Input {:maximum 8192},
+  :InputPath {:maximum 256},
+  :RoleArn {:minimum 1, :maximum 1600}},
+ :roomkey.aws.robomaker.SimulationApplication.RobotSoftwareSuite/RobotSoftwareSuite
+ {:Name {:enumerations #{"ROS" "ROS2"}},
+  :Version {:enumerations #{"Melodic" "Dashing" "Kinetic"}}},
+ :roomkey.aws.appstream.ImageBuilder.DomainJoinInfo/DomainJoinInfo
+ {:OrganizationalUnitDistinguishedName {:maximum 2000}},
+ :roomkey.aws.servicediscovery.Service.HealthCheckCustomConfig/HealthCheckCustomConfig
+ {:FailureThreshold {:minimum 1, :maximum 10}},
+ :roomkey.aws.cognito.UserPool.InviteMessageTemplate/InviteMessageTemplate
+ {:EmailMessage
+  {:regex
+   #"[\p{L}\p{M}\p{S}\p{N}\p{P}\s*]*&#123;####&#125;[\p{L}\p{M}\p{S}\p{N}\p{P}\s*]*",
+   :minimum 6,
+   :maximum 20000},
+  :EmailSubject
+  {:regex #"[\p{L}\p{M}\p{S}\p{N}\p{P}\s]+", :minimum 1, :maximum 140},
+  :SMSMessage
+  {:regex #".*&#123;####&#125;.*", :minimum 6, :maximum 140}},
+ :roomkey.aws.ec2.SpotFleet.TargetGroupsConfig/TargetGroupsConfig
+ {:TargetGroups {:maximum 5}},
+ :roomkey.aws.ses.ReceiptRule.SNSAction/SNSAction
+ {:Encoding {:enumerations #{"Base64" "UTF-8"}}},
+ :roomkey.aws.kinesisanalyticsv2.Application.CSVMappingParameters/CSVMappingParameters
+ {:RecordColumnDelimiter {:minimum 1},
+  :RecordRowDelimiter {:minimum 1}},
+ :roomkey.aws.codepipeline.Pipeline.BlockerDeclaration/BlockerDeclaration
+ {:Name {:minimum 1, :maximum 100},
+  :Type {:enumerations #{"Schedule"}}},
+ :roomkey.aws.route53.HostedZone.HostedZoneConfig/HostedZoneConfig
+ {:Comment {:maximum 256}},
+ :roomkey.aws.autoscaling.ScalingPolicy.CustomizedMetricSpecification/CustomizedMetricSpecification
+ {:Statistic
+  {:enumerations
+   #{"Sum" "Average" "SampleCount" "Minimum" "Maximum"}}},
+ :roomkey.aws.emr.Cluster.InstanceGroupConfig/InstanceGroupConfig
+ {:BidPrice
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256},
+  :InstanceType
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 256},
+  :Market {:enumerations #{"ON_DEMAND" "SPOT"}},
+  :Name
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256}},
+ :roomkey.aws.ecs.TaskDefinition.FirelensConfiguration/FirelensConfiguration
+ {:Type {:enumerations #{"fluentd" "fluentbit"}}},
+ :roomkey.aws.wafv2.WebACL.RegexPatternSetReferenceStatement/RegexPatternSetReferenceStatement
+ {:Arn {:regex #".*\S.*", :minimum 20, :maximum 2048}},
+ :roomkey.aws.config.RemediationConfiguration.StaticValue/StaticValue
+ {:Values {:maximum 25}},
+ :roomkey.aws.lambda.Function.VpcConfig/VpcConfig
+ {:SecurityGroupIds {:maximum 5}, :SubnetIds {:maximum 16}},
+ :roomkey.aws.ecs.TaskDefinition.ResourceRequirement/ResourceRequirement
+ {:Type {:enumerations #{"GPU" "InferenceAccelerator"}}},
+ :roomkey.aws.datapipeline.Pipeline.PipelineObject/PipelineObject
+ {:Id
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\n\t]*",
+   :minimum 1,
+   :maximum 1024},
+  :Name
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\n\t]*",
+   :minimum 1,
+   :maximum 1024}},
+ :roomkey.aws.cognito.UserPoolClient.AnalyticsConfiguration/AnalyticsConfiguration
+ {:ApplicationId {:regex #"^[0-9a-fA-F]+$"},
+  :RoleArn
+  {:regex
+   #"arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=/,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?",
+   :minimum 20,
+   :maximum 2048}},
+ :roomkey.aws.ecs.TaskSet.Scale/Scale
+ {:Unit {:enumerations #{"PERCENT"}}},
+ :roomkey.aws.ssm.ResourceDataSync.AwsOrganizationsSource/AwsOrganizationsSource
+ {:OrganizationalUnits {:maximum 1000},
+  :OrganizationSourceType {:minimum 1, :maximum 64}},
+ :roomkey.aws.kinesisanalyticsv2.ApplicationReferenceDataSource.ReferenceSchema/ReferenceSchema
+ {:RecordColumns {:maximum 1000}, :RecordEncoding {:regex #"UTF-8"}},
+ :roomkey.aws.elasticloadbalancing.LoadBalancer.HealthCheck/HealthCheck
+ {:HealthyThreshold {:minimum 2, :maximum 10},
+  :Interval {:minimum 5, :maximum 300},
+  :Timeout {:minimum 2, :maximum 60},
+  :UnhealthyThreshold {:minimum 2, :maximum 10}},
+ :roomkey.aws.s3.Bucket.ServerSideEncryptionByDefault/ServerSideEncryptionByDefault
+ {:SSEAlgorithm {:enumerations #{"aws:kms" "AES256"}}},
+ :roomkey.aws.wafregional.IPSet.IPSetDescriptor/IPSetDescriptor
+ {:Type {:enumerations #{"IPV4" "IPV6"}}},
+ :roomkey.aws.iam/AccessKey
+ {:Status {:enumerations #{"Active" "Inactive"}},
+  :UserName {:regex #"[\w+=,.@-]+", :minimum 1, :maximum 128}},
+ :roomkey.aws.ec2/Volume
+ {:VolumeType {:enumerations #{"standard" "sc1" "io1" "gp2" "st1"}}},
+ :roomkey.aws.ecs.Service.DeploymentController/DeploymentController
+ {:Type {:enumerations #{"CODE_DEPLOY" "ECS" "EXTERNAL"}}},
+ :roomkey.aws.kinesisanalyticsv2.Application.RecordColumn/RecordColumn
+ {:SqlType {:minimum 1}},
+ :roomkey.aws.ssm.MaintenanceWindowTask.MaintenanceWindowStepFunctionsParameters/MaintenanceWindowStepFunctionsParameters
+ {:Input {:maximum 4096}, :Name {:minimum 1, :maximum 80}},
+ :roomkey.aws.managedblockchain.Member.NetworkFabricConfiguration/NetworkFabricConfiguration
+ {:Edition {:enumerations #{"STARTER" "STANDARD"}}},
+ :roomkey.aws.kinesisanalytics.ApplicationOutput.LambdaOutput/LambdaOutput
+ {:ResourceARN {:regex #"arn:.*", :minimum 1, :maximum 2048},
+  :RoleARN
+  {:regex #"arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@&#45;_/]+",
+   :minimum 1,
+   :maximum 2048}},
+ :roomkey.aws.kinesisanalytics.ApplicationReferenceDataSource.CSVMappingParameters/CSVMappingParameters
+ {:RecordColumnDelimiter {:minimum 1},
+  :RecordRowDelimiter {:minimum 1}},
+ :roomkey.aws.appstream.Fleet.DomainJoinInfo/DomainJoinInfo
+ {:OrganizationalUnitDistinguishedName {:maximum 2000}},
+ :roomkey.aws.emr.Cluster.JobFlowInstancesConfig/JobFlowInstancesConfig
+ {:Ec2KeyName
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256},
+  :Ec2SubnetId
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256},
+  :EmrManagedMasterSecurityGroup
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256},
+  :EmrManagedSlaveSecurityGroup
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256},
+  :HadoopVersion
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256},
+  :ServiceAccessSecurityGroup
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256}},
+ :roomkey.aws.config.ConfigRule.Source/Source
+ {:Owner {:enumerations #{"AWS" "CUSTOM_LAMBDA"}},
+  :SourceDetails {:maximum 25},
+  :SourceIdentifier {:minimum 1, :maximum 256}},
+ :roomkey.aws.waf.IPSet.IPSetDescriptor/IPSetDescriptor
+ {:Type {:enumerations #{"IPV4" "IPV6"}}},
+ :roomkey.aws.emr.Step.HadoopJarStepConfig/HadoopJarStepConfig
+ {:Jar
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 10280},
+  :MainClass
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 10280}},
+ :roomkey.aws.kinesisanalytics.Application.InputParallelism/InputParallelism
+ {:Count {:minimum 1, :maximum 64}},
+ :roomkey.aws.codepipeline.CustomActionType.Settings/Settings
+ {:EntityUrlTemplate {:minimum 1, :maximum 2048},
+  :ExecutionUrlTemplate {:minimum 1, :maximum 2048},
+  :RevisionUrlTemplate {:minimum 1, :maximum 2048},
+  :ThirdPartyConfigurationUrl {:minimum 1, :maximum 2048}},
+ :roomkey.aws.emr.Cluster.SpotProvisioningSpecification/SpotProvisioningSpecification
+ {:BlockDurationMinutes {:minimum 0},
+  :TimeoutAction
+  {:enumerations #{"TERMINATE_CLUSTER" "SWITCH_TO_ON_DEMAND"}},
+  :TimeoutDurationMinutes {:minimum 0}},
+ :roomkey.aws.cognito.UserPoolRiskConfigurationAttachment.RiskExceptionConfigurationType/RiskExceptionConfigurationType
+ {:BlockedIPRangeList {:maximum 20},
+  :SkippedIPRangeList {:maximum 20}},
+ :roomkey.aws.gamelift.Fleet.IpPermission/IpPermission
+ {:FromPort {:minimum 1, :maximum 60000},
+  :IpRange {:regex #"[^\s]+"},
+  :Protocol {:enumerations #{"TCP" "UDP"}},
+  :ToPort {:minimum 1, :maximum 60000}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.ElasticsearchBufferingHints/ElasticsearchBufferingHints
+ {:IntervalInSeconds {:minimum 60, :maximum 900},
+  :SizeInMBs {:minimum 1, :maximum 100}},
+ :roomkey.aws.servicecatalog.CloudFormationProvisionedProduct.ProvisioningPreferences/ProvisioningPreferences
+ {:StackSetFailureToleranceCount {:minimum 0},
+  :StackSetFailureTolerancePercentage {:minimum 0, :maximum 100},
+  :StackSetMaxConcurrencyCount {:minimum 1},
+  :StackSetMaxConcurrencyPercentage {:minimum 1, :maximum 100},
+  :StackSetOperationType
+  {:enumerations #{"DELETE" "UPDATE" "CREATE"}}},
+ :roomkey.aws.wafv2.WebACL.Rule/Rule
+ {:Name {:regex #"^[\w&#45;]+$", :minimum 1, :maximum 128},
+  :Priority {:minimum 0}},
+ :roomkey.aws.s3.Bucket.AccessControlTranslation/AccessControlTranslation
+ {:Owner {:enumerations #{"Destination"}}},
+ :roomkey.aws.codebuild.ReportGroup.S3ReportExportConfig/S3ReportExportConfig
+ {:Bucket {:minimum 1}, :EncryptionKey {:minimum 1}},
+ :roomkey.aws.servicediscovery.Service.DnsConfig/DnsConfig
+ {:NamespaceId {:maximum 64},
+  :RoutingPolicy {:enumerations #{"MULTIVALUE" "WEIGHTED"}}},
+ :roomkey.aws.kinesisanalytics.ApplicationOutput.Output/Output
+ {:Name {:minimum 1, :maximum 32}},
+ :roomkey.aws.ecs.Service.PlacementStrategy/PlacementStrategy
+ {:Type {:enumerations #{"random" "binpack" "spread"}}},
+ :roomkey.aws.batch.ComputeEnvironment.ComputeResources/ComputeResources
+ {:AllocationStrategy
+  {:enumerations
+   #{"BEST_FIT_PROGRESSIVE" "BEST_FIT" "SPOT_CAPACITY_OPTIMIZED"}},
+  :Type {:enumerations #{"EC2" "SPOT"}}},
+ :roomkey.aws.cognito.UserPool.VerificationMessageTemplate/VerificationMessageTemplate
+ {:DefaultEmailOption
+  {:enumerations #{"CONFIRM_WITH_CODE" "CONFIRM_WITH_LINK"}},
+  :EmailMessage
+  {:regex
+   #"[\p{L}\p{M}\p{S}\p{N}\p{P}\s*]*&#123;####&#125;[\p{L}\p{M}\p{S}\p{N}\p{P}\s*]*",
+   :minimum 6,
+   :maximum 20000},
+  :EmailMessageByLink
+  {:regex
+   #"[\p{L}\p{M}\p{S}\p{N}\p{P}\s*]*&#123;##[\p{L}\p{M}\p{S}\p{N}\p{P}\s*]*##&#125;[\p{L}\p{M}\p{S}\p{N}\p{P}\s*]*",
+   :minimum 6,
+   :maximum 20000},
+  :EmailSubject
+  {:regex #"[\p{L}\p{M}\p{S}\p{N}\p{P}\s]+", :minimum 1, :maximum 140},
+  :EmailSubjectByLink
+  {:regex #"[\p{L}\p{M}\p{S}\p{N}\p{P}\s]+", :minimum 1, :maximum 140},
+  :SmsMessage
+  {:regex #".*&#123;####&#125;.*", :minimum 6, :maximum 140}},
+ :roomkey.aws.gamelift.Fleet.ServerProcess/ServerProcess
+ {:ConcurrentExecutions {:minimum 1},
+  :Parameters {:minimum 1, :maximum 1024}},
+ :roomkey.aws.events.Rule.RunCommandTarget/RunCommandTarget
+ {:Key
+  {:regex #"^[\p{L}\p{Z}\p{N}_.:/=+&#45;@]*$",
+   :minimum 1,
+   :maximum 128},
+  :Values {:maximum 50}},
+ :roomkey.aws.sagemaker.Model.ContainerDefinition/ContainerDefinition
+ {:ContainerHostname
+  {:regex #"^[a-zA-Z0-9](-*[a-zA-Z0-9])*", :maximum 63},
+  :Image {:regex #"[\S]+", :maximum 255},
+  :Mode {:enumerations #{"SingleModel" "MultiModel"}},
+  :ModelDataUrl
+  {:regex #"^(https|s3)://([^/]+)/?(.*)$", :maximum 1024}},
+ :roomkey.aws.emr.InstanceGroupConfig.ScalingAction/ScalingAction
+ {:Market {:enumerations #{"ON_DEMAND" "SPOT"}}},
+ :roomkey.aws.sagemaker.Workteam.NotificationConfiguration/NotificationConfiguration
+ {:NotificationTopicArn
+  {:regex
+   #"arn:aws[a-z&#45;]*:sns:[a-z0-9&#45;]*:[0-9]{12}:[a-zA-Z0-9_.-]*"}},
+ :roomkey.aws.kinesisanalytics.Application.CSVMappingParameters/CSVMappingParameters
+ {:RecordColumnDelimiter {:minimum 1},
+  :RecordRowDelimiter {:minimum 1}},
+ :roomkey.aws.appstream.Stack.StorageConnector/StorageConnector
+ {:ConnectorType
+  {:enumerations #{"HOMEFOLDERS" "GOOGLE_DRIVE" "ONE_DRIVE"}},
+  :Domains {:maximum 10}},
+ :roomkey.aws.ssm.ResourceDataSync.S3Destination/S3Destination
+ {:BucketName {:minimum 1, :maximum 2048},
+  :BucketPrefix {:minimum 1, :maximum 256},
+  :BucketRegion {:minimum 1, :maximum 64},
+  :KMSKeyArn {:regex #"arn:.*", :minimum 1, :maximum 512},
+  :SyncFormat {:enumerations #{"JsonSerDe"}}},
+ :roomkey.aws.kinesisanalyticsv2.ApplicationReferenceDataSource.RecordFormat/RecordFormat
+ {:RecordFormatType {:enumerations #{"CSV" "JSON"}}},
+ :roomkey.aws.config.DeliveryChannel.ConfigSnapshotDeliveryProperties/ConfigSnapshotDeliveryProperties
+ {:DeliveryFrequency
+  {:enumerations
+   #{"Twelve_Hours" "One_Hour" "TwentyFour_Hours" "Three_Hours"
+     "Six_Hours"}}},
+ :roomkey.aws.servicecatalog.CloudFormationProvisionedProduct.ProvisioningParameter/ProvisioningParameter
+ {:Key {:minimum 1, :maximum 1000}, :Value {:maximum 4096}},
+ :roomkey.aws.acmpca.CertificateAuthority.CrlConfiguration/CrlConfiguration
+ {:CustomCname {:minimum 0, :maximum 253},
+  :ExpirationInDays {:minimum 1, :maximum 5000},
+  :S3BucketName {:minimum 3, :maximum 255}},
+ :roomkey.aws.iotanalytics.Dataset.RetentionPeriod/RetentionPeriod
+ {:NumberOfDays {:minimum 1}},
+ :roomkey.aws.gamelift.Fleet.ResourceCreationLimitPolicy/ResourceCreationLimitPolicy
+ {:NewGameSessionsPerCreator {:minimum 0},
+  :PolicyPeriodInMinutes {:minimum 0}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.CopyCommand/CopyCommand
+ {:DataTableName {:minimum 1}},
+ :roomkey.aws.datapipeline.Pipeline.ParameterAttribute/ParameterAttribute
+ {:Key
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 256},
+  :StringValue
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 10240}},
+ :roomkey.aws.route53.HealthCheck.AlarmIdentifier/AlarmIdentifier
+ {:Region
+  {:enumerations
+   #{"ap-northeast-1" "eu-west-1" "ap-east-1" "ap-northeast-3"
+     "us-east-2" "ap-southeast-2" "cn-north-1" "sa-east-1"
+     "ap-southeast-1" "cn-northwest-1" "ap-northeast-2" "eu-west-3"
+     "ca-central-1" "eu-central-1" "eu-west-2" "me-south-1" "us-west-2"
+     "us-east-1" "us-west-1" "ap-south-1" "eu-north-1"}}},
+ :roomkey.aws.wafv2.WebACL.ExcludedRule/ExcludedRule
+ {:Name {:regex #"^[\w&#45;]+$", :minimum 1, :maximum 128}},
+ :roomkey.aws.kinesisanalyticsv2.Application.EnvironmentProperties/EnvironmentProperties
+ {:PropertyGroups {:maximum 50}},
+ :roomkey.aws.ecs.TaskSet.AwsVpcConfiguration/AwsVpcConfiguration
+ {:AssignPublicIp {:enumerations #{"DISABLED" "ENABLED"}}},
+ :roomkey.aws.kinesisanalytics.Application.JSONMappingParameters/JSONMappingParameters
+ {:RecordRowPath {:minimum 1}},
+ :roomkey.aws.gamelift.Script.S3Location/S3Location
+ {:Bucket {:minimum 1},
+  :Key {:minimum 1},
+  :ObjectVersion {:minimum 1},
+  :RoleArn {:minimum 1}},
+ :roomkey.aws.autoscalingplans.ScalingPlan.ApplicationSource/ApplicationSource
+ {:CloudFormationStackARN
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*"}},
+ :roomkey.aws.iotanalytics.Datastore.RetentionPeriod/RetentionPeriod
+ {:NumberOfDays {:minimum 1}},
+ :roomkey.aws.cognito.UserPool.AccountRecoverySetting/AccountRecoverySetting
+ {:RecoveryMechanisms {:maximum 2}},
+ :roomkey.aws.kinesisanalyticsv2.ApplicationCloudWatchLoggingOption.CloudWatchLoggingOption/CloudWatchLoggingOption
+ {:LogStreamARN {:regex #"arn:.*", :minimum 1, :maximum 2048}},
+ :roomkey.aws.codepipeline.Webhook.WebhookFilterRule/WebhookFilterRule
+ {:JsonPath {:minimum 1, :maximum 150},
+  :MatchEquals {:minimum 1, :maximum 150}},
+ :roomkey.aws.kinesisanalytics.Application.RecordFormat/RecordFormat
+ {:RecordFormatType {:enumerations #{"CSV" "JSON"}}},
+ :roomkey.aws.gamelift.GameSessionQueue.Destination/Destination
+ {:DestinationArn
+  {:regex #"[a-zA-Z0-9:/-]+", :minimum 1, :maximum 256}},
+ :roomkey.aws.wafv2.RuleGroup.Rule/Rule
+ {:Name {:regex #"^[\w&#45;]+$", :minimum 1, :maximum 128},
+  :Priority {:minimum 0}},
+ :roomkey.aws.codedeploy.DeploymentGroup.DeploymentStyle/DeploymentStyle
+ {:DeploymentOption
+  {:enumerations #{"WITH_TRAFFIC_CONTROL" "WITHOUT_TRAFFIC_CONTROL"}},
+  :DeploymentType {:enumerations #{"IN_PLACE" "BLUE_GREEN"}}},
+ :roomkey.aws.waf.SizeConstraintSet.SizeConstraint/SizeConstraint
+ {:ComparisonOperator
+  {:enumerations #{"NE" "LT" "GE" "LE" "EQ" "GT"}}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.RedshiftDestinationConfiguration/RedshiftDestinationConfiguration
+ {:ClusterJDBCURL
+  {:regex
+   #"jdbc:(redshift|postgresql)://((?!-)[A-Za-z0-9-]{1,63}(?<!-)&#46;)+redshift&#46;([a-zA-Z0-9&#46;]+):\d{1,5}/[a-zA-Z0-9_$]+",
+   :minimum 1},
+  :Password {:minimum 6},
+  :RoleARN {:regex #"arn:.*", :minimum 1, :maximum 512},
+  :Username {:minimum 1}},
+ :roomkey.aws.kinesisanalytics.Application.RecordColumn/RecordColumn
+ {:SqlType {:minimum 1}},
+ :roomkey.aws.kinesisanalyticsv2.ApplicationReferenceDataSource.CSVMappingParameters/CSVMappingParameters
+ {:RecordColumnDelimiter {:minimum 1},
+  :RecordRowDelimiter {:minimum 1}},
+ :roomkey.aws.elasticbeanstalk/Environment
+ {:ApplicationName {:minimum 1, :maximum 100},
+  :CNAMEPrefix {:minimum 4, :maximum 63},
+  :Description {:maximum 200},
+  :EnvironmentName {:minimum 4, :maximum 40},
+  :TemplateName {:minimum 1, :maximum 100},
+  :VersionLabel {:minimum 1, :maximum 100}},
+ :roomkey.aws.gamelift.MatchmakingConfiguration.GameProperty/GameProperty
+ {:Key {:maximum 32}, :Value {:maximum 96}},
+ :roomkey.aws.emr.Cluster.CloudWatchAlarmDefinition/CloudWatchAlarmDefinition
+ {:ComparisonOperator
+  {:enumerations
+   #{"GREATER_THAN_OR_EQUAL" "GREATER_THAN" "LESS_THAN_OR_EQUAL"
+     "LESS_THAN"}},
+  :Statistic
+  {:enumerations
+   #{"SUM" "MINIMUM" "SAMPLE_COUNT" "AVERAGE" "MAXIMUM"}},
+  :Unit
+  {:enumerations
+   #{"KILO_BYTES_PER_SECOND" "PERCENT" "BITS" "COUNT_PER_SECOND"
+     "MICRO_SECONDS" "COUNT" "KILO_BITS" "MEGA_BITS" "TERA_BYTES"
+     "GIGA_BITS" "SECONDS" "GIGA_BYTES" "BYTES_PER_SECOND"
+     "GIGA_BITS_PER_SECOND" "MEGA_BYTES_PER_SECOND"
+     "TERA_BYTES_PER_SECOND" "KILO_BITS_PER_SECOND" "NONE" "MEGA_BYTES"
+     "BITS_PER_SECOND" "TERA_BITS" "TERA_BITS_PER_SECOND" "BYTES"
+     "MEGA_BITS_PER_SECOND" "MILLI_SECONDS" "GIGA_BYTES_PER_SECOND"
+     "KILO_BYTES"}}},
+ :roomkey.aws.kinesisanalytics.ApplicationReferenceDataSource.ReferenceDataSource/ReferenceDataSource
+ {:TableName {:minimum 1, :maximum 32}},
+ :roomkey.aws.wafv2.WebACL.TextTransformation/TextTransformation
+ {:Priority {:minimum 0}},
+ :roomkey.aws.ec2.LaunchTemplate.Placement/Placement
+ {:Tenancy {:enumerations #{"host" "dedicated" "default"}}},
+ :roomkey.aws.dlm.LifecyclePolicy.FastRestoreRule/FastRestoreRule
+ {:AvailabilityZones {:maximum 10},
+  :Count {:minimum 1, :maximum 1000},
+  :Interval {:minimum 1},
+  :IntervalUnit {:enumerations #{"WEEKS" "DAYS" "YEARS" "MONTHS"}}},
+ :roomkey.aws.config.RemediationConfiguration.SsmControls/SsmControls
+ {:ConcurrentExecutionRatePercentage {:minimum 1, :maximum 100},
+  :ErrorPercentage {:minimum 1, :maximum 100}},
+ :roomkey.aws.ssm.PatchBaseline.RuleGroup/RuleGroup
+ {:PatchRules {:maximum 10}},
+ :roomkey.aws.robomaker.SimulationApplication.SimulationSoftwareSuite/SimulationSoftwareSuite
+ {:Name {:enumerations #{"Gazebo" "RosbagPlay"}},
+  :Version {:regex #"7|9|Kinetic|Melodic|Dashing"}},
+ :roomkey.aws.ec2.Instance.Ebs/Ebs
+ {:VolumeType {:enumerations #{"standard" "sc1" "io1" "gp2" "st1"}}},
+ :roomkey.aws.cognito.UserPool.UserPoolAddOns/UserPoolAddOns
+ {:AdvancedSecurityMode {:enumerations #{"AUDIT" "ENFORCED" "OFF"}}},
+ :roomkey.aws.applicationautoscaling.ScalingPolicy.CustomizedMetricSpecification/CustomizedMetricSpecification
+ {:Statistic
+  {:enumerations
+   #{"Sum" "Average" "SampleCount" "Minimum" "Maximum"}}},
+ :roomkey.aws.fsx.FileSystem.LustreConfiguration/LustreConfiguration
+ {:ExportPath {:regex #"^.{3,900}$", :minimum 3, :maximum 900},
+  :ImportedFileChunkSize {:minimum 1, :maximum 512000},
+  :ImportPath {:regex #"^.{3,900}$", :minimum 3, :maximum 900}},
+ :roomkey.aws.ssm.MaintenanceWindowTask.MaintenanceWindowLambdaParameters/MaintenanceWindowLambdaParameters
+ {:ClientContext {:minimum 1, :maximum 8000},
+  :Qualifier {:minimum 1, :maximum 128}},
+ :roomkey.aws.iotanalytics.Pipeline.Math/Math
+ {:Attribute {:minimum 1, :maximum 256},
+  :Math {:minimum 1, :maximum 256},
+  :Name {:minimum 1, :maximum 128},
+  :Next {:minimum 1, :maximum 128}},
+ :roomkey.aws.wafregional.SizeConstraintSet.SizeConstraint/SizeConstraint
+ {:ComparisonOperator
+  {:enumerations #{"NE" "LT" "GE" "LE" "EQ" "GT"}}},
+ :roomkey.aws.kinesisanalyticsv2.ApplicationOutput.Output/Output
+ {:Name {:minimum 1, :maximum 32}},
+ :roomkey.aws.workspaces.Workspace.WorkspaceProperties/WorkspaceProperties
+ {:ComputeTypeName
+  {:enumerations
+   #{"VALUE" "POWER" "GRAPHICS" "STANDARD" "POWERPRO" "GRAPHICSPRO"
+     "PERFORMANCE"}},
+  :RunningMode {:enumerations #{"ALWAYS_ON" "AUTO_STOP"}}},
+ :roomkey.aws.elasticloadbalancingv2.Listener.Action/Action
+ {:Order {:minimum 1, :maximum 50000},
+  :Type
+  {:enumerations
+   #{"authenticate-oidc" "redirect" "fixed-response" "forward"
+     "authenticate-cognito"}}},
+ :roomkey.aws.cloudformation/Stack
+ {:NotificationARNs {:maximum 5},
+  :Tags {:maximum 50},
+  :TemplateURL {:minimum 1, :maximum 1024},
+  :TimeoutInMinutes {:minimum 1}},
+ :roomkey.aws.wafv2.RuleGroup.SingleHeader/SingleHeader
+ {:Name {:regex #".*\S.*", :minimum 1, :maximum 64}},
+ :roomkey.aws.budgets.Budget.Subscriber/Subscriber
+ {:SubscriptionType {:enumerations #{"SNS" "EMAIL"}}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.OrcSerDe/OrcSerDe
+ {:BlockSizeBytes {:minimum 67108864},
+  :Compression {:enumerations #{"NONE" "ZLIB" "SNAPPY"}},
+  :FormatVersion {:enumerations #{"V0_12" "V0_11"}},
+  :RowIndexStride {:minimum 1000},
+  :StripeSizeBytes {:minimum 8388608}},
+ :roomkey.aws.kinesisanalytics.ApplicationReferenceDataSource.RecordFormat/RecordFormat
+ {:RecordFormatType {:enumerations #{"CSV" "JSON"}}},
+ :roomkey.aws.wafregional.RateBasedRule.Predicate/Predicate
+ {:DataId {:minimum 1, :maximum 128},
+  :Type
+  {:enumerations
+   #{"SizeConstraint" "XssMatch" "GeoMatch" "SqlInjectionMatch"
+     "ByteMatch" "RegexMatch" "IPMatch"}}},
+ :roomkey.aws.ssm.Association.S3OutputLocation/S3OutputLocation
+ {:OutputS3BucketName {:minimum 3, :maximum 63},
+  :OutputS3KeyPrefix {:maximum 500}},
+ :roomkey.aws.config.OrganizationConformancePack.ConformancePackInputParameter/ConformancePackInputParameter
+ {:ParameterName {:minimum 0, :maximum 255},
+  :ParameterValue {:minimum 0, :maximum 255}},
+ :roomkey.aws.s3.Bucket.Transition/Transition
+ {:StorageClass
+  {:enumerations
+   #{"DEEP_ARCHIVE" "GLACIER" "ONEZONE_IA" "STANDARD_IA"
+     "INTELLIGENT_TIERING"}}},
+ :roomkey.aws.elasticloadbalancingv2.TargetGroup.TargetDescription/TargetDescription
+ {:Port {:minimum 1, :maximum 65535}},
+ :roomkey.aws.ec2.LaunchTemplate.TagSpecification/TagSpecification
+ {:ResourceType
+  {:enumerations
+   #{"key-pair" "traffic-mirror-target" "host-reservation"
+     "vpn-gateway" "subnet" "transit-gateway" "spot-fleet-request"
+     "vpc" "elastic-ip" "dedicated-host" "spot-instances-request"
+     "route-table" "image" "natgateway" "traffic-mirror-session"
+     "transit-gateway-route-table" "snapshot" "vpn-connection"
+     "traffic-mirror-filter" "internet-gateway" "reserved-instances"
+     "instance" "transit-gateway-multicast-domain" "fleet"
+     "network-interface" "security-group" "volume" "dhcp-options"
+     "vpc-peering-connection" "customer-gateway" "placement-group"
+     "fpga-image" "network-acl" "client-vpn-endpoint" "launch-template"
+     "transit-gateway-attachment"}}},
+ :roomkey.aws.iotevents.DetectorModel.TransitionEvent/TransitionEvent
+ {:Condition {:maximum 512},
+  :EventName {:maximum 128},
+  :NextState {:minimum 1, :maximum 128}},
+ :roomkey.aws.ec2.SpotFleet.SpotFleetRequestConfigData/SpotFleetRequestConfigData
+ {:AllocationStrategy
+  {:enumerations #{"lowestPrice" "capacityOptimized" "diversified"}},
+  :ExcessCapacityTerminationPolicy
+  {:enumerations #{"noTermination" "default"}},
+  :InstanceInterruptionBehavior
+  {:enumerations #{"stop" "hibernate" "terminate"}},
+  :Type {:enumerations #{"maintain" "request" "instant"}}},
+ :roomkey.aws.emr.Cluster.BootstrapActionConfig/BootstrapActionConfig
+ {:Name
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256}},
+ :roomkey.aws.iotanalytics.Pipeline.Filter/Filter
+ {:Filter {:minimum 1, :maximum 256},
+  :Name {:minimum 1, :maximum 128},
+  :Next {:minimum 1, :maximum 128}},
+ :roomkey.aws.events.Rule.RunCommandParameters/RunCommandParameters
+ {:RunCommandTargets {:maximum 5}},
+ :roomkey.aws.fms.Policy.PolicyTag/PolicyTag
+ {:Key
+  {:regex #"^([\p{L}\p{Z}\p{N}_.:/=+&#45;@]*)$",
+   :minimum 1,
+   :maximum 128},
+  :Value
+  {:regex #"^([\p{L}\p{Z}\p{N}_.:/=+&#45;@]*)$",
+   :minimum 0,
+   :maximum 256}},
+ :roomkey.aws.efs.FileSystem.ElasticFileSystemTag/ElasticFileSystemTag
+ {:Key {:minimum 1, :maximum 128}, :Value {:maximum 256}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.ParquetSerDe/ParquetSerDe
+ {:BlockSizeBytes {:minimum 67108864},
+  :Compression {:enumerations #{"GZIP" "UNCOMPRESSED" "SNAPPY"}},
+  :MaxPaddingBytes {:minimum 0},
+  :PageSizeBytes {:minimum 65536},
+  :WriterVersion {:enumerations #{"V2" "V1"}}},
+ :roomkey.aws.autoscaling/ScalingPolicy
+ {:AdjustmentType
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :AutoScalingGroupName
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :MetricAggregationType
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*"},
+  :PolicyType {:enumerations #{"SimpleScaling"}}},
+ :roomkey.aws.s3.Bucket.AccelerateConfiguration/AccelerateConfiguration
+ {:AccelerationStatus {:enumerations #{"Suspended" "Enabled"}}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.SchemaConfiguration/SchemaConfiguration
+ {:CatalogId {:regex #"^\S+$"},
+  :DatabaseName {:regex #"^\S+$"},
+  :Region {:regex #"^\S+$"},
+  :RoleARN {:regex #"^\S+$"},
+  :TableName {:regex #"^\S+$"},
+  :VersionId {:regex #"^\S+$"}},
+ :roomkey.aws.ssm.PatchBaseline.Rule/Rule
+ {:ApproveAfterDays {:minimum 0, :maximum 100},
+  :ComplianceLevel
+  {:enumerations
+   #{"INFORMATIONAL" "CRITICAL" "LOW" "HIGH" "UNSPECIFIED" "MEDIUM"}}},
+ :roomkey.aws.iam/UserToGroupAddition
+ {:GroupName {:regex #"[\w+=,.@-]+", :minimum 1, :maximum 128}},
+ :roomkey.aws.opsworks.Layer.AutoScalingThresholds/AutoScalingThresholds
+ {:IgnoreMetricsTime {:minimum 1, :maximum 100},
+  :ThresholdsWaitTime {:minimum 1, :maximum 100}},
+ :roomkey.aws.dlm.LifecyclePolicy.CrossRegionCopyRule/CrossRegionCopyRule
+ {:CmkArn
+  {:regex #"arn:aws(-[a-z]{1,3}){0,2}:kms:([a-z]+-){2,3}\d:\d+:key/.*",
+   :minimum 0,
+   :maximum 2048},
+  :TargetRegion {:regex #"([a-z]+-){2,3}\d", :minimum 0, :maximum 16}},
+ :roomkey.aws.budgets.Budget.NotificationWithSubscribers/NotificationWithSubscribers
+ {:Subscribers {:maximum 11}},
+ :roomkey.aws.lambda.Function.Code/Code
+ {:S3Bucket
+  {:regex #"^[0-9A-Za-z&#46;&#45;_]*(?<!&#46;)$",
+   :minimum 3,
+   :maximum 63},
+  :S3Key {:minimum 1, :maximum 1024},
+  :S3ObjectVersion {:minimum 1, :maximum 1024}},
+ :roomkey.aws.iam/Group
+ {:Path
+  {:regex #"(\u002F)|(\u002F[\u0021-\u007F]+\u002F)",
+   :minimum 1,
+   :maximum 512}},
+ :roomkey.aws.codepipeline.CustomActionType.ConfigurationProperties/ConfigurationProperties
+ {:Description {:minimum 1, :maximum 160},
+  :Name {:minimum 1, :maximum 50},
+  :Type {:enumerations #{"Number" "String" "Boolean"}}},
+ :roomkey.aws.ssm.ResourceDataSync.SyncSource/SyncSource
+ {:SourceType {:minimum 1, :maximum 64}},
+ :roomkey.aws.wafv2.WebACL.VisibilityConfig/VisibilityConfig
+ {:MetricName
+  {:regex #"^[\w#:&#46;&#45;/]+$", :minimum 1, :maximum 255}},
+ :roomkey.aws.wafv2.RuleGroup.RegexPatternSetReferenceStatement/RegexPatternSetReferenceStatement
+ {:Arn {:regex #".*\S.*", :minimum 20, :maximum 2048}},
+ :roomkey.aws.ecs.TaskDefinition.TaskDefinitionPlacementConstraint/TaskDefinitionPlacementConstraint
+ {:Type {:enumerations #{"memberOf"}}},
+ :roomkey.aws.iotanalytics.Pipeline.DeviceRegistryEnrich/DeviceRegistryEnrich
+ {:Attribute {:minimum 1, :maximum 256},
+  :Name {:minimum 1, :maximum 128},
+  :Next {:minimum 1, :maximum 128},
+  :RoleArn {:minimum 20, :maximum 2048},
+  :ThingName {:minimum 1, :maximum 256}},
+ :roomkey.aws.autoscaling.AutoScalingGroup.TagProperty/TagProperty
+ {:Key
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 128},
+  :Value
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.EncryptionConfiguration/EncryptionConfiguration
+ {:NoEncryptionConfig {:enumerations #{"NoEncryption"}}},
+ :roomkey.aws.wafv2.WebACL.RuleGroupReferenceStatement/RuleGroupReferenceStatement
+ {:Arn {:regex #".*\S.*", :minimum 20, :maximum 2048}},
+ :roomkey.aws.dms.Endpoint.S3Settings/S3Settings
+ {:CompressionType {:enumerations #{"none" "gzip"}}},
+ :roomkey.aws.s3.Bucket.DataExport/DataExport
+ {:OutputSchemaVersion {:enumerations #{"V_1"}}},
+ :roomkey.aws.kinesisanalyticsv2.Application.RecordFormat/RecordFormat
+ {:RecordFormatType {:enumerations #{"CSV" "JSON"}}},
+ :roomkey.aws.wafv2.RuleGroup.IPSetReferenceStatement/IPSetReferenceStatement
+ {:Arn {:regex #".*\S.*", :minimum 20, :maximum 2048}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.Processor/Processor
+ {:Type {:enumerations #{"Lambda"}}},
+ :roomkey.aws.kinesisanalytics.Application.KinesisFirehoseInput/KinesisFirehoseInput
+ {:ResourceARN {:regex #"arn:.*", :minimum 1, :maximum 2048},
+  :RoleARN
+  {:regex #"arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@&#45;_/]+",
+   :minimum 1,
+   :maximum 2048}},
+ :roomkey.aws.iotanalytics.Dataset.OutputFileUriValue/OutputFileUriValue
+ {:FileName {:regex #"[\w&#46;-]{1,255}"}},
+ :roomkey.aws.certificatemanager.Certificate.DomainValidationOption/DomainValidationOption
+ {:DomainName
+  {:regex
+   #"^(&#42;&#46;)?(((?!-)[A-Za-z0-9-]{0,62}[A-Za-z0-9])&#46;)+((?!-)[A-Za-z0-9-]{1,62}[A-Za-z0-9])$",
+   :minimum 1,
+   :maximum 253}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.SplunkRetryOptions/SplunkRetryOptions
+ {:DurationInSeconds {:minimum 0, :maximum 7200}},
+ :roomkey.aws.iotanalytics.Pipeline.RemoveAttributes/RemoveAttributes
+ {:Attributes {:maximum 50},
+  :Name {:minimum 1, :maximum 128},
+  :Next {:minimum 1, :maximum 128}},
+ :roomkey.aws.budgets.Budget.Notification/Notification
+ {:ComparisonOperator
+  {:enumerations #{"GREATER_THAN" "LESS_THAN" "EQUAL_TO"}},
+  :NotificationType {:enumerations #{"ACTUAL" "FORECASTED"}},
+  :ThresholdType {:enumerations #{"ABSOLUTE_VALUE" "PERCENTAGE"}}},
+ :roomkey.aws.directoryservice.MicrosoftAD.VpcSettings/VpcSettings
+ {:VpcId {:regex #"^(vpc-[0-9a-f]{8}|vpc-[0-9a-f]{17})$"}},
+ :roomkey.aws.ecs.TaskDefinition.LogConfiguration/LogConfiguration
+ {:LogDriver
+  {:enumerations
+   #{"awsfirelens" "gelf" "json-file" "fluentd" "journald" "syslog"
+     "splunk" "awslogs"}}},
+ :roomkey.aws.elasticbeanstalk.ConfigurationTemplate.SourceConfiguration/SourceConfiguration
+ {:ApplicationName {:minimum 1, :maximum 100},
+  :TemplateName {:minimum 1, :maximum 100}},
+ :roomkey.aws.kinesisanalyticsv2.ApplicationReferenceDataSource.ReferenceDataSource/ReferenceDataSource
+ {:TableName {:minimum 1, :maximum 32}},
+ :roomkey.aws.iotanalytics.Dataset.S3DestinationConfiguration/S3DestinationConfiguration
+ {:Bucket {:regex #"^[a-zA-Z0-9.&#45;_]*$", :minimum 3, :maximum 255},
+  :Key
+  {:regex #"^[a-zA-Z0-9!_.*'()/{}:-]*$", :minimum 1, :maximum 255},
+  :RoleArn {:minimum 20, :maximum 2048}},
+ :roomkey.aws.dlm.LifecyclePolicy.RetainRule/RetainRule
+ {:Count {:minimum 1, :maximum 1000},
+  :Interval {:minimum 1},
+  :IntervalUnit {:enumerations #{"WEEKS" "DAYS" "YEARS" "MONTHS"}}},
+ :roomkey.aws.ec2.EC2Fleet.OnDemandOptionsRequest/OnDemandOptionsRequest
+ {:AllocationStrategy {:enumerations #{"prioritized" "lowest-price"}}},
+ :roomkey.aws.ec2.ClientVpnEndpoint.ClientAuthenticationRequest/ClientAuthenticationRequest
+ {:Type
+  {:enumerations
+   #{"directory-service-authentication"
+     "certificate-authentication"}}},
+ :roomkey.aws.elasticloadbalancingv2.ListenerRule.Action/Action
+ {:Order {:minimum 1, :maximum 50000},
+  :Type
+  {:enumerations
+   #{"authenticate-oidc" "redirect" "fixed-response" "forward"
+     "authenticate-cognito"}}},
+ :roomkey.aws.ses.ReceiptRule.StopAction/StopAction
+ {:Scope {:enumerations #{"RuleSet"}}},
+ :roomkey.aws.kinesisanalyticsv2.Application.S3ContentLocation/S3ContentLocation
+ {:BucketARN {:regex #"arn:.*", :minimum 1, :maximum 2048},
+  :FileKey {:minimum 1, :maximum 1024}},
+ :roomkey.aws.sagemaker.Workteam.CognitoMemberDefinition/CognitoMemberDefinition
+ {:CognitoClientId {:regex #"[\w+]+", :minimum 1, :maximum 128},
+  :CognitoUserGroup
+  {:regex #"[\p{L}\p{M}\p{S}\p{N}\p{P}]+", :minimum 1, :maximum 128},
+  :CognitoUserPool
+  {:regex #"[\w-]+_[0-9a-zA-Z]+", :minimum 1, :maximum 55}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.ElasticsearchRetryOptions/ElasticsearchRetryOptions
+ {:DurationInSeconds {:minimum 0, :maximum 7200}},
+ :roomkey.aws.ecs.TaskDefinition.Ulimit/Ulimit
+ {:Name
+  {:enumerations
+   #{"nproc" "fsize" "memlock" "nofile" "cpu" "rtprio" "sigpending"
+     "rttime" "msgqueue" "locks" "data" "core" "rss" "nice" "stack"}}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.KMSEncryptionConfig/KMSEncryptionConfig
+ {:AWSKMSKeyARN {:regex #"arn:.*", :minimum 1, :maximum 512}},
+ :roomkey.aws.cloudfront.Distribution.DistributionConfig/DistributionConfig
+ {:HttpVersion {:enumerations #{"http2" "http1.1"}},
+  :PriceClass
+  {:enumerations
+   #{"PriceClass_200" "PriceClass_All" "PriceClass_100"}}},
+ :roomkey.aws.codebuild.Project.ProjectFileSystemLocation/ProjectFileSystemLocation
+ {:Type {:enumerations #{"EFS"}}},
+ :roomkey.aws.wafregional.GeoMatchSet.GeoMatchConstraint/GeoMatchConstraint
+ {:Type {:enumerations #{"Country"}},
+  :Value
+  {:enumerations
+   #{"CR" "TG" "TJ" "ZA" "IM" "PE" "LC" "CH" "RU" "MP" "CK" "SI" "AU"
+     "KR" "IT" "FI" "GF" "SC" "SX" "TT" "TK" "MY" "SY" "MN" "TF" "KP"
+     "AM" "DZ" "UY" "TD" "DJ" "BI" "MK" "MU" "LI" "NU" "GR" "GY" "CG"
+     "NF" "ML" "AX" "GM" "SA" "CX" "BH" "NE" "BN" "MF" "CD" "DK" "BJ"
+     "ME" "SJ" "BO" "JO" "CV" "VE" "CI" "UZ" "TN" "IS" "EH" "TM" "GA"
+     "LS" "TZ" "AT" "LT" "NP" "BG" "IL" "GU" "PK" "PT" "HR" "VU" "PF"
+     "BM" "MR" "GE" "HU" "TW" "MM" "VG" "YE" "SR" "PN" "VA" "PR" "KW"
+     "SE" "GB" "UM" "VN" "CF" "PA" "VC" "JP" "IR" "AF" "LY" "MZ" "RO"
+     "QA" "CM" "GG" "BY" "SD" "BQ" "MO" "KY" "AR" "BR" "ZW" "NR" "NZ"
+     "AW" "FJ" "ID" "SV" "CN" "FM" "HT" "CC" "RW" "BA" "TL" "JM" "KM"
+     "KE" "WS" "TO" "PY" "SH" "CY" "GH" "MA" "SG" "LK" "PH" "SM" "WF"
+     "TR" "PS" "BZ" "CU" "TV" "AD" "SB" "DM" "LR" "OM" "SO" "DO" "AL"
+     "BL" "FR" "GW" "MS" "BB" "CA" "MG" "KH" "LA" "GP" "BV" "HN" "TH"
+     "DE" "LB" "KZ" "AS" "EC" "NO" "AO" "FK" "ET" "GS" "MD" "AG" "BE"
+     "MV" "SZ" "CZ" "CL" "BT" "NL" "EG" "MQ" "SN" "FO" "EE" "AQ" "ST"
+     "KN" "BW" "MH" "NI" "PG" "VI" "IQ" "KG" "US" "ZM" "MC" "GI" "NC"
+     "GT" "BF" "YT" "LU" "UA" "IE" "LV" "GD" "MW" "BS" "AZ" "SK" "GQ"
+     "TC" "RE" "IN" "ES" "GL" "KI" "HK" "CO" "SS" "RS" "IO" "NG" "UG"
+     "CW" "SL" "ER" "JE" "AE" "HM" "PM" "BD" "MT" "AI" "GN" "PW" "NA"
+     "MX" "PL"}}},
+ :roomkey.aws.config.RemediationConfiguration.ResourceValue/ResourceValue
+ {:Value {:enumerations #{"RESOURCE_ID"}}},
+ :roomkey.aws.cognito.UserPool.LambdaConfig/LambdaConfig
+ {:DefineAuthChallenge
+  {:regex
+   #"arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=/,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?",
+   :minimum 20,
+   :maximum 2048},
+  :VerifyAuthChallengeResponse
+  {:regex
+   #"arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=/,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?",
+   :minimum 20,
+   :maximum 2048},
+  :UserMigration
+  {:regex
+   #"arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=/,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?",
+   :minimum 20,
+   :maximum 2048},
+  :PostConfirmation
+  {:regex
+   #"arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=/,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?",
+   :minimum 20,
+   :maximum 2048},
+  :PreTokenGeneration
+  {:regex
+   #"arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=/,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?",
+   :minimum 20,
+   :maximum 2048},
+  :PostAuthentication
+  {:regex
+   #"arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=/,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?",
+   :minimum 20,
+   :maximum 2048},
+  :PreAuthentication
+  {:regex
+   #"arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=/,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?",
+   :minimum 20,
+   :maximum 2048},
+  :PreSignUp
+  {:regex
+   #"arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=/,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?",
+   :minimum 20,
+   :maximum 2048},
+  :CreateAuthChallenge
+  {:regex
+   #"arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=/,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?",
+   :minimum 20,
+   :maximum 2048},
+  :CustomMessage
+  {:regex
+   #"arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=/,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?",
+   :minimum 20,
+   :maximum 2048}},
+ :roomkey.aws.iam.Role.Policy/Policy
+ {:PolicyDocument
+  {:regex #"[\u0009\u000A\u000D\u0020-\u00FF]+",
+   :minimum 1,
+   :maximum 131072},
+  :PolicyName {:regex #"[\w+=,.@-]+", :minimum 1, :maximum 128}},
+ :roomkey.aws.cognito.UserPoolRiskConfigurationAttachment.NotifyEmailType/NotifyEmailType
+ {:HtmlBody
+  {:regex #"[\p{L}\p{M}\p{S}\p{N}\p{P}\s*]+",
+   :minimum 6,
+   :maximum 20000},
+  :Subject
+  {:regex #"[\p{L}\p{M}\p{S}\p{N}\p{P}\s]+", :minimum 1, :maximum 140},
+  :TextBody
+  {:regex #"[\p{L}\p{M}\p{S}\p{N}\p{P}\s*]+",
+   :minimum 6,
+   :maximum 20000}},
+ :roomkey.aws.cognito.UserPool.AdminCreateUserConfig/AdminCreateUserConfig
+ {:UnusedAccountValidityDays {:minimum 0, :maximum 365}},
+ :roomkey.aws.kinesisanalytics.Application.Input/Input
+ {:NamePrefix {:minimum 1, :maximum 32}},
+ :roomkey.aws.autoscaling.AutoScalingGroup.LaunchTemplateOverrides/LaunchTemplateOverrides
+ {:InstanceType
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :WeightedCapacity
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 32}},
+ :roomkey.aws.autoscalingplans.ScalingPlan.PredefinedLoadMetricSpecification/PredefinedLoadMetricSpecification
+ {:PredefinedLoadMetricType
+  {:enumerations
+   #{"ASGTotalCPUUtilization" "ASGTotalNetworkOut" "ASGTotalNetworkIn"
+     "ALBTargetGroupRequestCount"}}},
+ :roomkey.aws.kinesisanalyticsv2.Application.CodeContent/CodeContent
+ {:TextContent {:minimum 0, :maximum 102400}},
+ :roomkey.aws.s3.Bucket.Rule/Rule
+ {:Status {:enumerations #{"Disabled" "Enabled"}}},
+ :roomkey.aws.dms.Endpoint.KinesisSettings/KinesisSettings
+ {:MessageFormat {:enumerations #{"json"}}},
+ :roomkey.aws.autoscalingplans.ScalingPlan.ScalingInstruction/ScalingInstruction
+ {:PredictiveScalingMode
+  {:enumerations #{"ForecastOnly" "ForecastAndScale"}},
+  :ScalingPolicyUpdateBehavior
+  {:enumerations #{"KeepExternalPolicies" "ReplaceExternalPolicies"}},
+  :ScheduledActionBufferTime {:minimum 0},
+  :ServiceNamespace
+  {:enumerations #{"dynamodb" "ec2" "ecs" "autoscaling" "rds"}}},
+ :roomkey.aws.s3.Bucket.SseKmsEncryptedObjects/SseKmsEncryptedObjects
+ {:Status {:enumerations #{"Disabled" "Enabled"}}},
+ :roomkey.aws.iam.Group.Policy/Policy
+ {:PolicyDocument
+  {:regex #"[\u0009\u000A\u000D\u0020-\u00FF]+",
+   :minimum 1,
+   :maximum 131072},
+  :PolicyName {:regex #"[\w+=,.@-]+", :minimum 1, :maximum 128}},
+ :roomkey.aws.autoscaling.AutoScalingGroup.MetricsCollection/MetricsCollection
+ {:Granularity {:enumerations #{"1Minute"}}},
+ :roomkey.aws.emr.Cluster.SimpleScalingPolicyConfiguration/SimpleScalingPolicyConfiguration
+ {:AdjustmentType
+  {:enumerations
+   #{"EXACT_CAPACITY" "PERCENT_CHANGE_IN_CAPACITY"
+     "CHANGE_IN_CAPACITY"}}},
+ :roomkey.aws.servicediscovery.Service.HealthCheckConfig/HealthCheckConfig
+ {:FailureThreshold {:minimum 1, :maximum 10},
+  :ResourcePath {:maximum 255}},
+ :roomkey.aws.sagemaker.Model.VpcConfig/VpcConfig
+ {:SecurityGroupIds {:maximum 5}, :Subnets {:maximum 16}},
+ :roomkey.aws.wafv2.WebACL.ManagedRuleGroupStatement/ManagedRuleGroupStatement
+ {:Name {:regex #"^[\w&#45;]+$", :minimum 1, :maximum 128},
+  :VendorName {:regex #".*\S.*", :minimum 1, :maximum 128}},
+ :roomkey.aws.transfer.Server.EndpointDetails/EndpointDetails
+ {:VpcEndpointId
+  {:regex #"^vpce-[0-9a-f]{17}$", :minimum 22, :maximum 22}},
+ :roomkey.aws.kinesisanalytics.Application.InputSchema/InputSchema
+ {:RecordColumns {:maximum 1000}, :RecordEncoding {:regex #"UTF-8"}},
+ :roomkey.aws.iotanalytics.Dataset.DatasetContentVersionValue/DatasetContentVersionValue
+ {:DatasetName {:regex #"^[a-zA-Z0-9_]+$", :minimum 1, :maximum 128}},
+ :roomkey.aws.ec2.SpotFleet.LaunchTemplateOverrides/LaunchTemplateOverrides
+ {:InstanceType
+  {:enumerations
+   #{"c5d.metal" "m1.large" "t3.small" "i3en.2xlarge" "m5ad.4xlarge"
+     "cc1.4xlarge" "t3a.xlarge" "z1d.large" "x1e.32xlarge" "t3a.small"
+     "r5d.xlarge" "r5a.large" "r5a.xlarge" "m5d.24xlarge" "c1.medium"
+     "r4.2xlarge" "inf1.24xlarge" "r3.8xlarge" "r5.4xlarge"
+     "m5ad.16xlarge" "d2.xlarge" "m3.2xlarge" "r5d.8xlarge"
+     "i3en.12xlarge" "i2.8xlarge" "r5dn.2xlarge" "h1.16xlarge"
+     "m5.xlarge" "r5a.2xlarge" "t3.2xlarge" "g2.2xlarge" "g3.8xlarge"
+     "m5n.large" "t3a.medium" "t3.xlarge" "c3.8xlarge" "t2.large"
+     "r5ad.24xlarge" "m5n.4xlarge" "x1e.4xlarge" "t3.nano"
+     "p2.16xlarge" "m1.xlarge" "m5a.24xlarge" "d2.8xlarge"
+     "r5n.12xlarge" "r5d.large" "m4.4xlarge" "m5a.8xlarge" "t2.2xlarge"
+     "r4.16xlarge" "m5d.16xlarge" "r5n.16xlarge" "c5.24xlarge"
+     "r5dn.24xlarge" "u-12tb1.metal" "r5d.4xlarge" "c5.metal"
+     "g3.16xlarge" "z1d.2xlarge" "m5d.8xlarge" "t3.large" "h1.2xlarge"
+     "g3.4xlarge" "cr1.8xlarge" "t1.micro" "r5ad.16xlarge" "a1.2xlarge"
+     "c5d.large" "g4dn.4xlarge" "m5ad.2xlarge" "r5a.24xlarge"
+     "z1d.xlarge" "t3a.2xlarge" "c5.4xlarge" "p3dn.24xlarge"
+     "m5n.8xlarge" "c3.2xlarge" "g2.8xlarge" "a1.metal" "z1d.3xlarge"
+     "u-18tb1.metal" "r5ad.12xlarge" "c5d.18xlarge" "c4.8xlarge"
+     "m5dn.2xlarge" "m5a.16xlarge" "c5.18xlarge" "x1e.2xlarge"
+     "r5.metal" "i3en.6xlarge" "z1d.6xlarge" "inf1.2xlarge"
+     "m5n.12xlarge" "u-24tb1.metal" "m5dn.24xlarge" "m2.xlarge"
+     "m1.small" "i2.4xlarge" "c3.4xlarge" "i3.16xlarge" "t2.micro"
+     "r5d.16xlarge" "z1d.metal" "g3s.xlarge" "d2.2xlarge" "x1.32xlarge"
+     "m4.2xlarge" "r5d.24xlarge" "u-6tb1.metal" "i3.4xlarge"
+     "m4.10xlarge" "i3.metal" "m1.medium" "g4dn.2xlarge" "c5n.xlarge"
+     "c4.4xlarge" "hi1.4xlarge" "r3.xlarge" "c5n.large" "x1e.16xlarge"
+     "r5a.16xlarge" "m5.large" "r5n.8xlarge" "r5dn.4xlarge"
+     "c5d.24xlarge" "r5.xlarge" "c4.2xlarge" "i3.8xlarge" "m5.8xlarge"
+     "p3.2xlarge" "m5.4xlarge" "t3.medium" "u-9tb1.metal"
+     "r5ad.8xlarge" "m5ad.8xlarge" "t2.small" "r5n.xlarge"
+     "c5n.4xlarge" "r4.xlarge" "m5ad.xlarge" "m5ad.12xlarge"
+     "m5a.2xlarge" "m5.2xlarge" "z1d.12xlarge" "i3en.metal"
+     "r5a.8xlarge" "t3.micro" "m5dn.4xlarge" "c5.large" "c5.2xlarge"
+     "m5dn.8xlarge" "f1.2xlarge" "m5d.4xlarge" "c5d.xlarge" "m3.xlarge"
+     "c5d.9xlarge" "r3.2xlarge" "m5d.metal" "cg1.4xlarge" "m5ad.large"
+     "r3.4xlarge" "r5n.large" "m5.16xlarge" "t2.xlarge" "c4.xlarge"
+     "m2.2xlarge" "t3a.micro" "f1.4xlarge" "r5.large" "p2.8xlarge"
+     "r5d.12xlarge" "m5.metal" "r5ad.large" "x1.16xlarge" "m5n.xlarge"
+     "m4.large" "c5n.2xlarge" "r5dn.8xlarge" "i3en.large"
+     "r5ad.2xlarge" "r5ad.xlarge" "m4.16xlarge" "r3.large"
+     "m5n.16xlarge" "d2.4xlarge" "h1.8xlarge" "r5n.4xlarge"
+     "i3.2xlarge" "c4.large" "h1.4xlarge" "m5d.12xlarge" "r5ad.4xlarge"
+     "m4.xlarge" "m5a.large" "f1.16xlarge" "r5.12xlarge" "m5a.4xlarge"
+     "i2.2xlarge" "p3.16xlarge" "inf1.6xlarge" "m5ad.24xlarge"
+     "r5dn.12xlarge" "i3.xlarge" "m5n.24xlarge" "c5n.9xlarge"
+     "r5dn.16xlarge" "m5dn.large" "c5d.12xlarge" "r5dn.xlarge"
+     "i3en.3xlarge" "t2.nano" "m2.4xlarge" "r5a.4xlarge" "r5d.metal"
+     "g4dn.16xlarge" "r4.large" "m5a.xlarge" "c3.xlarge" "p2.xlarge"
+     "g4dn.12xlarge" "c5d.4xlarge" "m5dn.12xlarge" "i3.large"
+     "a1.4xlarge" "g4dn.xlarge" "r4.8xlarge" "a1.xlarge" "t2.medium"
+     "i3en.xlarge" "p3.8xlarge" "m5a.12xlarge" "c3.large" "c5.12xlarge"
+     "m3.medium" "a1.medium" "m5n.2xlarge" "r5dn.large" "m5d.2xlarge"
+     "r5d.2xlarge" "t3a.nano" "i2.xlarge" "m5.24xlarge" "c5n.18xlarge"
+     "r5a.12xlarge" "c5.9xlarge" "g4dn.8xlarge" "m5d.large"
+     "m5.12xlarge" "cc2.8xlarge" "hs1.8xlarge" "r5.16xlarge"
+     "m5dn.16xlarge" "m3.large" "i3en.24xlarge" "x1e.xlarge"
+     "c1.xlarge" "c5d.2xlarge" "x1e.8xlarge" "r5.2xlarge" "m5dn.xlarge"
+     "t3a.large" "m5d.xlarge" "r5n.2xlarge" "r5n.24xlarge" "a1.large"
+     "c5.xlarge" "r4.4xlarge" "inf1.xlarge" "r5.8xlarge"
+     "r5.24xlarge"}}},
+ :roomkey.aws.datapipeline.Pipeline.Field/Field
+ {:Key
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 256},
+  :RefValue
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 256},
+  :StringValue
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 10240}},
+ :roomkey.aws.codebuild.Project.WebhookFilter/WebhookFilter
+ {:Type
+  {:enumerations
+   #{"FILE_PATH" "BASE_REF" "EVENT" "HEAD_REF" "ACTOR_ACCOUNT_ID"}}},
+ :roomkey.aws.datapipeline.Pipeline.ParameterValue/ParameterValue
+ {:Id
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 256},
+  :StringValue
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 10240}},
+ :roomkey.aws.fsx.FileSystem.SelfManagedActiveDirectoryConfiguration/SelfManagedActiveDirectoryConfiguration
+ {:DomainName {:regex #"^.{1,255}$", :minimum 1, :maximum 255},
+  :FileSystemAdministratorsGroup
+  {:regex #"^.{1,256}$", :minimum 1, :maximum 256},
+  :OrganizationalUnitDistinguishedName
+  {:regex #"^.{1,2000}$", :minimum 1, :maximum 2000},
+  :Password {:regex #"^.{1,256}$", :minimum 1, :maximum 256},
+  :UserName {:regex #"^.{1,256}$", :minimum 1, :maximum 256}},
+ :roomkey.aws.cloudwatch.Alarm.Dimension/Dimension
+ {:Name {:minimum 1, :maximum 255}, :Value {:minimum 1, :maximum 255}},
+ :roomkey.aws.ssm.MaintenanceWindowTask.Target/Target
+ {:Key
+  {:regex
+   #"^[\p{L}\p{Z}\p{N}_.:/=&#45;@]*$|resource-groups:ResourceTypeFilters|resource-groups:Name",
+   :minimum 1,
+   :maximum 163},
+  :Values {:maximum 50}},
+ :roomkey.aws.mediastore.Container.CorsRule/CorsRule
+ {:AllowedHeaders {:maximum 100},
+  :AllowedMethods {:maximum 4},
+  :AllowedOrigins {:maximum 100},
+  :ExposeHeaders {:maximum 100},
+  :MaxAgeSeconds {:minimum 0, :maximum 2147483647}},
+ :roomkey.aws.gamelift.Fleet.CertificateConfiguration/CertificateConfiguration
+ {:CertificateType {:enumerations #{"DISABLED" "GENERATED"}}},
+ :roomkey.aws.emr.Step.KeyValue/KeyValue
+ {:Key
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 10280},
+  :Value
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 10280}},
+ :roomkey.aws.codepipeline.Pipeline.ActionDeclaration/ActionDeclaration
+ {:Name {:regex #"[A-Za-z0-9.@&#45;_]+", :minimum 1, :maximum 100},
+  :Namespace {:regex #"[A-Za-z0-9@&#45;_]+", :minimum 1, :maximum 100},
+  :Region {:minimum 4, :maximum 30},
+  :RoleArn
+  {:regex #"arn:aws(-[\w]+)*:iam::[0-9]{12}:role/.*", :maximum 1024},
+  :RunOrder {:minimum 1, :maximum 999}},
+ :roomkey.aws.ec2.LaunchTemplate.Ebs/Ebs
+ {:VolumeType {:enumerations #{"standard" "sc1" "io1" "gp2" "st1"}}},
+ :roomkey.aws.iotanalytics.Pipeline.Datastore/Datastore
+ {:DatastoreName {:regex #"^[a-zA-Z0-9_]+$", :minimum 1, :maximum 128},
+  :Name {:minimum 1, :maximum 128}},
+ :roomkey.aws.ssm.MaintenanceWindowTask.MaintenanceWindowRunCommandParameters/MaintenanceWindowRunCommandParameters
+ {:Comment {:maximum 100},
+  :DocumentHash {:maximum 256},
+  :DocumentHashType {:enumerations #{"Sha256" "Sha1"}},
+  :OutputS3BucketName {:minimum 3, :maximum 63},
+  :OutputS3KeyPrefix {:maximum 500},
+  :TimeoutSeconds {:minimum 30, :maximum 2592000}},
+ :roomkey.aws.kinesisanalytics.ApplicationReferenceDataSource.JSONMappingParameters/JSONMappingParameters
+ {:RecordRowPath {:minimum 1}},
+ :roomkey.aws.ssm.MaintenanceWindowTask.LoggingInfo/LoggingInfo
+ {:Region {:minimum 3, :maximum 20},
+  :S3Bucket {:minimum 3, :maximum 63},
+  :S3Prefix {:maximum 500}},
+ :roomkey.aws.kinesisanalytics.ApplicationReferenceDataSource.S3ReferenceDataSource/S3ReferenceDataSource
+ {:BucketARN {:regex #"arn:.*", :minimum 1, :maximum 2048},
+  :FileKey {:minimum 1, :maximum 1024},
+  :ReferenceRoleARN
+  {:regex #"arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@&#45;_/]+",
+   :minimum 1,
+   :maximum 2048}},
+ :roomkey.aws.appstream.ImageBuilder.AccessEndpoint/AccessEndpoint
+ {:EndpointType {:enumerations #{"STREAMING"}}, :VpceId {:minimum 1}},
+ :roomkey.aws.ec2.SpotFleet.SpotFleetLaunchSpecification/SpotFleetLaunchSpecification
+ {:InstanceType
+  {:enumerations
+   #{"c5d.metal" "m1.large" "t3.small" "i3en.2xlarge" "m5ad.4xlarge"
+     "cc1.4xlarge" "t3a.xlarge" "z1d.large" "x1e.32xlarge" "t3a.small"
+     "r5d.xlarge" "r5a.large" "r5a.xlarge" "m5d.24xlarge" "c1.medium"
+     "r4.2xlarge" "inf1.24xlarge" "r3.8xlarge" "r5.4xlarge"
+     "m5ad.16xlarge" "d2.xlarge" "m3.2xlarge" "r5d.8xlarge"
+     "i3en.12xlarge" "i2.8xlarge" "r5dn.2xlarge" "h1.16xlarge"
+     "m5.xlarge" "r5a.2xlarge" "t3.2xlarge" "g2.2xlarge" "g3.8xlarge"
+     "m5n.large" "t3a.medium" "t3.xlarge" "c3.8xlarge" "t2.large"
+     "r5ad.24xlarge" "m5n.4xlarge" "x1e.4xlarge" "t3.nano"
+     "p2.16xlarge" "m1.xlarge" "m5a.24xlarge" "d2.8xlarge"
+     "r5n.12xlarge" "r5d.large" "m4.4xlarge" "m5a.8xlarge" "t2.2xlarge"
+     "r4.16xlarge" "m5d.16xlarge" "r5n.16xlarge" "c5.24xlarge"
+     "r5dn.24xlarge" "u-12tb1.metal" "r5d.4xlarge" "c5.metal"
+     "g3.16xlarge" "z1d.2xlarge" "m5d.8xlarge" "t3.large" "h1.2xlarge"
+     "g3.4xlarge" "cr1.8xlarge" "t1.micro" "r5ad.16xlarge" "a1.2xlarge"
+     "c5d.large" "g4dn.4xlarge" "m5ad.2xlarge" "r5a.24xlarge"
+     "z1d.xlarge" "t3a.2xlarge" "c5.4xlarge" "p3dn.24xlarge"
+     "m5n.8xlarge" "c3.2xlarge" "g2.8xlarge" "a1.metal" "z1d.3xlarge"
+     "u-18tb1.metal" "r5ad.12xlarge" "c5d.18xlarge" "c4.8xlarge"
+     "m5dn.2xlarge" "m5a.16xlarge" "c5.18xlarge" "x1e.2xlarge"
+     "r5.metal" "i3en.6xlarge" "z1d.6xlarge" "inf1.2xlarge"
+     "m5n.12xlarge" "u-24tb1.metal" "m5dn.24xlarge" "m2.xlarge"
+     "m1.small" "i2.4xlarge" "c3.4xlarge" "i3.16xlarge" "t2.micro"
+     "r5d.16xlarge" "z1d.metal" "g3s.xlarge" "d2.2xlarge" "x1.32xlarge"
+     "m4.2xlarge" "r5d.24xlarge" "u-6tb1.metal" "i3.4xlarge"
+     "m4.10xlarge" "i3.metal" "m1.medium" "g4dn.2xlarge" "c5n.xlarge"
+     "c4.4xlarge" "hi1.4xlarge" "r3.xlarge" "c5n.large" "x1e.16xlarge"
+     "r5a.16xlarge" "m5.large" "r5n.8xlarge" "r5dn.4xlarge"
+     "c5d.24xlarge" "r5.xlarge" "c4.2xlarge" "i3.8xlarge" "m5.8xlarge"
+     "p3.2xlarge" "m5.4xlarge" "t3.medium" "u-9tb1.metal"
+     "r5ad.8xlarge" "m5ad.8xlarge" "t2.small" "r5n.xlarge"
+     "c5n.4xlarge" "r4.xlarge" "m5ad.xlarge" "m5ad.12xlarge"
+     "m5a.2xlarge" "m5.2xlarge" "z1d.12xlarge" "i3en.metal"
+     "r5a.8xlarge" "t3.micro" "m5dn.4xlarge" "c5.large" "c5.2xlarge"
+     "m5dn.8xlarge" "f1.2xlarge" "m5d.4xlarge" "c5d.xlarge" "m3.xlarge"
+     "c5d.9xlarge" "r3.2xlarge" "m5d.metal" "cg1.4xlarge" "m5ad.large"
+     "r3.4xlarge" "r5n.large" "m5.16xlarge" "t2.xlarge" "c4.xlarge"
+     "m2.2xlarge" "t3a.micro" "f1.4xlarge" "r5.large" "p2.8xlarge"
+     "r5d.12xlarge" "m5.metal" "r5ad.large" "x1.16xlarge" "m5n.xlarge"
+     "m4.large" "c5n.2xlarge" "r5dn.8xlarge" "i3en.large"
+     "r5ad.2xlarge" "r5ad.xlarge" "m4.16xlarge" "r3.large"
+     "m5n.16xlarge" "d2.4xlarge" "h1.8xlarge" "r5n.4xlarge"
+     "i3.2xlarge" "c4.large" "h1.4xlarge" "m5d.12xlarge" "r5ad.4xlarge"
+     "m4.xlarge" "m5a.large" "f1.16xlarge" "r5.12xlarge" "m5a.4xlarge"
+     "i2.2xlarge" "p3.16xlarge" "inf1.6xlarge" "m5ad.24xlarge"
+     "r5dn.12xlarge" "i3.xlarge" "m5n.24xlarge" "c5n.9xlarge"
+     "r5dn.16xlarge" "m5dn.large" "c5d.12xlarge" "r5dn.xlarge"
+     "i3en.3xlarge" "t2.nano" "m2.4xlarge" "r5a.4xlarge" "r5d.metal"
+     "g4dn.16xlarge" "r4.large" "m5a.xlarge" "c3.xlarge" "p2.xlarge"
+     "g4dn.12xlarge" "c5d.4xlarge" "m5dn.12xlarge" "i3.large"
+     "a1.4xlarge" "g4dn.xlarge" "r4.8xlarge" "a1.xlarge" "t2.medium"
+     "i3en.xlarge" "p3.8xlarge" "m5a.12xlarge" "c3.large" "c5.12xlarge"
+     "m3.medium" "a1.medium" "m5n.2xlarge" "r5dn.large" "m5d.2xlarge"
+     "r5d.2xlarge" "t3a.nano" "i2.xlarge" "m5.24xlarge" "c5n.18xlarge"
+     "r5a.12xlarge" "c5.9xlarge" "g4dn.8xlarge" "m5d.large"
+     "m5.12xlarge" "cc2.8xlarge" "hs1.8xlarge" "r5.16xlarge"
+     "m5dn.16xlarge" "m3.large" "i3en.24xlarge" "x1e.xlarge"
+     "c1.xlarge" "c5d.2xlarge" "x1e.8xlarge" "r5.2xlarge" "m5dn.xlarge"
+     "t3a.large" "m5d.xlarge" "r5n.2xlarge" "r5n.24xlarge" "a1.large"
+     "c5.xlarge" "r4.4xlarge" "inf1.xlarge" "r5.8xlarge"
+     "r5.24xlarge"}}},
+ :roomkey.aws.ecs.Service.PlacementConstraint/PlacementConstraint
+ {:Type {:enumerations #{"distinctInstance" "memberOf"}}},
+ :roomkey.aws.kinesisanalyticsv2.Application.Input/Input
+ {:NamePrefix {:minimum 1, :maximum 32}},
+ :roomkey.aws.wafv2.RuleGroup.TextTransformation/TextTransformation
+ {:Priority {:minimum 0}},
+ :roomkey.aws.kinesisanalyticsv2.ApplicationOutput.DestinationSchema/DestinationSchema
+ {:RecordFormatType {:enumerations #{"CSV" "JSON"}}},
+ :roomkey.aws.emr.InstanceGroupConfig.CloudWatchAlarmDefinition/CloudWatchAlarmDefinition
+ {:ComparisonOperator
+  {:enumerations
+   #{"GREATER_THAN_OR_EQUAL" "GREATER_THAN" "LESS_THAN_OR_EQUAL"
+     "LESS_THAN"}},
+  :Statistic
+  {:enumerations
+   #{"SUM" "MINIMUM" "SAMPLE_COUNT" "AVERAGE" "MAXIMUM"}},
+  :Unit
+  {:enumerations
+   #{"KILO_BYTES_PER_SECOND" "PERCENT" "BITS" "COUNT_PER_SECOND"
+     "MICRO_SECONDS" "COUNT" "KILO_BITS" "MEGA_BITS" "TERA_BYTES"
+     "GIGA_BITS" "SECONDS" "GIGA_BYTES" "BYTES_PER_SECOND"
+     "GIGA_BITS_PER_SECOND" "MEGA_BYTES_PER_SECOND"
+     "TERA_BYTES_PER_SECOND" "KILO_BITS_PER_SECOND" "NONE" "MEGA_BYTES"
+     "BITS_PER_SECOND" "TERA_BITS" "TERA_BITS_PER_SECOND" "BYTES"
+     "MEGA_BITS_PER_SECOND" "MILLI_SECONDS" "GIGA_BYTES_PER_SECOND"
+     "KILO_BYTES"}}},
+ :roomkey.aws.autoscaling.AutoScalingGroup.InstancesDistribution/InstancesDistribution
+ {:OnDemandAllocationStrategy
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*"},
+  :SpotAllocationStrategy
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*"},
+  :SpotMaxPrice {:minimum 0, :maximum 255}},
+ :roomkey.aws.ssm.PatchBaseline.PatchFilter/PatchFilter
+ {:Key
+  {:enumerations
+   #{"PATCH_ID" "PATCH_SET" "CLASSIFICATION" "SEVERITY" "MSRC_SEVERITY"
+     "SECTION" "PRODUCT" "PRIORITY" "PRODUCT_FAMILY"}},
+  :Values {:maximum 20}},
+ :roomkey.aws.waf.Rule.Predicate/Predicate
+ {:DataId {:minimum 1, :maximum 128},
+  :Type
+  {:enumerations
+   #{"SizeConstraint" "XssMatch" "GeoMatch" "SqlInjectionMatch"
+     "ByteMatch" "RegexMatch" "IPMatch"}}},
+ :roomkey.aws.iotanalytics.Dataset.ContainerAction/ContainerAction
+ {:ExecutionRoleArn {:minimum 20, :maximum 2048},
+  :Image {:maximum 255},
+  :Variables {:maximum 50}},
+ :roomkey.aws.opsworks.App.Source/Source
+ {:Type {:enumerations #{"svn" "archive" "s3" "git"}}},
+ :roomkey.aws.cloudfront.Distribution.Cookies/Cookies
+ {:Forward {:enumerations #{"none" "whitelist" "all"}}},
+ :roomkey.aws.codepipeline.Pipeline.StageDeclaration/StageDeclaration
+ {:Name {:regex #"[A-Za-z0-9.@&#45;_]+", :minimum 1, :maximum 100}},
+ :roomkey.aws.s3.Bucket.FilterRule/FilterRule
+ {:Name {:enumerations #{"prefix" "suffix"}}},
+ :roomkey.aws.elasticache/CacheCluster
+ {:AZMode {:enumerations #{"cross-az" "single-az"}}},
+ :roomkey.aws.iotanalytics.Dataset.TriggeringDataset/TriggeringDataset
+ {:DatasetName {:regex #"^[a-zA-Z0-9_]+$", :minimum 1, :maximum 128}},
+ :roomkey.aws.cognito.UserPool.SmsConfiguration/SmsConfiguration
+ {:SnsCallerArn
+  {:regex
+   #"arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=/,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?",
+   :minimum 20,
+   :maximum 2048}},
+ :roomkey.aws.cloudwatch.Alarm.Metric/Metric
+ {:Dimensions {:maximum 10},
+  :MetricName {:minimum 1, :maximum 255},
+  :Namespace {:regex #"[^:].*", :minimum 1, :maximum 255}},
+ :roomkey.aws.ec2.ClientVpnEndpoint.TagSpecification/TagSpecification
+ {:ResourceType
+  {:enumerations
+   #{"key-pair" "traffic-mirror-target" "host-reservation"
+     "vpn-gateway" "subnet" "transit-gateway" "spot-fleet-request"
+     "vpc" "elastic-ip" "dedicated-host" "spot-instances-request"
+     "route-table" "image" "natgateway" "traffic-mirror-session"
+     "transit-gateway-route-table" "snapshot" "vpn-connection"
+     "traffic-mirror-filter" "internet-gateway" "reserved-instances"
+     "instance" "transit-gateway-multicast-domain" "fleet"
+     "network-interface" "security-group" "volume" "dhcp-options"
+     "vpc-peering-connection" "customer-gateway" "placement-group"
+     "fpga-image" "network-acl" "client-vpn-endpoint" "launch-template"
+     "transit-gateway-attachment"}}},
+ :roomkey.aws.robomaker.SimulationApplication.SourceConfig/SourceConfig
+ {:Architecture {:enumerations #{"X86_64" "ARM64" "ARMHF"}},
+  :S3Bucket
+  {:regex #"[a-z0-9][a-z0-9.&#45;]*[a-z0-9]", :minimum 3, :maximum 63},
+  :S3Key {:regex #".*", :minimum 1, :maximum 1024}},
+ :roomkey.aws.ssm.Association.Target/Target
+ {:Key
+  {:regex
+   #"^[\p{L}\p{Z}\p{N}_.:/=&#45;@]*$|resource-groups:ResourceTypeFilters|resource-groups:Name",
+   :minimum 1,
+   :maximum 163},
+  :Values {:maximum 50}},
+ :roomkey.aws.managedblockchain.Member.MemberFabricConfiguration/MemberFabricConfiguration
+ {:AdminPassword
+  {:regex
+   #"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?!.*[@'&#92;\"/])[a-zA-Z0-9\S]*$",
+   :minimum 8,
+   :maximum 32},
+  :AdminUsername
+  {:regex #"^[a-zA-Z][a-zA-Z0-9]*$", :minimum 1, :maximum 16}},
+ :roomkey.aws.iotanalytics.Channel.RetentionPeriod/RetentionPeriod
+ {:NumberOfDays {:minimum 1}},
+ :roomkey.aws.gamelift.GameSessionQueue.PlayerLatencyPolicy/PlayerLatencyPolicy
+ {:MaximumIndividualPlayerLatencyMilliseconds {:minimum 0},
+  :PolicyDurationSeconds {:minimum 0}},
+ :roomkey.aws.autoscalingplans.ScalingPlan.CustomizedLoadMetricSpecification/CustomizedLoadMetricSpecification
+ {:Statistic {:enumerations #{"Sum"}}},
+ :roomkey.aws.wafv2.RuleGroup.VisibilityConfig/VisibilityConfig
+ {:MetricName
+  {:regex #"^[\w#:&#46;&#45;/]+$", :minimum 1, :maximum 255}},
+ :roomkey.aws.kinesisanalyticsv2.Application.MonitoringConfiguration/MonitoringConfiguration
+ {:ConfigurationType {:enumerations #{"CUSTOM" "DEFAULT"}},
+  :LogLevel {:enumerations #{"WARN" "ERROR" "DEBUG" "INFO"}},
+  :MetricsLevel
+  {:enumerations #{"OPERATOR" "TASK" "APPLICATION" "PARALLELISM"}}},
+ :roomkey.aws.elasticloadbalancingv2.ListenerRule.FixedResponseConfig/FixedResponseConfig
+ {:ContentType {:minimum 0, :maximum 32},
+  :MessageBody {:minimum 0, :maximum 1024},
+  :StatusCode {:regex #"^(2|4|5)\d\d$"}},
+ :roomkey.aws.kinesisanalyticsv2.Application.PropertyGroup/PropertyGroup
+ {:PropertyGroupId
+  {:regex #"[a-zA-Z0-9_.-]+", :minimum 1, :maximum 50}},
+ :roomkey.aws.dlm.LifecyclePolicy.Schedule/Schedule
+ {:CrossRegionCopyRules {:maximum 3},
+  :Name {:regex #"[\p{all}]*", :minimum 0, :maximum 500},
+  :TagsToAdd {:maximum 50},
+  :VariableTags {:maximum 50}},
+ :roomkey.aws.codepipeline.Pipeline.ArtifactStore/ArtifactStore
+ {:Location
+  {:regex #"[a-zA-Z0-9&#45;&#46;]+", :minimum 3, :maximum 63},
+  :Type {:enumerations #{"S3"}}},
+ :roomkey.aws.kinesisanalyticsv2.Application.JSONMappingParameters/JSONMappingParameters
+ {:RecordRowPath {:minimum 1}},
+ :roomkey.aws.ec2.EC2Fleet.SpotOptionsRequest/SpotOptionsRequest
+ {:AllocationStrategy {:enumerations #{"lowestPrice"}},
+  :InstanceInterruptionBehavior
+  {:enumerations #{"stop" "hibernate" "terminate"}}},
+ :roomkey.aws.dms.Endpoint.MongoDbSettings/MongoDbSettings
+ {:AuthMechanism
+  {:enumerations #{"scram_sha_1" "mongodb_cr" "default"}},
+  :AuthType {:enumerations #{"password" "no"}},
+  :NestingLevel {:enumerations #{"none" "one"}}},
+ :roomkey.aws.wafv2.WebACL.IPSetReferenceStatement/IPSetReferenceStatement
+ {:Arn {:regex #".*\S.*", :minimum 20, :maximum 2048}},
+ :roomkey.aws.codebuild.Project.SourceAuth/SourceAuth
+ {:Type {:enumerations #{"OAUTH"}}},
+ :roomkey.aws.gamelift.Build.S3Location/S3Location
+ {:Bucket {:minimum 1},
+  :Key {:minimum 1},
+  :ObjectVersion {:minimum 1},
+  :RoleArn {:minimum 1}},
+ :roomkey.aws.transfer.User.HomeDirectoryMapEntry/HomeDirectoryMapEntry
+ {:Entry {:regex #"^/.*", :maximum 1024},
+  :Target {:regex #"^/.*", :maximum 1024}},
+ :roomkey.aws.codebuild.Project.VpcConfig/VpcConfig
+ {:SecurityGroupIds {:maximum 5},
+  :Subnets {:maximum 16},
+  :VpcId {:minimum 1}},
+ :roomkey.aws.ssm.PatchBaseline.PatchFilterGroup/PatchFilterGroup
+ {:PatchFilters {:maximum 4}},
+ :roomkey.aws.lambda.Function.DeadLetterConfig/DeadLetterConfig
+ {:TargetArn {:regex #"(arn:(aws[a-zA-Z-]*)?:[a-z0-9-.]+:.*)|()"}},
+ :roomkey.aws.events.Rule.EcsParameters/EcsParameters
+ {:LaunchType {:enumerations #{"EC2" "FARGATE"}},
+  :TaskCount {:minimum 1},
+  :TaskDefinitionArn {:minimum 1, :maximum 1600}},
+ :roomkey.aws.kinesisanalyticsv2.Application.InputSchema/InputSchema
+ {:RecordColumns {:maximum 1000}, :RecordEncoding {:regex #"UTF-8"}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.S3DestinationConfiguration/S3DestinationConfiguration
+ {:BucketARN {:regex #"arn:.*", :minimum 1, :maximum 2048},
+  :CompressionFormat
+  {:enumerations #{"GZIP" "UNCOMPRESSED" "ZIP" "Snappy"}},
+  :RoleARN {:regex #"arn:.*", :minimum 1, :maximum 512}},
+ :roomkey.aws.ec2.LaunchTemplate.LaunchTemplateElasticInferenceAccelerator/LaunchTemplateElasticInferenceAccelerator
+ {:Count {:minimum 1}},
+ :roomkey.aws.autoscaling.AutoScalingGroup.NotificationConfiguration/NotificationConfiguration
+ {:TopicARN
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 1600}},
+ :roomkey.aws.kinesisanalyticsv2.ApplicationReferenceDataSource.JSONMappingParameters/JSONMappingParameters
+ {:RecordRowPath {:minimum 1}},
+ :roomkey.aws.kinesisanalyticsv2.ApplicationReferenceDataSource.S3ReferenceDataSource/S3ReferenceDataSource
+ {:BucketARN {:regex #"arn:.*", :minimum 1, :maximum 2048},
+  :FileKey {:minimum 1, :maximum 1024}},
+ :roomkey.aws.wafv2.RuleGroup.SingleQueryArgument/SingleQueryArgument
+ {:Name {:regex #".*\S.*", :minimum 1, :maximum 64}},
+ :roomkey.aws.emr.Cluster.HadoopJarStepConfig/HadoopJarStepConfig
+ {:Jar
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 10280},
+  :MainClass
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 10280}},
+ :roomkey.aws.managedblockchain.Member.NetworkConfiguration/NetworkConfiguration
+ {:Description {:maximum 128},
+  :Framework {:enumerations #{"HYPERLEDGER_FABRIC"}},
+  :FrameworkVersion {:minimum 1, :maximum 8},
+  :Name {:regex #".*\S.*", :minimum 1, :maximum 64}},
+ :roomkey.aws.wafv2.RuleGroup.SizeConstraintStatement/SizeConstraintStatement
+ {:ComparisonOperator
+  {:enumerations #{"NE" "LT" "GE" "LE" "EQ" "GT"}}},
+ :roomkey.aws.ses.ReceiptRule.LambdaAction/LambdaAction
+ {:InvocationType {:enumerations #{"RequestResponse" "Event"}}},
+ :roomkey.aws.codestarnotifications.NotificationRule.Target/Target
+ {:TargetAddress {:minimum 1, :maximum 320},
+  :TargetType {:regex #"^[A-Za-z]+$"}},
+ :roomkey.aws.elasticloadbalancingv2.LoadBalancer.LoadBalancerAttribute/LoadBalancerAttribute
+ {:Value {:maximum 1024}},
+ :roomkey.aws.ec2.EC2Fleet.FleetLaunchTemplateSpecificationRequest/FleetLaunchTemplateSpecificationRequest
+ {:LaunchTemplateName
+  {:regex #"[a-zA-Z0-9&#40;&#41;&#46;&#45;/_]+",
+   :minimum 3,
+   :maximum 128}},
+ :roomkey.aws.lambda.EventInvokeConfig.OnSuccess/OnSuccess
+ {:Destination
+  {:regex
+   #"^$|arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9&#45;])+:([a-z]{2}(-gov)?-[a-z]+-\d{1})?:(\d{12})?:(.*)",
+   :minimum 0,
+   :maximum 350}},
+ :roomkey.aws.dlm.LifecyclePolicy.CreateRule/CreateRule
+ {:Interval {:minimum 1},
+  :IntervalUnit {:enumerations #{"HOURS"}},
+  :Times {:maximum 1}},
+ :roomkey.aws.elasticloadbalancingv2.Listener.RedirectConfig/RedirectConfig
+ {:Host {:minimum 1, :maximum 128},
+  :Path {:minimum 1, :maximum 128},
+  :Protocol {:regex #"^(HTTPS?|#&#123;protocol&#125;)$"},
+  :Query {:minimum 0, :maximum 128},
+  :StatusCode {:enumerations #{"HTTP_302" "HTTP_301"}}},
+ :roomkey.aws.emr.Cluster.ScriptBootstrapActionConfig/ScriptBootstrapActionConfig
+ {:Path
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 10280}},
+ :roomkey.aws.ec2.SpotFleet.ClassicLoadBalancersConfig/ClassicLoadBalancersConfig
+ {:ClassicLoadBalancers {:maximum 5}},
+ :roomkey.aws.kinesisanalyticsv2.Application.ApplicationCodeConfiguration/ApplicationCodeConfiguration
+ {:CodeContentType {:enumerations #{"ZIPFILE" "PLAINTEXT"}}},
+ :roomkey.aws.dynamodb.Table.KeySchema/KeySchema
+ {:AttributeName {:minimum 1, :maximum 255}},
+ :roomkey.aws.batch.JobDefinition.ResourceRequirement/ResourceRequirement
+ {:Type {:enumerations #{"GPU"}}},
+ :roomkey.aws.elasticloadbalancing.LoadBalancer.Listeners/Listeners
+ {:InstancePort {:minimum 1, :maximum 65535}},
+ :roomkey.aws.efs.FileSystem.LifecyclePolicy/LifecyclePolicy
+ {:TransitionToIA
+  {:enumerations
+   #{"AFTER_14_DAYS" "AFTER_30_DAYS" "AFTER_7_DAYS" "AFTER_60_DAYS"
+     "AFTER_90_DAYS"}}},
+ :roomkey.aws.ssm.MaintenanceWindowTarget.Targets/Targets
+ {:Key
+  {:regex
+   #"^[\p{L}\p{Z}\p{N}_.:/=&#45;@]*$|resource-groups:ResourceTypeFilters|resource-groups:Name",
+   :minimum 1,
+   :maximum 163},
+  :Values {:maximum 50}},
+ :roomkey.aws.robomaker.RobotApplication.SourceConfig/SourceConfig
+ {:Architecture {:enumerations #{"X86_64" "ARM64" "ARMHF"}},
+  :S3Bucket
+  {:regex #"[a-z0-9][a-z0-9.&#45;]*[a-z0-9]", :minimum 3, :maximum 63},
+  :S3Key {:regex #".*", :minimum 1, :maximum 1024}},
+ :roomkey.aws.kinesisanalytics.ApplicationOutput.DestinationSchema/DestinationSchema
+ {:RecordFormatType {:enumerations #{"CSV" "JSON"}}},
+ :roomkey.aws.sagemaker.NotebookInstanceLifecycleConfig.NotebookInstanceLifecycleHook/NotebookInstanceLifecycleHook
+ {:Content {:regex #"[\S\s]+", :minimum 1, :maximum 16384}},
+ :roomkey.aws.wafregional.WebACL.Rule/Rule
+ {:RuleId {:minimum 1, :maximum 128}},
+ :roomkey.aws.elasticloadbalancing.LoadBalancer.ConnectionSettings/ConnectionSettings
+ {:IdleTimeout {:minimum 1, :maximum 3600}},
+ :roomkey.aws.iotanalytics.Dataset.IotEventsDestinationConfiguration/IotEventsDestinationConfiguration
+ {:InputName
+  {:regex #"^[a-zA-Z][a-zA-Z0-9_]*$", :minimum 1, :maximum 128},
+  :RoleArn {:minimum 20, :maximum 2048}},
+ :roomkey.aws.codebuild.Project.RegistryCredential/RegistryCredential
+ {:Credential {:minimum 1},
+  :CredentialProvider {:enumerations #{"SECRETS_MANAGER"}}},
+ :roomkey.aws.sagemaker.CodeRepository.GitConfig/GitConfig
+ {:Branch {:regex #"[^ ~^:?*&#91;]+", :minimum 1, :maximum 1024},
+  :RepositoryUrl {:regex #"^https://([^/]+)/?(.*)$"},
+  :SecretArn
+  {:regex
+   #"arn:aws[a-z&#45;]*:secretsmanager:[a-z0-9&#45;]*:[0-9]{12}:secret:.*",
+   :minimum 1,
+   :maximum 2048}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.ExtendedS3DestinationConfiguration/ExtendedS3DestinationConfiguration
+ {:BucketARN {:regex #"arn:.*", :minimum 1, :maximum 2048},
+  :CompressionFormat
+  {:enumerations #{"GZIP" "UNCOMPRESSED" "ZIP" "Snappy"}},
+  :RoleARN {:regex #"arn:.*", :minimum 1, :maximum 512},
+  :S3BackupMode {:enumerations #{"Disabled" "Enabled"}}},
+ :roomkey.aws.autoscalingplans.ScalingPlan.CustomizedScalingMetricSpecification/CustomizedScalingMetricSpecification
+ {:Statistic
+  {:enumerations
+   #{"Sum" "Average" "SampleCount" "Minimum" "Maximum"}}},
+ :roomkey.aws.pinpointemail.Identity.MailFromAttributes/MailFromAttributes
+ {:BehaviorOnMxFailure
+  {:enumerations #{"REJECT_MESSAGE" "USE_DEFAULT_VALUE"}}},
+ :roomkey.aws.applicationautoscaling.ScalableTarget.ScheduledAction/ScheduledAction
+ {:ScheduledActionName
+  {:regex
+   #"(?!((^[ ]+.*)|(.*([\u0000-\u001f]|[\u007f-\u009f]|[:/|])+.*)|(.*[ ]+$))).+",
+   :minimum 1,
+   :maximum 256}},
+ :roomkey.aws.config.ConfigRule.Scope/Scope
+ {:ComplianceResourceId {:minimum 1, :maximum 768},
+  :ComplianceResourceTypes {:maximum 100},
+  :TagKey {:minimum 1, :maximum 128},
+  :TagValue {:minimum 1, :maximum 256}},
+ :roomkey.aws.ec2.LaunchTemplate.MetadataOptions/MetadataOptions
+ {:HttpEndpoint {:enumerations #{"enabled" "disabled"}},
+  :HttpTokens {:enumerations #{"optional" "required"}}},
+ :roomkey.aws.s3.Bucket.DefaultRetention/DefaultRetention
+ {:Mode {:enumerations #{"GOVERNANCE" "COMPLIANCE"}}},
+ :roomkey.aws.kinesisanalytics.ApplicationOutput.KinesisFirehoseOutput/KinesisFirehoseOutput
+ {:ResourceARN {:regex #"arn:.*", :minimum 1, :maximum 2048},
+  :RoleARN
+  {:regex #"arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@&#45;_/]+",
+   :minimum 1,
+   :maximum 2048}},
+ :roomkey.aws.elasticloadbalancingv2.Listener.FixedResponseConfig/FixedResponseConfig
+ {:ContentType {:minimum 0, :maximum 32},
+  :MessageBody {:minimum 0, :maximum 1024},
+  :StatusCode {:regex #"^(2|4|5)\d\d$"}},
+ :roomkey.aws.elasticbeanstalk.ConfigurationTemplate.ConfigurationOptionSetting/ConfigurationOptionSetting
+ {:ResourceName {:minimum 1, :maximum 256}},
+ :roomkey.aws.ecs.TaskDefinition.PortMapping/PortMapping
+ {:Protocol {:enumerations #{"udp" "tcp"}}},
+ :roomkey.aws.cloudwatch/Alarm
+ {:Unit
+  {:enumerations
+   #{"Terabytes" "Kilobits/Second" "Count" "Bits" "Percent"
+     "Gigabits/Second" "None" "Count/Second" "Bytes" "Gigabytes/Second"
+     "Megabits/Second" "Kilobytes/Second" "Terabytes/Second"
+     "Bits/Second" "Bytes/Second" "Milliseconds" "Kilobytes"
+     "Microseconds" "Terabits" "Megabytes/Second" "Gigabytes"
+     "Gigabits" "Megabits" "Kilobits" "Terabits/Second" "Megabytes"
+     "Seconds"}},
+  :AlarmName {:minimum 1, :maximum 255},
+  :EvaluationPeriods {:minimum 1},
+  :Statistic
+  {:enumerations #{"Sum" "Average" "SampleCount" "Minimum" "Maximum"}},
+  :ThresholdMetricId {:minimum 1, :maximum 255},
+  :DatapointsToAlarm {:minimum 1},
+  :Dimensions {:maximum 10},
+  :TreatMissingData {:minimum 1, :maximum 255},
+  :ComparisonOperator
+  {:enumerations
+   #{"LessThanThreshold" "GreaterThanThreshold"
+     "LessThanOrEqualToThreshold"
+     "LessThanLowerOrGreaterThanUpperThreshold"
+     "LessThanLowerThreshold" "GreaterThanOrEqualToThreshold"
+     "GreaterThanUpperThreshold"}},
+  :AlarmActions {:maximum 5},
+  :AlarmDescription {:minimum 0, :maximum 1024},
+  :Namespace {:regex #"[^:].*", :minimum 1, :maximum 255},
+  :Period {:minimum 1},
+  :OKActions {:maximum 5},
+  :EvaluateLowSampleCountPercentile {:minimum 1, :maximum 255},
+  :InsufficientDataActions {:maximum 5},
+  :MetricName {:minimum 1, :maximum 255},
+  :ExtendedStatistic {:regex #"p(\d{1,2}(&#46;\d{0,2})?|100)"}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.SplunkDestinationConfiguration/SplunkDestinationConfiguration
+ {:HECAcknowledgmentTimeoutInSeconds {:minimum 180, :maximum 600},
+  :HECEndpointType {:enumerations #{"Event" "Raw"}},
+  :S3BackupMode {:enumerations #{"FailedEventsOnly" "AllEvents"}}},
+ :roomkey.aws.ec2.SpotFleet.SpotPlacement/SpotPlacement
+ {:Tenancy {:enumerations #{"host" "dedicated" "default"}}},
+ :roomkey.aws.kinesisanalyticsv2.Application.InputLambdaProcessor/InputLambdaProcessor
+ {:ResourceARN {:regex #"arn:.*", :minimum 1, :maximum 2048}},
+ :roomkey.aws.s3.Bucket.InventoryConfiguration/InventoryConfiguration
+ {:IncludedObjectVersions {:enumerations #{"Current" "All"}}},
+ :roomkey.aws.iotanalytics.Dataset.GlueConfiguration/GlueConfiguration
+ {:DatabaseName
+  {:regex #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\t]*",
+   :minimum 1,
+   :maximum 150},
+  :TableName
+  {:regex #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\t]*",
+   :minimum 1,
+   :maximum 150}},
+ :roomkey.aws.dynamodb.Table.AttributeDefinition/AttributeDefinition
+ {:AttributeName {:minimum 1, :maximum 255}},
+ :roomkey.aws.ec2.SpotFleet.SpotFleetTagSpecification/SpotFleetTagSpecification
+ {:ResourceType
+  {:enumerations
+   #{"key-pair" "traffic-mirror-target" "host-reservation"
+     "vpn-gateway" "subnet" "transit-gateway" "spot-fleet-request"
+     "vpc" "elastic-ip" "dedicated-host" "spot-instances-request"
+     "route-table" "image" "natgateway" "traffic-mirror-session"
+     "transit-gateway-route-table" "snapshot" "vpn-connection"
+     "traffic-mirror-filter" "internet-gateway" "reserved-instances"
+     "instance" "transit-gateway-multicast-domain" "fleet"
+     "network-interface" "security-group" "volume" "dhcp-options"
+     "vpc-peering-connection" "customer-gateway" "placement-group"
+     "fpga-image" "network-acl" "client-vpn-endpoint" "launch-template"
+     "transit-gateway-attachment"}}},
+ :roomkey.aws.cognito.UserPool.EmailConfiguration/EmailConfiguration
+ {:EmailSendingAccount
+  {:enumerations #{"COGNITO_DEFAULT" "DEVELOPER"}},
+  :ReplyToEmailAddress
+  {:regex
+   #"[\p{L}\p{M}\p{S}\p{N}\p{P}]+@[\p{L}\p{M}\p{S}\p{N}\p{P}]+"}},
+ :roomkey.aws.wafv2.WebACL.SizeConstraintStatement/SizeConstraintStatement
+ {:ComparisonOperator
+  {:enumerations #{"NE" "LT" "GE" "LE" "EQ" "GT"}}},
+ :roomkey.aws.events.Rule.AwsVpcConfiguration/AwsVpcConfiguration
+ {:AssignPublicIp {:enumerations #{"DISABLED" "ENABLED"}}},
+ :roomkey.aws.wafv2.RegexPatternSet.Regex/Regex
+ {:RegexString {:regex #".*", :minimum 1, :maximum 512}},
+ :roomkey.aws.kinesisanalyticsv2.ApplicationOutput.LambdaOutput/LambdaOutput
+ {:ResourceARN {:regex #"arn:.*", :minimum 1, :maximum 2048}},
+ :roomkey.aws.cloudwatch.AnomalyDetector.Dimension/Dimension
+ {:Name {:minimum 1, :maximum 255}, :Value {:minimum 1, :maximum 255}},
+ :roomkey.aws.dynamodb.Table.TimeToLiveSpecification/TimeToLiveSpecification
+ {:AttributeName {:minimum 1, :maximum 255}},
+ :roomkey.aws.sagemaker.EndpointConfig.ProductionVariant/ProductionVariant
+ {:AcceleratorType
+  {:enumerations
+   #{"ml.eia1.large" "ml.eia2.xlarge" "ml.eia1.medium" "ml.eia1.xlarge"
+     "ml.eia2.medium" "ml.eia2.large"}},
+  :InitialInstanceCount {:minimum 1},
+  :InstanceType
+  {:enumerations
+   #{"ml.r5d.24xlarge" "ml.r5.4xlarge" "ml.t2.large" "ml.m5d.large"
+     "ml.r5d.xlarge" "ml.r5d.12xlarge" "ml.r5.2xlarge" "ml.c4.large"
+     "ml.r5d.2xlarge" "ml.m5.xlarge" "ml.g4dn.xlarge" "ml.c5.xlarge"
+     "ml.m4.2xlarge" "ml.c5.9xlarge" "ml.r5d.large" "ml.p2.16xlarge"
+     "ml.r5d.4xlarge" "ml.r5.12xlarge" "ml.inf1.xlarge" "ml.r5.xlarge"
+     "ml.m5.large" "ml.r5.large" "ml.m5.12xlarge" "ml.m5d.12xlarge"
+     "ml.c5.2xlarge" "ml.c5d.18xlarge" "ml.inf1.6xlarge"
+     "ml.c4.2xlarge" "ml.t2.2xlarge" "ml.c5.large" "ml.g4dn.2xlarge"
+     "ml.c4.4xlarge" "ml.m4.4xlarge" "ml.m5.4xlarge" "ml.m4.xlarge"
+     "ml.m4.16xlarge" "ml.inf1.2xlarge" "ml.c5d.2xlarge"
+     "ml.c5d.9xlarge" "ml.m5d.2xlarge" "ml.g4dn.8xlarge"
+     "ml.p2.8xlarge" "ml.c5d.4xlarge" "ml.g4dn.12xlarge"
+     "ml.r5.24xlarge" "ml.g4dn.16xlarge" "ml.m5d.4xlarge"
+     "ml.t2.xlarge" "ml.p3.16xlarge" "ml.c5d.large" "ml.c4.8xlarge"
+     "ml.c5.18xlarge" "ml.g4dn.4xlarge" "ml.m5.2xlarge" "ml.c4.xlarge"
+     "ml.m5d.24xlarge" "ml.m5.24xlarge" "ml.p3.2xlarge"
+     "ml.inf1.24xlarge" "ml.c5d.xlarge" "ml.m5d.xlarge" "ml.p3.8xlarge"
+     "ml.p2.xlarge" "ml.m4.10xlarge" "ml.t2.medium" "ml.c5.4xlarge"}},
+  :ModelName {:regex #"^[a-zA-Z0-9](-*[a-zA-Z0-9])*", :maximum 63},
+  :VariantName {:regex #"^[a-zA-Z0-9](-*[a-zA-Z0-9])*", :maximum 63}},
+ :roomkey.aws.transfer.Server.IdentityProviderDetails/IdentityProviderDetails
+ {:InvocationRole
+  {:regex #"arn:.*role/.*", :minimum 20, :maximum 2048},
+  :Url {:maximum 255}},
+ :roomkey.aws.managedblockchain.Member.MemberConfiguration/MemberConfiguration
+ {:Description {:maximum 128},
+  :Name
+  {:regex #"^(?!-)^[^0-9](?!.*--)[A-Za-z0-9-]+[^- ]$",
+   :minimum 1,
+   :maximum 64}},
+ :roomkey.aws.lambda.Function.TracingConfig/TracingConfig
+ {:Mode {:enumerations #{"Active" "PassThrough"}}},
+ :roomkey.aws.appstream.Stack.AccessEndpoint/AccessEndpoint
+ {:EndpointType {:enumerations #{"STREAMING"}}, :VpceId {:minimum 1}},
+ :roomkey.aws.appconfig.ConfigurationProfile.Validators/Validators
+ {:Content {:minimum 0, :maximum 32768},
+  :Type {:enumerations #{"LAMBDA" "JSON_SCHEMA"}}},
+ :roomkey.aws.wafregional.Rule.Predicate/Predicate
+ {:DataId {:minimum 1, :maximum 128},
+  :Type
+  {:enumerations
+   #{"SizeConstraint" "XssMatch" "GeoMatch" "SqlInjectionMatch"
+     "ByteMatch" "RegexMatch" "IPMatch"}}},
+ :roomkey.aws.gamelift.Fleet.RuntimeConfiguration/RuntimeConfiguration
+ {:GameSessionActivationTimeoutSeconds {:minimum 1, :maximum 600},
+  :MaxConcurrentGameSessionActivations
+  {:minimum 1, :maximum 2147483647},
+  :ServerProcesses {:maximum 50}},
+ :roomkey.aws.iam/User
+ {:Path
+  {:regex #"(\u002F)|(\u002F[\u0021-\u007F]+\u002F)",
+   :minimum 1,
+   :maximum 512},
+  :Tags {:maximum 50}},
+ :roomkey.aws.iotanalytics.Pipeline.AddAttributes/AddAttributes
+ {:Name {:minimum 1, :maximum 128}, :Next {:minimum 1, :maximum 128}},
+ :roomkey.aws.ssm.MaintenanceWindowTask.MaintenanceWindowAutomationParameters/MaintenanceWindowAutomationParameters
+ {:DocumentVersion {:regex #"([$]LATEST|[$]DEFAULT|^[1-9][0-9]*$)"}},
+ :roomkey.aws.fms.Policy.ResourceTag/ResourceTag
+ {:Key
+  {:regex #"^([\p{L}\p{Z}\p{N}_.:/=+&#45;@]*)$",
+   :minimum 1,
+   :maximum 128},
+  :Value {:regex #"^([\p{L}\p{Z}\p{N}_.:/=+&#45;@]*)$", :maximum 256}},
+ :roomkey.aws.kinesisanalytics.Application.KinesisStreamsInput/KinesisStreamsInput
+ {:ResourceARN {:regex #"arn:.*", :minimum 1, :maximum 2048},
+  :RoleARN
+  {:regex #"arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@&#45;_/]+",
+   :minimum 1,
+   :maximum 2048}},
+ :roomkey.aws.ec2.EC2Fleet.FleetLaunchTemplateConfigRequest/FleetLaunchTemplateConfigRequest
+ {:Overrides {:maximum 50}},
+ :roomkey.aws.managedblockchain.Member.ApprovalThresholdPolicy/ApprovalThresholdPolicy
+ {:ProposalDurationInHours {:minimum 1, :maximum 168},
+  :ThresholdComparator
+  {:enumerations #{"GREATER_THAN" "GREATER_THAN_OR_EQUAL_TO"}},
+  :ThresholdPercentage {:minimum 0, :maximum 100}},
+ :roomkey.aws.ec2.LaunchTemplate.InstanceMarketOptions/InstanceMarketOptions
+ {:MarketType {:enumerations #{"spot"}}},
+ :roomkey.aws.autoscaling.AutoScalingGroup.LaunchTemplateSpecification/LaunchTemplateSpecification
+ {:LaunchTemplateId
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :LaunchTemplateName {:minimum 3, :maximum 128},
+  :Version
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255}},
+ :roomkey.aws.appstream.Stack.UserSetting/UserSetting
+ {:Action
+  {:enumerations
+   #{"FILE_DOWNLOAD" "FILE_UPLOAD" "PRINTING_TO_LOCAL_DEVICE"
+     "CLIPBOARD_COPY_TO_LOCAL_DEVICE"
+     "CLIPBOARD_COPY_FROM_LOCAL_DEVICE"}},
+  :Permission {:enumerations #{"DISABLED" "ENABLED"}}},
+ :roomkey.aws.ssm.PatchBaseline.PatchSource/PatchSource
+ {:Configuration {:minimum 1, :maximum 1024},
+  :Name {:regex #"^[a-zA-Z0-9_&#45;.]{3,50}$"},
+  :Products {:maximum 20}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.ElasticsearchDestinationConfiguration/ElasticsearchDestinationConfiguration
+ {:DomainARN {:regex #"arn:.*", :minimum 1, :maximum 512},
+  :IndexName {:minimum 1, :maximum 80},
+  :IndexRotationPeriod
+  {:enumerations
+   #{"OneWeek" "NoRotation" "OneDay" "OneMonth" "OneHour"}},
+  :RoleARN {:regex #"arn:.*", :minimum 1, :maximum 512},
+  :S3BackupMode
+  {:enumerations #{"AllDocuments" "FailedDocumentsOnly"}},
+  :TypeName {:minimum 0, :maximum 100}},
+ :roomkey.aws.elasticloadbalancingv2.ListenerRule.RedirectConfig/RedirectConfig
+ {:Host {:minimum 1, :maximum 128},
+  :Path {:minimum 1, :maximum 128},
+  :Protocol {:regex #"^(HTTPS?|#&#123;protocol&#125;)$"},
+  :Query {:minimum 0, :maximum 128},
+  :StatusCode {:enumerations #{"HTTP_302" "HTTP_301"}}},
+ :roomkey.aws.config.OrganizationConfigRule.OrganizationCustomRuleMetadata/OrganizationCustomRuleMetadata
+ {:Description {:minimum 0, :maximum 256},
+  :InputParameters {:minimum 1, :maximum 2048},
+  :LambdaFunctionArn {:minimum 1, :maximum 256},
+  :MaximumExecutionFrequency
+  {:enumerations
+   #{"Twelve_Hours" "One_Hour" "TwentyFour_Hours" "Three_Hours"
+     "Six_Hours"}},
+  :ResourceIdScope {:minimum 1, :maximum 768},
+  :ResourceTypesScope {:maximum 100},
+  :TagKeyScope {:minimum 1, :maximum 128},
+  :TagValueScope {:minimum 1, :maximum 256}},
+ :roomkey.aws.iotanalytics.Dataset.Variable/Variable
+ {:StringValue {:minimum 0, :maximum 1024},
+  :VariableName {:minimum 1, :maximum 256}},
+ :roomkey.aws.kinesisanalyticsv2.Application.InputParallelism/InputParallelism
+ {:Count {:minimum 1, :maximum 64}},
+ :roomkey.aws.elasticbeanstalk/ApplicationVersion
+ {:ApplicationName {:minimum 1, :maximum 100},
+  :Description {:maximum 200}},
+ :roomkey.aws.route53.HealthCheck.HealthCheckConfig/HealthCheckConfig
+ {:ChildHealthChecks {:maximum 256},
+  :FailureThreshold {:minimum 1, :maximum 10},
+  :Port {:minimum 1, :maximum 65535},
+  :Regions {:maximum 64},
+  :RequestInterval {:minimum 10, :maximum 30},
+  :ResourcePath {:maximum 255},
+  :SearchString {:maximum 255}},
+ :roomkey.aws.ec2/Instance
+ {:InstanceInitiatedShutdownBehavior
+  {:enumerations #{"stop" "terminate"}},
+  :InstanceType
+  {:enumerations
+   #{"c5d.metal" "m1.large" "t3.small" "i3en.2xlarge" "m5ad.4xlarge"
+     "cc1.4xlarge" "t3a.xlarge" "z1d.large" "x1e.32xlarge" "t3a.small"
+     "r5d.xlarge" "r5a.large" "r5a.xlarge" "m5d.24xlarge" "c1.medium"
+     "r4.2xlarge" "inf1.24xlarge" "r3.8xlarge" "r5.4xlarge"
+     "m5ad.16xlarge" "d2.xlarge" "m3.2xlarge" "r5d.8xlarge"
+     "i3en.12xlarge" "i2.8xlarge" "r5dn.2xlarge" "h1.16xlarge"
+     "m5.xlarge" "r5a.2xlarge" "t3.2xlarge" "g2.2xlarge" "g3.8xlarge"
+     "m5n.large" "t3a.medium" "t3.xlarge" "c3.8xlarge" "t2.large"
+     "r5ad.24xlarge" "m5n.4xlarge" "x1e.4xlarge" "t3.nano"
+     "p2.16xlarge" "m1.xlarge" "m5a.24xlarge" "d2.8xlarge"
+     "r5n.12xlarge" "r5d.large" "m4.4xlarge" "m5a.8xlarge" "t2.2xlarge"
+     "r4.16xlarge" "m5d.16xlarge" "r5n.16xlarge" "c5.24xlarge"
+     "r5dn.24xlarge" "u-12tb1.metal" "r5d.4xlarge" "c5.metal"
+     "g3.16xlarge" "z1d.2xlarge" "m5d.8xlarge" "t3.large" "h1.2xlarge"
+     "g3.4xlarge" "cr1.8xlarge" "t1.micro" "r5ad.16xlarge" "a1.2xlarge"
+     "c5d.large" "g4dn.4xlarge" "m5ad.2xlarge" "r5a.24xlarge"
+     "z1d.xlarge" "t3a.2xlarge" "c5.4xlarge" "p3dn.24xlarge"
+     "m5n.8xlarge" "c3.2xlarge" "g2.8xlarge" "a1.metal" "z1d.3xlarge"
+     "u-18tb1.metal" "r5ad.12xlarge" "c5d.18xlarge" "c4.8xlarge"
+     "m5dn.2xlarge" "m5a.16xlarge" "c5.18xlarge" "x1e.2xlarge"
+     "r5.metal" "i3en.6xlarge" "z1d.6xlarge" "inf1.2xlarge"
+     "m5n.12xlarge" "u-24tb1.metal" "m5dn.24xlarge" "m2.xlarge"
+     "m1.small" "i2.4xlarge" "c3.4xlarge" "i3.16xlarge" "t2.micro"
+     "r5d.16xlarge" "z1d.metal" "g3s.xlarge" "d2.2xlarge" "x1.32xlarge"
+     "m4.2xlarge" "r5d.24xlarge" "u-6tb1.metal" "i3.4xlarge"
+     "m4.10xlarge" "i3.metal" "m1.medium" "g4dn.2xlarge" "c5n.xlarge"
+     "c4.4xlarge" "hi1.4xlarge" "r3.xlarge" "c5n.large" "x1e.16xlarge"
+     "r5a.16xlarge" "m5.large" "r5n.8xlarge" "r5dn.4xlarge"
+     "c5d.24xlarge" "r5.xlarge" "c4.2xlarge" "i3.8xlarge" "m5.8xlarge"
+     "p3.2xlarge" "m5.4xlarge" "t3.medium" "u-9tb1.metal"
+     "r5ad.8xlarge" "m5ad.8xlarge" "t2.small" "r5n.xlarge"
+     "c5n.4xlarge" "r4.xlarge" "m5ad.xlarge" "m5ad.12xlarge"
+     "m5a.2xlarge" "m5.2xlarge" "z1d.12xlarge" "i3en.metal"
+     "r5a.8xlarge" "t3.micro" "m5dn.4xlarge" "c5.large" "c5.2xlarge"
+     "m5dn.8xlarge" "f1.2xlarge" "m5d.4xlarge" "c5d.xlarge" "m3.xlarge"
+     "c5d.9xlarge" "r3.2xlarge" "m5d.metal" "cg1.4xlarge" "m5ad.large"
+     "r3.4xlarge" "r5n.large" "m5.16xlarge" "t2.xlarge" "c4.xlarge"
+     "m2.2xlarge" "t3a.micro" "f1.4xlarge" "r5.large" "p2.8xlarge"
+     "r5d.12xlarge" "m5.metal" "r5ad.large" "x1.16xlarge" "m5n.xlarge"
+     "m4.large" "c5n.2xlarge" "r5dn.8xlarge" "i3en.large"
+     "r5ad.2xlarge" "r5ad.xlarge" "m4.16xlarge" "r3.large"
+     "m5n.16xlarge" "d2.4xlarge" "h1.8xlarge" "r5n.4xlarge"
+     "i3.2xlarge" "c4.large" "h1.4xlarge" "m5d.12xlarge" "r5ad.4xlarge"
+     "m4.xlarge" "m5a.large" "f1.16xlarge" "r5.12xlarge" "m5a.4xlarge"
+     "i2.2xlarge" "p3.16xlarge" "inf1.6xlarge" "m5ad.24xlarge"
+     "r5dn.12xlarge" "i3.xlarge" "m5n.24xlarge" "c5n.9xlarge"
+     "r5dn.16xlarge" "m5dn.large" "c5d.12xlarge" "r5dn.xlarge"
+     "i3en.3xlarge" "t2.nano" "m2.4xlarge" "r5a.4xlarge" "r5d.metal"
+     "g4dn.16xlarge" "r4.large" "m5a.xlarge" "c3.xlarge" "p2.xlarge"
+     "g4dn.12xlarge" "c5d.4xlarge" "m5dn.12xlarge" "i3.large"
+     "a1.4xlarge" "g4dn.xlarge" "r4.8xlarge" "a1.xlarge" "t2.medium"
+     "i3en.xlarge" "p3.8xlarge" "m5a.12xlarge" "c3.large" "c5.12xlarge"
+     "m3.medium" "a1.medium" "m5n.2xlarge" "r5dn.large" "m5d.2xlarge"
+     "r5d.2xlarge" "t3a.nano" "i2.xlarge" "m5.24xlarge" "c5n.18xlarge"
+     "r5a.12xlarge" "c5.9xlarge" "g4dn.8xlarge" "m5d.large"
+     "m5.12xlarge" "cc2.8xlarge" "hs1.8xlarge" "r5.16xlarge"
+     "m5dn.16xlarge" "m3.large" "i3en.24xlarge" "x1e.xlarge"
+     "c1.xlarge" "c5d.2xlarge" "x1e.8xlarge" "r5.2xlarge" "m5dn.xlarge"
+     "t3a.large" "m5d.xlarge" "r5n.2xlarge" "r5n.24xlarge" "a1.large"
+     "c5.xlarge" "r4.4xlarge" "inf1.xlarge" "r5.8xlarge"
+     "r5.24xlarge"}},
+  :Tenancy {:enumerations #{"host" "dedicated" "default"}}},
+ :roomkey.aws.iotanalytics.Pipeline.SelectAttributes/SelectAttributes
+ {:Attributes {:maximum 50},
+  :Name {:minimum 1, :maximum 128},
+  :Next {:minimum 1, :maximum 128}},
+ :roomkey.aws.codepipeline.Webhook.WebhookAuthConfiguration/WebhookAuthConfiguration
+ {:AllowedIPRange {:minimum 1, :maximum 100},
+  :SecretToken {:minimum 1, :maximum 100}},
+ :roomkey.aws.codebuild.Project.EnvironmentVariable/EnvironmentVariable
+ {:Name {:minimum 1}},
+ :roomkey.aws.dlm.LifecyclePolicy.CrossRegionCopyRetainRule/CrossRegionCopyRetainRule
+ {:Interval {:minimum 1},
+  :IntervalUnit {:enumerations #{"WEEKS" "DAYS" "YEARS" "MONTHS"}}},
+ :roomkey.aws.s3.Bucket.RedirectRule/RedirectRule
+ {:Protocol {:enumerations #{"https" "http"}}},
+ :roomkey.aws.kinesisanalyticsv2.Application.ParallelismConfiguration/ParallelismConfiguration
+ {:ConfigurationType {:enumerations #{"CUSTOM" "DEFAULT"}},
+  :Parallelism {:minimum 1},
+  :ParallelismPerKPU {:minimum 1}},
+ :roomkey.aws.ec2.SpotFleet.EbsBlockDevice/EbsBlockDevice
+ {:VolumeType {:enumerations #{"standard" "sc1" "io1" "gp2" "st1"}}},
+ :roomkey.aws.budgets.Budget.BudgetData/BudgetData
+ {:BudgetType
+  {:enumerations
+   #{"SAVINGS_PLANS_UTILIZATION" "RI_UTILIZATION" "USAGE"
+     "SAVINGS_PLANS_COVERAGE" "COST" "RI_COVERAGE"}},
+  :TimeUnit
+  {:enumerations #{"QUARTERLY" "MONTHLY" "DAILY" "ANNUALLY"}}},
+ :roomkey.aws.emr.Cluster.InstanceFleetConfig/InstanceFleetConfig
+ {:Name
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256},
+  :TargetOnDemandCapacity {:minimum 0},
+  :TargetSpotCapacity {:minimum 0}},
+ :roomkey.aws.iotevents.DetectorModel.State/State
+ {:StateName {:minimum 1, :maximum 128}},
+ :roomkey.aws.iotevents.DetectorModel.DetectorModelDefinition/DetectorModelDefinition
+ {:InitialStateName {:minimum 1, :maximum 128}},
+ :roomkey.aws.route53resolver.ResolverEndpoint.IpAddressRequest/IpAddressRequest
+ {:Ip {:minimum 7, :maximum 36}, :SubnetId {:minimum 1, :maximum 32}},
+ :roomkey.aws.iotanalytics.Dataset.Action/Action
+ {:ActionName {:regex #"^[a-zA-Z0-9_]+$", :minimum 1, :maximum 128}},
+ :roomkey.aws.ec2.LaunchTemplate.SpotOptions/SpotOptions
+ {:InstanceInterruptionBehavior
+  {:enumerations #{"stop" "hibernate" "terminate"}},
+  :SpotInstanceType {:enumerations #{"persistent" "one-time"}}},
+ :roomkey.aws.secretsmanager.Secret.GenerateSecretString/GenerateSecretString
+ {:ExcludeCharacters {:minimum 0, :maximum 4096},
+  :GenerateStringKey {:minimum 0, :maximum 10240},
+  :SecretStringTemplate {:minimum 0, :maximum 10240}},
+ :roomkey.aws.iotevents.Input.InputDefinition/InputDefinition
+ {:Attributes {:maximum 200}},
+ :roomkey.aws.autoscaling.LaunchConfiguration.BlockDevice/BlockDevice
+ {:Iops {:minimum 100, :maximum 20000},
+  :SnapshotId
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :VolumeSize {:minimum 1, :maximum 16384},
+  :VolumeType {:minimum 1, :maximum 255}},
+ :roomkey.aws.autoscaling/AutoScalingGroup
+ {:AutoScalingGroupName
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :HealthCheckType
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 32},
+  :LaunchConfigurationName
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :PlacementGroup
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 255},
+  :ServiceLinkedRoleARN
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 1600},
+  :VPCZoneIdentifier
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 2047}},
+ :roomkey.aws.lambda.EventInvokeConfig.OnFailure/OnFailure
+ {:Destination
+  {:regex
+   #"^$|arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9&#45;])+:([a-z]{2}(-gov)?-[a-z]+-\d{1})?:(\d{12})?:(.*)",
+   :minimum 0,
+   :maximum 350}},
+ :roomkey.aws.codepipeline.Pipeline.InputArtifact/InputArtifact
+ {:Name {:regex #"[a-zA-Z0-9_&#45;]+", :minimum 1, :maximum 100}},
+ :roomkey.aws.elasticbeanstalk/Application
+ {:ApplicationName {:minimum 1, :maximum 100},
+  :Description {:maximum 200}},
+ :roomkey.aws.cognito.UserPool.SchemaAttribute/SchemaAttribute
+ {:AttributeDataType
+  {:enumerations #{"Number" "String" "DateTime" "Boolean"}},
+  :Name
+  {:regex #"[\p{L}\p{M}\p{S}\p{N}\p{P}]+", :minimum 1, :maximum 20}},
+ :roomkey.aws.iam.User.Policy/Policy
+ {:PolicyDocument
+  {:regex #"[\u0009\u000A\u000D\u0020-\u00FF]+",
+   :minimum 1,
+   :maximum 131072},
+  :PolicyName {:regex #"[\w+=,.@-]+", :minimum 1, :maximum 128}},
+ :roomkey.aws.opsworks.Stack.Source/Source
+ {:Type {:enumerations #{"svn" "archive" "s3" "git"}}},
+ :roomkey.aws.cognito.UserPool.PasswordPolicy/PasswordPolicy
+ {:MinimumLength {:minimum 6, :maximum 99},
+  :TemporaryPasswordValidityDays {:minimum 0, :maximum 365}},
+ :roomkey.aws.kinesisanalyticsv2.ApplicationOutput.KinesisFirehoseOutput/KinesisFirehoseOutput
+ {:ResourceARN {:regex #"arn:.*", :minimum 1, :maximum 2048}},
+ :roomkey.aws.robomaker.SimulationApplication.RenderingEngine/RenderingEngine
+ {:Name {:enumerations #{"OGRE"}}, :Version {:regex #"1.x"}},
+ :roomkey.aws.ec2.EC2Fleet.FleetLaunchTemplateOverridesRequest/FleetLaunchTemplateOverridesRequest
+ {:InstanceType
+  {:enumerations
+   #{"c5d.metal" "m1.large" "t3.small" "i3en.2xlarge" "m5ad.4xlarge"
+     "cc1.4xlarge" "t3a.xlarge" "z1d.large" "x1e.32xlarge" "t3a.small"
+     "r5d.xlarge" "r5a.large" "r5a.xlarge" "m5d.24xlarge" "c1.medium"
+     "r4.2xlarge" "inf1.24xlarge" "r3.8xlarge" "r5.4xlarge"
+     "m5ad.16xlarge" "d2.xlarge" "m3.2xlarge" "r5d.8xlarge"
+     "i3en.12xlarge" "i2.8xlarge" "r5dn.2xlarge" "h1.16xlarge"
+     "m5.xlarge" "r5a.2xlarge" "t3.2xlarge" "g2.2xlarge" "g3.8xlarge"
+     "m5n.large" "t3a.medium" "t3.xlarge" "c3.8xlarge" "t2.large"
+     "r5ad.24xlarge" "m5n.4xlarge" "x1e.4xlarge" "t3.nano"
+     "p2.16xlarge" "m1.xlarge" "m5a.24xlarge" "d2.8xlarge"
+     "r5n.12xlarge" "r5d.large" "m4.4xlarge" "m5a.8xlarge" "t2.2xlarge"
+     "r4.16xlarge" "m5d.16xlarge" "r5n.16xlarge" "c5.24xlarge"
+     "r5dn.24xlarge" "u-12tb1.metal" "r5d.4xlarge" "c5.metal"
+     "g3.16xlarge" "z1d.2xlarge" "m5d.8xlarge" "t3.large" "h1.2xlarge"
+     "g3.4xlarge" "cr1.8xlarge" "t1.micro" "r5ad.16xlarge" "a1.2xlarge"
+     "c5d.large" "g4dn.4xlarge" "m5ad.2xlarge" "r5a.24xlarge"
+     "z1d.xlarge" "t3a.2xlarge" "c5.4xlarge" "p3dn.24xlarge"
+     "m5n.8xlarge" "c3.2xlarge" "g2.8xlarge" "a1.metal" "z1d.3xlarge"
+     "u-18tb1.metal" "r5ad.12xlarge" "c5d.18xlarge" "c4.8xlarge"
+     "m5dn.2xlarge" "m5a.16xlarge" "c5.18xlarge" "x1e.2xlarge"
+     "r5.metal" "i3en.6xlarge" "z1d.6xlarge" "inf1.2xlarge"
+     "m5n.12xlarge" "u-24tb1.metal" "m5dn.24xlarge" "m2.xlarge"
+     "m1.small" "i2.4xlarge" "c3.4xlarge" "i3.16xlarge" "t2.micro"
+     "r5d.16xlarge" "z1d.metal" "g3s.xlarge" "d2.2xlarge" "x1.32xlarge"
+     "m4.2xlarge" "r5d.24xlarge" "u-6tb1.metal" "i3.4xlarge"
+     "m4.10xlarge" "i3.metal" "m1.medium" "g4dn.2xlarge" "c5n.xlarge"
+     "c4.4xlarge" "hi1.4xlarge" "r3.xlarge" "c5n.large" "x1e.16xlarge"
+     "r5a.16xlarge" "m5.large" "r5n.8xlarge" "r5dn.4xlarge"
+     "c5d.24xlarge" "r5.xlarge" "c4.2xlarge" "i3.8xlarge" "m5.8xlarge"
+     "p3.2xlarge" "m5.4xlarge" "t3.medium" "u-9tb1.metal"
+     "r5ad.8xlarge" "m5ad.8xlarge" "t2.small" "r5n.xlarge"
+     "c5n.4xlarge" "r4.xlarge" "m5ad.xlarge" "m5ad.12xlarge"
+     "m5a.2xlarge" "m5.2xlarge" "z1d.12xlarge" "i3en.metal"
+     "r5a.8xlarge" "t3.micro" "m5dn.4xlarge" "c5.large" "c5.2xlarge"
+     "m5dn.8xlarge" "f1.2xlarge" "m5d.4xlarge" "c5d.xlarge" "m3.xlarge"
+     "c5d.9xlarge" "r3.2xlarge" "m5d.metal" "cg1.4xlarge" "m5ad.large"
+     "r3.4xlarge" "r5n.large" "m5.16xlarge" "t2.xlarge" "c4.xlarge"
+     "m2.2xlarge" "t3a.micro" "f1.4xlarge" "r5.large" "p2.8xlarge"
+     "r5d.12xlarge" "m5.metal" "r5ad.large" "x1.16xlarge" "m5n.xlarge"
+     "m4.large" "c5n.2xlarge" "r5dn.8xlarge" "i3en.large"
+     "r5ad.2xlarge" "r5ad.xlarge" "m4.16xlarge" "r3.large"
+     "m5n.16xlarge" "d2.4xlarge" "h1.8xlarge" "r5n.4xlarge"
+     "i3.2xlarge" "c4.large" "h1.4xlarge" "m5d.12xlarge" "r5ad.4xlarge"
+     "m4.xlarge" "m5a.large" "f1.16xlarge" "r5.12xlarge" "m5a.4xlarge"
+     "i2.2xlarge" "p3.16xlarge" "inf1.6xlarge" "m5ad.24xlarge"
+     "r5dn.12xlarge" "i3.xlarge" "m5n.24xlarge" "c5n.9xlarge"
+     "r5dn.16xlarge" "m5dn.large" "c5d.12xlarge" "r5dn.xlarge"
+     "i3en.3xlarge" "t2.nano" "m2.4xlarge" "r5a.4xlarge" "r5d.metal"
+     "g4dn.16xlarge" "r4.large" "m5a.xlarge" "c3.xlarge" "p2.xlarge"
+     "g4dn.12xlarge" "c5d.4xlarge" "m5dn.12xlarge" "i3.large"
+     "a1.4xlarge" "g4dn.xlarge" "r4.8xlarge" "a1.xlarge" "t2.medium"
+     "i3en.xlarge" "p3.8xlarge" "m5a.12xlarge" "c3.large" "c5.12xlarge"
+     "m3.medium" "a1.medium" "m5n.2xlarge" "r5dn.large" "m5d.2xlarge"
+     "r5d.2xlarge" "t3a.nano" "i2.xlarge" "m5.24xlarge" "c5n.18xlarge"
+     "r5a.12xlarge" "c5.9xlarge" "g4dn.8xlarge" "m5d.large"
+     "m5.12xlarge" "cc2.8xlarge" "hs1.8xlarge" "r5.16xlarge"
+     "m5dn.16xlarge" "m3.large" "i3en.24xlarge" "x1e.xlarge"
+     "c1.xlarge" "c5d.2xlarge" "x1e.8xlarge" "r5.2xlarge" "m5dn.xlarge"
+     "t3a.large" "m5d.xlarge" "r5n.2xlarge" "r5n.24xlarge" "a1.large"
+     "c5.xlarge" "r4.4xlarge" "inf1.xlarge" "r5.8xlarge"
+     "r5.24xlarge"}}},
+ :roomkey.aws.route53resolver.ResolverRule.TargetAddress/TargetAddress
+ {:Ip {:minimum 7, :maximum 36}, :Port {:minimum 0, :maximum 65535}},
+ :roomkey.aws.route53.RecordSet.GeoLocation/GeoLocation
+ {:CountryCode {:minimum 1, :maximum 2},
+  :SubdivisionCode {:minimum 1, :maximum 3}},
+ :roomkey.aws.applicationautoscaling.ScalingPolicy.StepScalingPolicyConfiguration/StepScalingPolicyConfiguration
+ {:AdjustmentType
+  {:enumerations
+   #{"PercentChangeInCapacity" "ExactCapacity" "ChangeInCapacity"}},
+  :MetricAggregationType
+  {:enumerations #{"Average" "Minimum" "Maximum"}}},
+ :roomkey.aws.ecr.Repository.LifecyclePolicy/LifecyclePolicy
+ {:LifecyclePolicyText {:minimum 100, :maximum 30720},
+  :RegistryId {:regex #"[0-9]{12}"}},
+ :roomkey.aws.ecs.TaskDefinition.DockerVolumeConfiguration/DockerVolumeConfiguration
+ {:Scope {:enumerations #{"shared" "task"}}},
+ :roomkey.aws.s3.Bucket.ObjectLockConfiguration/ObjectLockConfiguration
+ {:ObjectLockEnabled {:enumerations #{"Enabled"}}},
+ :roomkey.aws.kinesisfirehose.DeliveryStream.ProcessorParameter/ProcessorParameter
+ {:ParameterName
+  {:enumerations
+   #{"RoleArn" "BufferSizeInMBs" "LambdaArn" "BufferIntervalInSeconds"
+     "NumberOfRetries"}},
+  :ParameterValue {:minimum 1, :maximum 512}},
+ :roomkey.aws.emr.Cluster.KerberosAttributes/KerberosAttributes
+ {:ADDomainJoinPassword
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256},
+  :ADDomainJoinUser
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256},
+  :CrossRealmTrustPrincipalPassword
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256},
+  :KdcAdminPassword
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256},
+  :Realm
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256}},
+ :roomkey.aws.iotevents.DetectorModel.Event/Event
+ {:Condition {:maximum 512}, :EventName {:maximum 128}},
+ :roomkey.aws.route53.RecordSetGroup.GeoLocation/GeoLocation
+ {:CountryCode {:minimum 1, :maximum 2},
+  :SubdivisionCode {:minimum 1, :maximum 3}},
+ :roomkey.aws.elasticbeanstalk.ApplicationVersion.SourceBundle/SourceBundle
+ {:S3Bucket {:maximum 255}, :S3Key {:maximum 1024}},
+ :roomkey.aws.iotanalytics.Pipeline.Lambda/Lambda
+ {:BatchSize {:minimum 1, :maximum 1000},
+  :LambdaName {:regex #"^[a-zA-Z0-9_-]+$", :minimum 1, :maximum 64},
+  :Name {:minimum 1, :maximum 128},
+  :Next {:minimum 1, :maximum 128}},
+ :roomkey.aws.emr.Cluster.StepConfig/StepConfig
+ {:Name
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 256}},
+ :roomkey.aws.cognito.UserPool.RecoveryOption/RecoveryOption
+ {:Name
+  {:enumerations
+   #{"verified_email" "verified_phone_number" "admin_only"}},
+  :Priority {:minimum 1, :maximum 2}},
+ :roomkey.aws.dlm.LifecyclePolicy.PolicyDetails/PolicyDetails
+ {:PolicyType {:enumerations #{"EBS_SNAPSHOT_MANAGEMENT"}},
+  :ResourceTypes {:maximum 1},
+  :Schedules {:maximum 1},
+  :TargetTags {:maximum 50}},
+ :roomkey.aws.emr.Cluster.PlacementType/PlacementType
+ {:AvailabilityZone
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 10280}},
+ :roomkey.aws.kinesisanalytics.Application.InputLambdaProcessor/InputLambdaProcessor
+ {:ResourceARN {:regex #"arn:.*", :minimum 1, :maximum 2048},
+  :RoleARN
+  {:regex #"arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@&#45;_/]+",
+   :minimum 1,
+   :maximum 2048}},
+ :roomkey.aws.config.ConfigRule.SourceDetail/SourceDetail
+ {:EventSource {:enumerations #{"aws.config"}},
+  :MaximumExecutionFrequency
+  {:enumerations
+   #{"Twelve_Hours" "One_Hour" "TwentyFour_Hours" "Three_Hours"
+     "Six_Hours"}}},
+ :roomkey.aws.appstream.Stack.ApplicationSettings/ApplicationSettings
+ {:SettingsGroup {:maximum 100}},
+ :roomkey.aws.emr.Cluster.ScalingAction/ScalingAction
+ {:Market {:enumerations #{"ON_DEMAND" "SPOT"}}},
+ :roomkey.aws.logs.MetricFilter.MetricTransformation/MetricTransformation
+ {:MetricNamespace {:regex #"[^:*$]*", :maximum 255}},
+ :roomkey.aws.events.Rule.KinesisParameters/KinesisParameters
+ {:PartitionKeyPath {:maximum 256}},
+ :roomkey.aws.iotanalytics.Dataset.ResourceConfiguration/ResourceConfiguration
+ {:ComputeType {:enumerations #{"ACU_2" "ACU_1"}},
+  :VolumeSizeInGB {:minimum 1, :maximum 50}},
+ :roomkey.aws.gamelift.Alias.RoutingStrategy/RoutingStrategy
+ {:FleetId {:regex #"^fleet-\S+|^arn:.*:fleet\/fleet-\S+"}},
+ :roomkey.aws.autoscaling.AutoScalingGroup.LifecycleHookSpecification/LifecycleHookSpecification
+ {:LifecycleHookName
+  {:regex #"[A-Za-z0-9&#45;_\/]+", :minimum 1, :maximum 255},
+  :NotificationMetadata
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 1023},
+  :NotificationTargetARN
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 0,
+   :maximum 1600},
+  :RoleARN
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 1600}},
+ :roomkey.aws.autoscalingplans.ScalingPlan.TagFilter/TagFilter
+ {:Key
+  {:regex
+   #"[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*",
+   :minimum 1,
+   :maximum 128}},
+ :roomkey.aws.config.OrganizationConfigRule.OrganizationManagedRuleMetadata/OrganizationManagedRuleMetadata
+ {:Description {:minimum 0, :maximum 256},
+  :InputParameters {:minimum 1, :maximum 2048},
+  :MaximumExecutionFrequency
+  {:enumerations
+   #{"Twelve_Hours" "One_Hour" "TwentyFour_Hours" "Three_Hours"
+     "Six_Hours"}},
+  :ResourceIdScope {:minimum 1, :maximum 768},
+  :ResourceTypesScope {:maximum 100},
+  :RuleIdentifier {:minimum 1, :maximum 256},
+  :TagKeyScope {:minimum 1, :maximum 128},
+  :TagValueScope {:minimum 1, :maximum 256}},
+ :roomkey.aws.ec2.EC2Fleet.TargetCapacitySpecificationRequest/TargetCapacitySpecificationRequest
+ {:DefaultTargetCapacityType {:enumerations #{"spot" "on-demand"}}},
+ :roomkey.aws.s3.Bucket.ReplicationDestination/ReplicationDestination
+ {:StorageClass
+  {:enumerations
+   #{"DEEP_ARCHIVE" "GLACIER" "ONEZONE_IA" "STANDARD_IA" "STANDARD"
+     "INTELLIGENT_TIERING" "REDUCED_REDUNDANCY"}}},
+ :roomkey.aws.route53.RecordSetGroup.RecordSet/RecordSet
+ {:Comment {:maximum 256},
+  :HostedZoneId {:maximum 32},
+  :HostedZoneName {:maximum 1024},
+  :SetIdentifier {:minimum 1, :maximum 128}}}
