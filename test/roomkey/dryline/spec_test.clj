@@ -3,10 +3,11 @@
             [clojure.test :as t]
             [roomkey.dryline.specs :as specs]
             [roomkey.dryline.parse :as parse]
+            [roomkey.dryline.util :as util]
             [clojure.spec.alpha :as s]))
 
 (t/deftest ^:unit dryline-keyword
-  (let [sut specs/dryline-keyword]
+  (let [sut util/dryline-keyword]
     (t/are [type-name kw] (= (sut type-name) kw)
       "AWS::S3::Bucket.ObjectLockConfiguration"
       :roomkey.aws.s3.Bucket.ObjectLockConfiguration/ObjectLockConfiguration
