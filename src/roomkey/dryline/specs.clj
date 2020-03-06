@@ -69,20 +69,21 @@
   (cond
     (and (= Type "List") enumerations) (eval `(clojure.spec.alpha/coll-of ~enumerations))
     enumerations enumerations
+
     PrimitiveType (primitive-type-mapping PrimitiveType)
-    :else (case Type
-            "List" `(clojure.spec.alpha/coll-of
-                     ~(property-collection-predicate
-                       primitive-type-mapping
-                       type-name
-                       property)
-                     :distinct ~(not DuplicatesAllowed))
-            "Map" `(clojure.spec.alpha/map-of
+
+    (= Type "List") `(clojure.spec.alpha/coll-of
+                      ~(property-collection-predicate
+                        primitive-type-mapping
+                        type-name
+                        property)
+                      :distinct ~(not DuplicatesAllowed))
+    (= Type "Map") `(clojure.spec.alpha/map-of
                     string? ~(property-collection-predicate
                               primitive-type-mapping
                               type-name
                               property))
-            (spec-reference type-name Type))))
+    :else (spec-reference type-name Type)))
 
 (defn- gen-property-spec
   "Generates a spec for a property found in a resource type"
