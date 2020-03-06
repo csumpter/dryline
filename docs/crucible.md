@@ -23,6 +23,7 @@ The following example code shows you how to:
 (ns crucible-integration
   (:require [roomkey.dryline.parse :as parse]
             [roomkey.dryline.specs :as specs]
+            [roomkey.dryline.util :as util]
             [cognitect.aws.client.api :as aws]
             [clojure.java.io :as io]
             [crucible.core
@@ -72,7 +73,7 @@ The following example code shows you how to:
   The resulting function will be in the same namespace as the Dryline spec
   for the resource."
   [resource-type-name]
-  (let [spec-kw (specs/dryline-keyword resource-type-name)]
+  (let [spec-kw (util/dryline-keyword resource-type-name)]
     (binding [*ns* (create-ns (symbol (namespace spec-kw)))]
       (eval `(crucible.resources/defresource ~(symbol spec-kw)
                ~resource-type-name
