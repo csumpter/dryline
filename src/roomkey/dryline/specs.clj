@@ -1,5 +1,5 @@
 (ns roomkey.dryline.specs
-  "Generates Clojure specs from AWS resource and property type specifications.
+  "Defines Clojure specs from AWS resource and property type specifications.
 
   Definitions:
     AWS Type Identifier: An identifier found in AWS specifications of the form
@@ -176,7 +176,7 @@
 
 ;; TODO is this where we should check before re-defining a spec?
 (defn- add-property-spec
-  "Adds a spec for a property to the registry"
+  "Adds a spec for a property specification to the registry"
   [spec-keyword primitive-type-mapping type-identifier property-specification]
   (eval `(clojure.spec.alpha/def ~spec-keyword
            ~(property-spec primitive-type-mapping
@@ -320,22 +320,22 @@
             (recur (z/right loc) false)
             (recur (z/up loc) true)))))))
 
-(defn- gen-property-type-specs
-  "Generates all of the specs for property types"
+(defn- add-property-type-specs
+  "Adds all of the specs for property types to the registry"
   [property-types primitive-type-mapping]
   (doseq [root-property-type (root-property-types property-types)]
     (property-type-walk (partial add-property-type-spec primitive-type-mapping)
                         (property-type-zipper property-types root-property-type))))
 
-(defn- gen-resource-type-specs
-  "Generates all of the specs for resource types"
+(defn- add-resource-type-specs
+  "Adds all of the specs for resource types to the registry"
   [resource-types primitive-type-mapping]
   (doseq [resource-type resource-types]
     (add-resource-type-spec primitive-type-mapping resource-type)))
 
 (defn gen-specs
-  "Generates specs for all resource types and property types using the supplied
-  primitive type mapping"
+  "Adds specs for all resource types and property types using the supplied
+  primitive type mapping to the registry"
   ([parsed-spec primitive-type-mapping]
-   (gen-property-type-specs (:PropertyTypes parsed-spec) primitive-type-mapping)
-   (gen-resource-type-specs (:ResourceTypes parsed-spec) primitive-type-mapping)))
+   (add-property-type-specs (:PropertyTypes parsed-spec) primitive-type-mapping)
+   (add-resource-type-specs (:ResourceTypes parsed-spec) primitive-type-mapping)))
