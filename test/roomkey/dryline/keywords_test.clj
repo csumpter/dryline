@@ -22,8 +22,8 @@
     (t/is (= (sut "AWS::WAFv2::WebACL.Rules" :Rules)
              :roomkey.aws.wafv2.WebACL.properties.Rules/Rules))))
 
-(t/deftest ^:unit referenced-property-type-spec
-  (let [sut kws/referenced-property-type-spec]
+(t/deftest ^:unit referenced-property-type-keyword
+  (let [sut kws/referenced-property-type-keyword]
     (t/is (= (sut "AWS::WAFv2::WebACL.Rules" :Rule)
              :roomkey.aws.wafv2.WebACL.properties/Rule))))
 
