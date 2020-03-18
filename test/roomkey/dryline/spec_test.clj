@@ -22,7 +22,7 @@
                         io/resource
                         io/reader
                         parse/parse)]
-    (specs/gen-specs parsed-spec specs/primitive-type->predicate)
+    (specs/gen-specs parsed-spec specs/primitive-type->spec)
     (t/is (= (s/describe :roomkey.aws.s3/Bucket)
              '(keys
                :opt-un
@@ -59,5 +59,5 @@
                         io/resource
                         io/reader
                         parse/parse)]
-    (t/is (= (specs/gen-specs parsed-spec specs/primitive-type->predicate)
+    (t/is (= (specs/gen-specs parsed-spec specs/primitive-type->spec)
              nil))))
