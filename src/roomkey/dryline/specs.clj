@@ -13,8 +13,7 @@
         :vector (s/coll-of ::json :kind vector?)
         :map (s/map-of string? ::json)))
 
-;; TODO: rename to primitive-type->spec and update doc string
-(def primitive-type->predicate
+(def primitive-type->spec
   "A map from CloudFormation PrimitiveType to Clojure predicates"
   {"String" 'string?
    "Long" 'int?
@@ -24,7 +23,9 @@
    "Timestamp" 'inst?
    "Json" ::json})
 
-(defn ^:depricated dryline-keyword
+(def ^:deprecated primitive-type->predicate primitive-type->spec)
+
+(defn ^:deprecated dryline-keyword
   "Converts strings of form AWS::<Service>::<Resource> to namespaced keywords"
   [type-name]
   (case type-name
@@ -43,7 +44,7 @@
   [primitive-type-mapping type-identifier {:keys [ItemType PrimitiveItemType]}]
   (if PrimitiveItemType
     (primitive-type-mapping PrimitiveItemType)
-    (kws/referenced-property-type-spec type-identifier ItemType)))
+    (kws/referenced-property-type-keyword type-identifier ItemType)))
 
 (defn- property-spec
   "Returns the spec for a property"
@@ -66,7 +67,7 @@
                 primitive-type-mapping
                 type-identifier
                 property))
-      (kws/referenced-property-type-spec type-identifier Type))))
+      (kws/referenced-property-type-keyword type-identifier Type))))
 
 (defn- add-property-spec
   "Adds a spec for a property specification to the registry"
@@ -142,9 +143,11 @@
   (doseq [resource-type resource-types]
     (add-resource-type-spec primitive-type-mapping resource-type)))
 
-(defn gen-specs
+(defn add-specs
   "Adds specs for all resource types and property types using the supplied
   primitive type mapping to the registry"
   ([parsed-spec primitive-type-mapping]
    (add-property-type-specs (:PropertyTypes parsed-spec) primitive-type-mapping)
    (add-resource-type-specs (:ResourceTypes parsed-spec) primitive-type-mapping)))
+
+(def ^:deprecated gen-specs add-specs)

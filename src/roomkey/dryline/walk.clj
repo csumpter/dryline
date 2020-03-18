@@ -11,8 +11,10 @@
   (boolean (or PrimitiveType PrimitiveItemType)))
 
 (defn- referenced-property-type-identifier
-  "Returns the property type identifier for a that is referenced by a property
-  specification"
+  "Returns the property type identifier that is referenced by a property
+  specification
+  E.g. AWS::S3::Bucket.ObjectLockConfiguration, ObjectLockRule ->
+  AWS::S3::Bucket.ObjectLockRule"
   [property-type-identifier {:keys [ItemType Type] :as _property-specification}]
   (let [referenced-type (case Type
                           ("List" "Map") ItemType
@@ -62,7 +64,17 @@
 
 (defn property-type-walk
   "Walks the dependency graph of property types ensuring that specs are
-  generated in the correct order."
+  generated in the correct order. The walk starts at a root property type. If
+  the property type references other property types the walk proceeds down to
+  the first descendant of each set of children until a property type is found
+  that is not a branch (i.e. it references no other property types). A spec is
+  then added for the non-branching property type and the walk proceeds to the
+  right (i.e. the sibling of the previous). The walk continues in the same
+  pattern (down to non-branching, right) until there is no property type to the
+  right of the walk. The walk then goes up and arrives at a property type for
+  which all referenced types have already had a spec added and adds a spec for
+  this type. The walk then continues to the right if present, or continues up if
+  not. The walk ends when a spec has been added for the root property type."
   [spec-generator-fn zipper]
   (loop [loc zipper
          came-up? false]

@@ -31,7 +31,7 @@
 
 (defn resource-type-property-keyword
   "Returns a keyword for a property of a resource type of form
-  :roomkey.<serviceprovider.<servicename>.<ResourceTypeName>/<PropertyIdentifier>"
+  :roomkey.<serviceprovider>.<servicename>.<ResourceTypeName>/<PropertyIdentifier>"
   [resource-type-identifier property-identifier]
   (let [[provider service resource-type]
         (split-type-identifier resource-type-identifier)]
@@ -61,8 +61,11 @@
                                property-type-name)
                (name property-identifier)))))
 
-(defn referenced-property-type-spec
-  "Returns the spec keyword for a referenced property type"
+(defn referenced-property-type-keyword
+  "Returns the spec keyword for a referenced property type within the property
+  specification of a resource type or property type.
+  E.g. AWS::S3::Bucket.ObjectLockConfiguration, ObjectLockRule ->
+  :roomkey.aws.s3.Bucket.properties/ObjectLockRule"
   [type-identifier property-identifier]
   (case property-identifier
     "Tag" :roomkey.aws/Tag
