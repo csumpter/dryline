@@ -17,32 +17,6 @@
       "Tag"
       :roomkey.aws/Tag)))
 
-(t/deftest ^:unit resource-type-keyword
-  (let [sut #'specs/resource-type-keyword]
-    (t/is (= (sut "AWS::WAFv2::WebACL")
-             :roomkey.aws.wafv2/WebACL))))
-
-(t/deftest ^:unit resource-type-property-keyword
-  (let [sut #'specs/resource-type-property-keyword]
-    (t/is (= (sut "AWS::WAFv2::WebACL" :Rules)
-             :roomkey.aws.wafv2.WebACL/Rules))))
-
-(t/deftest ^:unit property-type-keyword
-  (let [sut #'specs/property-type-keyword]
-    (t/is (= (sut "AWS::WAFv2::WebACL.Rules")
-             :roomkey.aws.wafv2.WebACL.properties/Rules))))
-
-(t/deftest ^:unit property-type-property-keyword
-  (let [sut #'specs/property-type-property-keyword]
-    (t/is (= (sut "AWS::WAFv2::WebACL.Rules" :Rules)
-             :roomkey.aws.wafv2.WebACL.properties.Rules/Rules))))
-
-(t/deftest ^:unit referenced-property-type-spec
-  (let [sut #'specs/referenced-property-type-spec]
-    (t/is (= (sut "AWS::WAFv2::WebACL.Rules" :Rule)
-             :roomkey.aws.wafv2.WebACL.properties/Rule))))
-
-
 (t/deftest ^:unit s3-specs
   (let [parsed-spec (-> "aws/S3BucketSpecification.json"
                         io/resource
