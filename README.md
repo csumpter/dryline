@@ -41,15 +41,14 @@ We translated the [expected format of specification files](https://docs.aws.amaz
 In this example we will generate and use specs for an S3 Bucket. A version of the specification file can be found [here](test_resources/aws/S3BucketSpecification.json). 
 
 ```clojure
-(require '[roomkey.dryline.parse :as parse]
-         '[roomkey.dryline.specs :as specs]
+(require '[roomkey.dryline :as dryline]
          '[clojure.java.io :as io]
          '[clojure.spec.alpha :as s])
          
-(def parsed-spec (parse/parse (io/reader "path/to/S3BucketSpecification.json")))
-
-(specs/gen-specs parsed-spec specs/primitive-type->predicate)
-
+;; this function will parse, add specs for, and optionally validate the specifcation
+(dryline/parse-specification-and-add-specs (io/reader "path/to/Specification.json")
+                                           :validate true)
+                                           
 (s/describe :roomkey.aws.s3/Bucket)
 ;; This should return something of the form (keys :opt-un [...])
 
