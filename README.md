@@ -41,15 +41,14 @@ We translated the [expected format of specification files](https://docs.aws.amaz
 In this example we will generate and use specs for an S3 Bucket. A version of the specification file can be found [here](test_resources/aws/S3BucketSpecification.json). 
 
 ```clojure
-(require '[roomkey.dryline.parse :as parse]
-         '[roomkey.dryline.specs :as specs]
+(require '[roomkey.dryline :as dryline]
          '[clojure.java.io :as io]
          '[clojure.spec.alpha :as s])
          
-(def parsed-spec (parse/parse (io/reader "path/to/S3BucketSpecification.json")))
-
-(specs/gen-specs parsed-spec specs/primitive-type->predicate)
-
+;; this function will parse, add specs for, and optionally validate the specifcation
+(dryline/parse-specification-and-add-specs (io/reader "path/to/Specification.json")
+                                           :validate true)
+                                           
 (s/describe :roomkey.aws.s3/Bucket)
 ;; This should return something of the form (keys :opt-un [...])
 
@@ -63,6 +62,21 @@ In this example we will generate and use specs for an S3 Bucket. A version of th
 ### Crucible Integration
 A detailed example of integrating Crucible and Dryline can be found [here](docs/crucible.md)
 
+## Vocabulary
+CloudFormation specification files are complex. Here is a list of terms found throughout AWS documentation and the Dryline codebase
+
+* **AWS Type Identifier**: An identifier found in AWS specifications of the form \<ServiceProvider\>::\<ServiceName\>::\<DataTypeName\>. Dryline parses these identifiers as strings.
+* **Service Provider**: The first value in a type identifier. Either AWS or Alexa.
+* **Service Name**: The name of the AWS service to which a resource or property belongs. E.g. S3, Lambda, EC2, ApiGateway.
+* **Data Type Name**: The name of the resource or property type. DataTypeName references a property type if it of the form \<ResourceTypeName\>.\<PropertyTypeName\>.
+* **Resource Type**: A top level CloudFormation type. Resource types are a tuple of [type-identifier, type-specification].
+* **Property Type**: A sub-type of a resource type used to describe data structures that are not primitive. Resource types are a tuple of [type-identifier, type-specification].
+* **Type Specification**: A map describing a resource type or property type. Contains the key Properties.
+* **Properties**: A map of property-identifier -> property-specification.
+* **Property Identifier**: An identifier for a property of a resource type or property type. Dryline parses these identifiers as keywords.
+* **Property Specification**: A map describing a property. Provides information about the type of the property and whether or not it is required.
+* **Primitive Type Mapping**: A function that maps an AWS primitive type to a Clojure spec.
+
 ## Background
 Roomkey wanted to find a solution for building and validating CloudFormation templates programmatically with Clojure. We liked and supported the work done in the [Crucible](https://www.github.com/brabster/crucible) library but found that developers spent a lot of time writing and updating Clojure specs for CloudFormation resources, waiting on a release cycle and updating project dependencies. 
 
@@ -72,6 +86,6 @@ One might wonder why we invested so much time into validating CloudFormation tem
 
 #### Source materials
 
-https://d1uauaxba7bl26.cloudfront.net/latest/gzip/CloudFormationResourceSpecification.json
+<https://d1uauaxba7bl26.cloudfront.net/latest/gzip/CloudFormationResourceSpecification.json>
 
-https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-resource-specification-format.html
+<https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-resource-specification-format.html>
