@@ -10,7 +10,6 @@
   before adding specs and will throw an exception if invalid"
   [rdr primitive-type-mapping & {:keys [validate]}]
   (let [parsed-spec (parse/parse rdr)]
-    (prn parsed-spec)
     (when validate
       (when-some [data (s/explain-data :roomkey.aws.cloudformation/Specification
                                        parsed-spec)]
