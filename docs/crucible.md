@@ -21,8 +21,8 @@ The following example code shows you how to:
 
 ```clojure 
 (ns crucible-integration
-  (:require [roomkey.dryline.parse :as parse]
-            [roomkey.dryline.specs :as specs]
+  (:require [roomkey.dryline.specs :as specs]
+            [roomkey.dryline.keywords :as kws]
             [cognitect.aws.client.api :as aws]
             [clojure.java.io :as io]
             [crucible.core
@@ -38,7 +38,7 @@ The following example code shows you how to:
 ;;; level validation, you must extend Dryline with a new primitive type mapping
 ;;; so that resources with referenced values are valid.
 
-(def primitive-type->predicate
+(def primitive-type->crucible-spec
   {"String" '(clojure.spec.alpha/or
               :primitive string?
               :reference :crucible.values/value)
@@ -71,22 +71,27 @@ The following example code shows you how to:
   "Generates and evaluates Crucible defresource code for resource-type-name.
   The resulting function will be in the same namespace as the Dryline spec
   for the resource."
-  [resource-type-name]
-  (let [spec-kw (specs/dryline-keyword resource-type-name)]
+  [resource-type-identifier]
+  (let [spec-kw (kws/resource-type-keyword resource-type-identifier)]
     (binding [*ns* (create-ns (symbol (namespace spec-kw)))]
       (eval `(crucible.resources/defresource ~(symbol spec-kw)
-               ~resource-type-name
+               ~resource-type-identifier
                ~spec-kw)))))
 
 (let [parsed-spec (-> "path/to/Specification.json"
                       io/reader
                       parse/parse)]
   ;; Generate the dryline specs using a primitive type mapping that supports spec-or-ref
-  (specs/gen-specs parsed-spec primitive-type->predicate)
+  (specs/add-specs parsed-spec primitive-type->crucible-spec)
+
+  ;; Override crucible.encoding.keys/-> for all Dryline keywords
+  (doseq [spec-kw spec-kws]
+    (eval `(defmethod crucible.encoding.keys/->key ~spec-kw [_#]
+             ~(name spec-kw))))
 
   ;; Run defresource for all of the Resource Types in the specification file
-  (doseq [[resource-type-name _] (:ResourceTypes parsed-spec)]
-    (create-crucible-resource-from-spec resource-type-name)))
+  (doseq [[resource-type-identifier _] (:ResourceTypes parsed-spec)]
+    (create-crucible-resource-from-spec resource-type-identifier)))
 
 ;;; Build, validate and deploy a sample CloudFormation template
 ;;;
