@@ -15,3 +15,21 @@
                                        parsed-spec)]
         (throw (ex-info "Specification file is not valid" data))))
     (specs/add-specs parsed-spec primitive-type-mapping)))
+
+(s/def ::json
+  (s/or :string string?
+        :integer integer?
+        :double double?
+        :boolean boolean?
+        :vector (s/coll-of ::json :kind vector?)
+        :map (s/map-of string? ::json)))
+
+(def primitive-type->spec
+  "A map from CloudFormation PrimitiveType to Clojure predicates"
+  {"String" 'string?
+   "Long" 'int?
+   "Integer" 'int?
+   "Double" 'double?
+   "Boolean" 'boolean?
+   "Timestamp" 'inst?
+   "Json" ::json})

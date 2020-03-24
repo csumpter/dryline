@@ -46,7 +46,10 @@ In this example we will generate and use specs for an S3 Bucket. A version of th
          '[clojure.spec.alpha :as s])
          
 ;; this function will parse, add specs for, and optionally validate the specifcation
+;; dryline/primitive-type->spec is a very simple mapping that does not support
+;; the intrinsic functions that CloudFormation provides, but is a good starting point
 (dryline/parse-specification-and-add-specs (io/reader "path/to/Specification.json")
+                                           dryline/primitive-type->spec
                                            :validate true)
                                            
 (s/describe :roomkey.aws.s3/Bucket)
