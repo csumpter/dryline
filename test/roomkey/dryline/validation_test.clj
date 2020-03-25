@@ -8,5 +8,5 @@
 (def parsed-spec (parse/parse (io/reader (io/resource "aws/us-east-spec.json"))))
 
 (t/deftest ^:unit valid-specification
-  (t/is (s/valid? :roomkey.aws.cloudformation/Specification parsed-spec)))
+  (t/is (s/valid? :roomkey.dryline.validation/Specification parsed-spec)))
 
