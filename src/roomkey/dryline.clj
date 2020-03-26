@@ -18,7 +18,7 @@
 
 (s/def ::json
   (s/or :string string?
-        :integer integer?
+        :integer int?
         :double double?
         :boolean boolean?
         :vector (s/coll-of ::json :kind vector?)
