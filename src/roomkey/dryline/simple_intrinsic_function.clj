@@ -48,18 +48,3 @@
    "Boolean" ::boolean
    "Timestamp" ::timestamp
    "Json" ::json})
-
-(s/def ::literal
-  (s/or :string string?
-        :integer int?
-        :double double?
-        :boolean boolean?
-        :timestamp inst?))
-
-(s/def ::literal-json
-  (s/or :string string?
-        :integer int?
-        :double double?
-        :boolean boolean?
-        :vector (s/coll-of ::literal-json :kind vector?)
-        :map (s/map-of string? ::literal-json)))
