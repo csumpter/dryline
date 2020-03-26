@@ -1,7 +1,7 @@
 (ns roomkey.dryline.keywords
   (:require [clojure.string :as string]))
 
-(defn- split-type-identifier
+(defn split-type-identifier
   "Splits an AWS type identifier of the form into a tuple of
   (<serviceprovider> <servicename> <ResourceTypeName> ?<PropertyTypeName>).
   The tuple will contain a fourth element of PropertyTypeName iff DataTypeName
@@ -14,7 +14,7 @@
       (update 2 string/split #"\.")
       flatten))
 
-(defn- make-namespace
+(defn make-namespace
   "Builds a dot concatenated namespace string from `args` with the first value
   being \"roomkey\""
   [& args]
