@@ -7,29 +7,27 @@
             any?))
 
 (s/def ::string
-  (clojure.spec.alpha/or
-   :primitive string?
-   :simple-intrinsic-function ::simple-intrinsic-function))
+  (s/or :primitive string?
+        :simple-intrinsic-function ::simple-intrinsic-function))
 
 (s/def ::integer
-  (clojure.spec.alpha/or
-   :primitive int?
-   :simple-intrinsic-function ::simple-intrinsic-function))
+  (s/or :primitive int?
+        :simple-intrinsic-function ::simple-intrinsic-function))
 
 (s/def ::double
-  (clojure.spec.alpha/or
-   :primitive double?
-   :simple-intrinsic-function ::simple-intrinsic-function))
+  (s/or :primitive double?
+        :simple-intrinsic-function ::simple-intrinsic-function))
 
 (s/def ::boolean
-  (clojure.spec.alpha/or
-   :primitive boolean?
-   :simple-intrinsic-function ::simple-intrinsic-function))
+  (s/or :primitive boolean?
+        :simple-intrinsic-function ::simple-intrinsic-function))
 
 (s/def ::timestamp
-  (clojure.spec.alpha/or
-   :primitive inst?
-   :simple-intrinsic-function ::simple-intrinsic-function))
+  (s/or :primitive inst?
+        :simple-intrinsic-function ::simple-intrinsic-function))
+
+(s/def ::unqualified-keyword
+  (s/and keyword? (complement qualified-keyword?)))
 
 (s/def ::json
   (s/or :string ::string
@@ -37,7 +35,9 @@
         :double ::double
         :boolean ::boolean
         :vector (s/coll-of ::json :kind vector?)
-        :map (s/map-of string? ::json)))
+        :map (s/map-of (s/or :string string?
+                             :unqualified-keyword ::unqualified-keyword)
+                       ::json)))
 
 (def primitive-type->spec
   "A map from CF PrimitiveType to clojure predicates"
