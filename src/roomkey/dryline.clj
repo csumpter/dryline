@@ -1,7 +1,9 @@
 (ns roomkey.dryline
   (:require [roomkey.dryline.specs :as specs]
             [roomkey.dryline.parse :as parse]
-            [roomkey.dryline.validation]
+            [roomkey.dryline.template :as template]
+            [roomkey.dryline.validation :as validation]
+            [cheshire.core :as json]
             [clojure.spec.alpha :as s]))
 
 (defn parse-specification-and-add-specs
@@ -11,25 +13,17 @@
   [rdr primitive-type-mapping & {:keys [validate]}]
   (let [parsed-spec (parse/parse rdr)]
     (when validate
-      (when-some [data (s/explain-data :roomkey.aws.cloudformation/Specification
+      (when-some [data (s/explain-data ::validation/Specification
                                        parsed-spec)]
         (throw (ex-info "Specification file is not valid" data))))
-    (specs/add-specs parsed-spec primitive-type-mapping)))
+    (specs/add-specs parsed-spec primitive-type-mapping)
+    (template/add-methods-to-resource-type (keys (:ResourceTypes parsed-spec)))))
 
-(s/def ::json
-  (s/or :string string?
-        :integer int?
-        :double double?
-        :boolean boolean?
-        :vector (s/coll-of ::json :kind vector?)
-        :map (s/map-of string? ::json)))
-
-(def primitive-type->spec
-  "A map from CloudFormation PrimitiveType to Clojure predicates"
-  {"String" 'string?
-   "Long" 'int?
-   "Integer" 'int?
-   "Double" 'double?
-   "Boolean" 'boolean?
-   "Timestamp" 'inst?
-   "Json" ::json})
+(defn validate-and-encode
+  "Validates the template against the :roomkey.dryline.template/template spec.
+  If the template is valid, it is encoded as a JSON string. If not an exception
+  is thrown."
+  [template]
+  (when-some [data (s/explain-data ::template/template template)]
+    (throw (ex-info "template did not conform to spec" data)))
+  (json/generate-string template))

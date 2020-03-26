@@ -4,7 +4,7 @@ A [dry line](https://en.wikipedia.org/wiki/Dry_line) is a line across a continen
 ![](docs/dryline.jpg)
 
 ## Purpose
-Dryline is a Clojure library that programmatically builds specs for CloudFormation resource types. In the UNIX tooling mindset, Dryline does not build or deploy CloudFormation templates.
+Dryline is a Clojure library that programmatically builds specs for CloudFormation resource types and validates templates. In the UNIX tooling mindset, Dryline does not handle the lifecycle of CloudFormation stacks.
 
 ## Usage
 
@@ -16,40 +16,33 @@ Add the dependency into your `deps.edn`.
                   :sha "<SHA>"}}
 ```
 
-### Parse and validate a CloudFormation Specification file
+### Parse, validate and generate specs from a CloudFormation Specification file
 AWS regularly publishes specification files for CloudFormation. They are available for download [here](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-resource-specification.html) either as a single JSON file for all CloudFormation resources or as a ZIP archive of each service individually.
 
+#### Parsing
 The [`roomkey.dryline.parse`](src/roomkey/dryline/parse.clj) namespace ensures that the specification file is parsed to a format that the rest of Dryline can process.
 
+#### Validation
 We encountered a few issues of the specification files published by AWS being incorrectly formatted and therefore recommend that you validate their structure before relying on their contents. AWS were responsive and fixed the issues we found. If you encounter an invalid specification file we recommend raising an issue with AWS.
 
-We translated the [expected format of specification files](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-resource-specification-format.html) into Clojure specs in the [`roomkey.dryline.validation`](src/roomkey/dryline/validation.clj) namespace
+We translated the [expected format of specification files](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-resource-specification-format.html) into Clojure specs in the [`roomkey.dryline.validation`](src/roomkey/dryline/validation.clj) namespace.
 
-```clojure
-(require '[roomkey.dryline.parse :as parse]
-         '[roomkey.dryline.validation]
-         '[clojure.java.io :as io]
-         '[clojure.spec.alpha :as s])
-         
-(def parsed-spec (parse/parse (io/reader "path/to/Specification.json")))
+#### Spec Generation
+In order to build specs for CloudFormation resource types you must provide a mapping from CloudFormation primitive types to Clojure specs. The [`roomkey.dryline.simple-intrinsic-function`](src/roomkey/dryline/simple_intrinsic_function.clj) namespace provides a good default mapping. More information about CloudFormation intrinsic functions can be found [here](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html). 
 
-(s/valid? :roomkey.aws.cloudformation/Specification parsed-spec)
-;; If this returns false, then there is an issue with the specification file
-```
+Specs for resource types will be registered as `:roomkey.<provider>.<service>/<ResourceType>`. E.g. the spec for "AWS::S3::Bucket" will be located at `:roomkey.aws.s3/Bucket`. The [`roomkey.dryline.keywords`](src/roomkey/dryline/keywords.clj) namespace serves as a reference for how specs are named. All specs for resource types accept unqualified keywords. The names of these keywords are unmodified from the specification file and are expected to be in PascalCase.
 
-### Generate and use specs from a CloudFormation Specification file
-In this example we will generate and use specs for an S3 Bucket. A version of the specification file can be found [here](test_resources/aws/S3BucketSpecification.json). 
+In this example we will generate and use specs for an S3 Bucket. A version of the specification file can be found [here](test_resources/aws/S3BucketSpecification.json).
 
 ```clojure
 (require '[roomkey.dryline :as dryline]
+         '[roomkey.dryline.simple-intrinsic-function :as sif]
          '[clojure.java.io :as io]
          '[clojure.spec.alpha :as s])
          
-;; this function will parse, add specs for, and optionally validate the specifcation
-;; dryline/primitive-type->spec is a very simple mapping that does not support
-;; the intrinsic functions that CloudFormation provides, but is a good starting point
+;; this function will parse, add specs for, and optionally validate the specifcation.
 (dryline/parse-specification-and-add-specs (io/reader "path/to/Specification.json")
-                                           dryline/primitive-type->spec
+                                           sif/primitive-type->spec
                                            :validate true)
                                            
 (s/describe :roomkey.aws.s3/Bucket)
@@ -60,6 +53,25 @@ In this example we will generate and use specs for an S3 Bucket. A version of th
 
 (s/valid? :roomkey.aws.s3/Bucket {:BucketName 123})
 ;; This is false, because :BucketName must be a string
+```
+
+### Validate and encode a CloudFormation template
+Continuing the example above we will now use Dryline to encode a Clojure/Edn representation of a CloudFormation template to JSON. The `dryline/encode` function validates the template before encoding it in JSON. The keys for Logical IDs (e.g. "MyBucket" in the example below) in the template must be alphanumeric strings.
+
+```clojure
+(def bucket {:Type "AWS::S3::Bucket"
+             :Properties {:BucketName "my-bucket"}})
+
+(def template {:AWSTemplateFormatVersion "2010-09-09"
+               :Resources {"MyBucket" bucket}
+               :Outputs {"BucketARN" {:Description "The ARN of MyBucket"
+                                      :Value {"Fn::GetAtt" ["MyBucket" "Arn"]}}
+                         "BucketName" {:Description "The name of MyBucket"
+                                       :Value {"Ref" "MyBucket"}}}})
+
+;; Validate template against the :roomkey.dryline.template/template spec
+;; Returns template encoded as a JSON string if it is valid
+(dryline/validate-and-encode template)
 ```
 
 ### Crucible Integration
