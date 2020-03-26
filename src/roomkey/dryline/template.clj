@@ -37,7 +37,7 @@
 
 (s/def ::Mappings (s/map-of ::logical-id
                             (s/map-of string?
-                                      (s/map-of ::alphanumeric-string
+                                      (s/map-of ::logical-id
                                                 (s/or :string string?
                                                       :list (s/coll-of string?))))))
 
@@ -86,7 +86,7 @@
 
 (s/def ::resource-type (s/multi-spec resource-type :Type))
 
-(s/def ::Resources (s/map-of ::alphanumeric-string ::resource-type))
+(s/def ::Resources (s/map-of ::logical-id ::resource-type))
 
 ;; Outputs
 (s/def :roomkey.dryline.template.outputs/Description
@@ -94,7 +94,7 @@
 (s/def :roomkey.dryline.template.outputs/Value some?)
 (s/def :roomkey.dryline.template.outputs/Export some?)
 (s/def ::Outputs
-  (s/map-of ::alphanumeric-string
+  (s/map-of ::logical-id
             (s/keys :req-un [:roomkey.dryline.template.outputs/Value]
                     :opt-un [:roomkey.dryline.template.outputs/Description
                              :roomkey.dryline.template.outputs/Export])))
