@@ -1,7 +1,7 @@
 (ns roomkey.dryline
   (:require [roomkey.dryline.specs :as specs]
             [roomkey.dryline.parse :as parse]
-            [roomkey.dryline.validation]
+            [roomkey.dryline.validation :as validation]
             [clojure.spec.alpha :as s]))
 
 (defn parse-specification-and-add-specs
@@ -11,7 +11,7 @@
   [rdr primitive-type-mapping & {:keys [validate]}]
   (let [parsed-spec (parse/parse rdr)]
     (when validate
-      (when-some [data (s/explain-data :roomkey.aws.cloudformation/Specification
+      (when-some [data (s/explain-data ::validation/Specification
                                        parsed-spec)]
         (throw (ex-info "Specification file is not valid" data))))
     (specs/add-specs parsed-spec primitive-type-mapping)))
