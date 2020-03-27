@@ -6,24 +6,12 @@
             [roomkey.dryline.simple-intrinsic-function :as sif]
             [clojure.spec.alpha :as s]))
 
-(t/deftest ^:unit dryline-keyword
-  (let [sut specs/dryline-keyword]
-    (t/are [type-name kw] (= (sut type-name) kw)
-      "AWS::S3::Bucket.ObjectLockConfiguration"
-      :roomkey.aws.s3.Bucket.ObjectLockConfiguration/ObjectLockConfiguration
-
-      "AWS::S3::Bucket"
-      :roomkey.aws.s3/Bucket
-
-      "Tag"
-      :roomkey.aws/Tag)))
-
 (t/deftest ^:unit s3-specs
   (let [parsed-spec (-> "aws/S3BucketSpecification.json"
                         io/resource
                         io/reader
                         parse/parse)]
-    (specs/gen-specs parsed-spec sif/primitive-type->spec)
+    (specs/add-specs parsed-spec sif/primitive-type->spec)
     (t/is (= (s/describe :roomkey.aws.s3/Bucket)
              '(keys
                :opt-un
@@ -60,5 +48,5 @@
                         io/resource
                         io/reader
                         parse/parse)]
-    (t/is (= (specs/gen-specs parsed-spec sif/primitive-type->spec)
+    (t/is (= (specs/add-specs parsed-spec sif/primitive-type->spec)
              nil))))

@@ -1,43 +1,8 @@
 (ns roomkey.dryline.specs
   "Defines Clojure specs from AWS resource and property type specifications"
   (:require [clojure.spec.alpha :as s]
-            [clojure.string :as string]
             [roomkey.dryline.walk :as walk]
             [roomkey.dryline.keywords :as kws]))
-
-(s/def ::json
-  (s/or :string string?
-        :integer integer?
-        :double double?
-        :boolean boolean?
-        :vector (s/coll-of ::json :kind vector?)
-        :map (s/map-of string? ::json)))
-
-(def primitive-type->spec
-  "A map from CloudFormation PrimitiveType to Clojure predicates"
-  {"String" 'string?
-   "Long" 'int?
-   "Integer" 'int?
-   "Double" 'double?
-   "Boolean" 'boolean?
-   "Timestamp" 'inst?
-   "Json" ::json})
-
-(def ^:deprecated primitive-type->predicate primitive-type->spec)
-
-(defn ^:deprecated dryline-keyword
-  "Converts strings of form AWS::<Service>::<Resource> to namespaced keywords"
-  [type-name]
-  (case type-name
-    "Tag" :roomkey.aws/Tag
-    (let [[top-level-service service type] (string/split type-name #"::")
-          [type subtype] (string/split type #"\.")
-          service-prefix (string/join \. ["roomkey"
-                                          (string/lower-case top-level-service)
-                                          (string/lower-case service)])]
-      (if subtype
-        (keyword (str service-prefix \. type \. subtype) subtype)
-        (keyword service-prefix type)))))
 
 (defn- item-type-spec
   "Returns the spec for the type of an item in a collection"
@@ -149,5 +114,3 @@
   ([parsed-spec primitive-type-mapping]
    (add-property-type-specs (:PropertyTypes parsed-spec) primitive-type-mapping)
    (add-resource-type-specs (:ResourceTypes parsed-spec) primitive-type-mapping)))
-
-(def ^:deprecated gen-specs add-specs)
