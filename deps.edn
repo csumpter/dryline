@@ -3,14 +3,11 @@
         org.clojure/spec.alpha {:mvn/version "0.2.187"}
         http.async.client {:mvn/version "1.3.1"}
         hickory {:mvn/version "0.7.1"}}
- :paths ["src"
-         "resources"]
- :aliases {:dev {:extra-paths ["test"
-                               "test-resources"]
-                 :extra-deps {org.clojure/test.check {:mvn/version "1.0.0"}
-                              crucible {:mvn/version "0.45.3"}}}
-           :test {:extra-paths ["test"
-                                "test-resources"]
-                  :extra-deps {com.cognitect/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
-                                                          :sha "f7ef16dc3b8332b0d77bc0274578ad5270fbfedd"}}
+ :paths ["src" "resources"]
+ :aliases {:dev {:extra-paths ["test" "test-resources"]
+                 :extra-deps {org.clojure/test.check {:mvn/version "1.0.0"}}}
+           :test {:extra-paths ["test" "test-resources"]
+                  :extra-deps {com.cognitect/test-runner
+                               {:git/url "https://github.com/cognitect-labs/test-runner.git"
+                                :sha "f7ef16dc3b8332b0d77bc0274578ad5270fbfedd"}}
                   :main-opts ["-m" "cognitect.test-runner"]}}}
