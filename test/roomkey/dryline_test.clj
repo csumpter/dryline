@@ -21,4 +21,4 @@
                                          :Value {"Fn::GetAtt" ["MyBucket" "Arn"]}}
                             "BucketName" {:Description "The name of MyBucket"
                                           :Value {"Ref" "MyBucket"}}}}]
-    (t/is (string? (dryline/validate-and-encode template)))))
+    (t/is (string? (dryline/encode template :validate true)))))

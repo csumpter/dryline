@@ -19,11 +19,12 @@
     (specs/add-specs parsed-spec primitive-type-mapping)
     (template/add-methods-to-resource-type (keys (:ResourceTypes parsed-spec)))))
 
-(defn validate-and-encode
-  "Validates the template against the :roomkey.dryline.template/template spec.
-  If the template is valid, it is encoded as a JSON string. If not an exception
-  is thrown."
-  [template]
-  (when-some [data (s/explain-data ::template/template template)]
-    (throw (ex-info "template did not conform to spec" data)))
+(defn encode
+  "Encodes template as a JSON string. If :validate is true, template will be
+  validated against the :roomkey.dryline.template/template spec. If template is
+  not valid an exception will be thrown."
+  [template & {:keys [validate]}]
+  (when validate
+    (when-some [data (s/explain-data ::template/template template)]
+      (throw (ex-info "template did not conform to spec" data))))
   (json/generate-string template))

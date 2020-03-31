@@ -56,7 +56,7 @@ In this example we will generate and use specs for an S3 Bucket. A version of th
 ```
 
 ### Validate and encode a CloudFormation template
-Continuing the example above we will now use Dryline to encode a Clojure/Edn representation of a CloudFormation template to JSON. The `dryline/encode` function validates the template before encoding it in JSON. The keys for Logical IDs (e.g. "MyBucket" in the example below) in the template must be alphanumeric strings.
+Continuing the example above we will now use Dryline to encode a Clojure/Edn representation of a CloudFormation template to JSON. The `dryline/encode` function can validate the template before encoding it in JSON. The keys for Logical IDs (e.g. "MyBucket" in the example below) in the template must be alphanumeric strings.
 
 ```clojure
 (def bucket {:Type "AWS::S3::Bucket"
@@ -71,7 +71,7 @@ Continuing the example above we will now use Dryline to encode a Clojure/Edn rep
 
 ;; Validate template against the :roomkey.dryline.template/template spec
 ;; Returns template encoded as a JSON string if it is valid
-(dryline/validate-and-encode template)
+(dryline/encode template :validate true)
 ```
 
 ### Crucible Integration
