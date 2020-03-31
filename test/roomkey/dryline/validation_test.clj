@@ -5,7 +5,10 @@
             [roomkey.dryline.parse :as parse]
             [roomkey.dryline.validation]))
 
-(def parsed-spec (parse/parse (io/reader (io/resource "aws/us-east-spec.json"))))
+(def parsed-spec (-> "aws/CloudFormationResourceSpecification.json"
+                     io/resource
+                     io/reader
+                     parse/parse))
 
 (t/deftest ^:unit valid-specification
   (t/is (s/valid? :roomkey.dryline.validation/Specification parsed-spec)))

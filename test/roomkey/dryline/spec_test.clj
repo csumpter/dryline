@@ -3,6 +3,7 @@
             [clojure.test :as t]
             [roomkey.dryline.specs :as specs]
             [roomkey.dryline.parse :as parse]
+            [roomkey.dryline.simple-intrinsic-function :as sif]
             [clojure.spec.alpha :as s]))
 
 (t/deftest ^:unit dryline-keyword
@@ -22,7 +23,7 @@
                         io/resource
                         io/reader
                         parse/parse)]
-    (specs/gen-specs parsed-spec specs/primitive-type->spec)
+    (specs/gen-specs parsed-spec sif/primitive-type->spec)
     (t/is (= (s/describe :roomkey.aws.s3/Bucket)
              '(keys
                :opt-un
@@ -59,5 +60,5 @@
                         io/resource
                         io/reader
                         parse/parse)]
-    (t/is (= (specs/gen-specs parsed-spec specs/primitive-type->spec)
+    (t/is (= (specs/gen-specs parsed-spec sif/primitive-type->spec)
              nil))))
